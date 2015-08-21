@@ -406,7 +406,7 @@ void projectile() {
             g_cProjectile.Y = charLocation.Y - 1;
             for (int i = 0; i < 2; ++i) {
                 if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
-					console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
+                    console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
                     projKill();
                     projKill1();
                     g_cProjectile.Y -= 1;
