@@ -458,7 +458,34 @@ void minimap() {
 			console.writeToBuffer(c, '_');
 		}
 	}
+	mapper();
+}
 
+void mapper() {
+	COORD c;
+	//Tutorial Map
+	c.X = (MINIMAP_WIDTH / 2) + 43;
+	c.Y = MINIMAP_HEIGHT / 2;
+	console.writeToBuffer(c, (char)1, 0x0C);
+
+	//Joint
+	c.X = (MINIMAP_WIDTH / 2) + 44;
+	c.Y = MINIMAP_HEIGHT / 2;
+	console.writeToBuffer(c, (char)196, 0x0B);
+
+	//MAP 1
+	c.X = (MINIMAP_WIDTH / 2) + 45;
+	c.Y = MINIMAP_HEIGHT / 2;
+	console.writeToBuffer(c, (char)1, 0x0C);
+
+	//Joint
+	c.X = (MINIMAP_WIDTH / 2) + 46;
+	c.Y = (MINIMAP_HEIGHT / 2) - 1;
+	console.writeToBuffer(c, '/', 0x0B);
+
+	c.X = (MINIMAP_WIDTH / 2) + 46;
+	c.Y = (MINIMAP_HEIGHT / 2) + 1;
+	console.writeToBuffer(c, '\\', 0x0B);
 }
 
 void HUD() {

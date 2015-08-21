@@ -39,6 +39,7 @@ void collision();
 #define MAP_HEIGHT 27
 void randomSeed();
 void minimap();
+void mapper();
 void HUD();
 void switchPath();
 void moveMonster();
