@@ -2,7 +2,7 @@
 #define _GAME_H
 
 #include "Framework\timer.h"
-
+#include <stdio.h>
 extern StopWatch g_timer;
 extern bool g_quitGame;
 
@@ -18,6 +18,7 @@ enum Keys
 	K_A,
 	K_S,
 	K_D,
+    K_E,
     K_COUNT
 };
 enum GAMESTATES{
@@ -55,7 +56,7 @@ void monster1Death();
 void collision1();
 void projKill1();
 void projKill();
-
+void mapChange();
 void refill();
 
 void gameplay();
