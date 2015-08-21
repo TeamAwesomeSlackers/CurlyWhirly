@@ -7,8 +7,7 @@
 #include <iomanip>
 #include <fstream>
 #include <sstream>
-#include <stdio.h>
-#include "Framework\timer.h"
+
 int monsterdelay = 0; 
 int monster1delay = 0;
 int health = 3;
@@ -17,8 +16,8 @@ int bomb = 3;
 FILE *map;
 
 GAMESTATES g_eGameState = SPLASH;
+DEATHSTATE die = SAD;
 // Console object
-
 
 Console console(75, 27, "SP1 Framework");
 
@@ -57,14 +56,12 @@ char printMap[MAP_HEIGHT][MAP_WIDTH] = {
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
 };
-
 // Game specific variables here
-COORD charLocation;
+COORD	charLocation;
 COORD	g_cConsoleSize;
 COORD	g_cChaserLoc;
 COORD	g_cChaser1Loc;
 COORD	g_cProjectile;
-COORD CurentLocation;
 // Initialize variables, allocate memory, load data from file, etc. 
 // This is called once before entering into your main loop
 void init()
@@ -94,7 +91,6 @@ void shutdown()
 {
     // Reset to white text on black background
 	colour(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-
     console.clearBuffer();
 }
 /*
@@ -117,6 +113,9 @@ void getInput()
 	keyPressed[K_A] = isKeyPressed('A');
 	keyPressed[K_S] = isKeyPressed('S');
 	keyPressed[K_D] = isKeyPressed('D');
+	keyPressed[K_E] = isKeyPressed('E');
+	keyPressed[K_R] = isKeyPressed('R');
+
 }
 
 /*
@@ -134,20 +133,12 @@ void update(double dt)
     // get the delta time
     elapsedTime += dt;
     deltaTime = dt;
-
 	switch (g_eGameState){
-	case GAME: gameplay();
-		break;
-	default: SPLASH : splashwait();
-	}
-}
-
-void startrender(){
-	clearScreen();
-	switch (g_eGameState){
-	case SPLASH: splash();
-	case GAME: render();
-		break;
+		case GAME: gameplay();
+			break;
+		case GAMEOVER: gameend();
+			break;
+		default: SPLASH : splashwait();
 	}
 }
 void splashwait(){
@@ -156,10 +147,14 @@ void splashwait(){
 	}
 }
 void gameplay(){
-
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
     moveCharacter();    // moves the character, collision detection, physics, etc
+	moveMonster();		//moves the monsters
+	moveMonster1();
     // sound can be played here too.
+	if (health <= 0){
+		g_eGameState = GAMEOVER;
+	}
 }
 
 /*
@@ -176,17 +171,16 @@ void render()
 		break;
 	case GAME: renderGame();
 		break;
+	case GAMEOVER: gameend();
+		break;
 	}
-
 	renderToScreen();// dump the contents of the buffer to the screen, one frame worth of game
 }
 
 void renderGame() {
-    moveMonster();		//moves the monsters
-	moveMonster1();
 	renderMap(); // renders the character into the buffer
-	projectile();// renders the map to the buffer first
 	renderCharacter();  // renders the character into the buffer
+	projectile();     //projectile
 }
 
 void renderMap()
@@ -344,6 +338,7 @@ void moveCharacter()
             }
 
         }
+		trapLava();
         refill();
 }
 void processUserInput()
@@ -363,8 +358,8 @@ void renderCharacter()
 {
     // Draw the location of the character
     console.writeToBuffer(charLocation, (char)232, 0x0E);
-    console.writeToBuffer(g_cChaserLoc, (char)238, 0x0C);
-    console.writeToBuffer(g_cChaser1Loc, (char)238, 0x0C);
+    console.writeToBuffer(g_cChaserLoc, (char)238, 0x0A);
+    console.writeToBuffer(g_cChaser1Loc, (char)238, 0x0A);
 }
 
 void renderFramerate()
@@ -467,7 +462,6 @@ void projectile() {
     }
 }
 
-
 void minimap() {
 	COORD c;
 	#define MINIMAP_WIDTH 22
@@ -494,28 +488,82 @@ void minimap() {
 void mapper() {
 	COORD c;
 	//Tutorial Map
-	c.X = (MINIMAP_WIDTH / 2) + 43;
-	c.Y = MINIMAP_HEIGHT / 2;
-	console.writeToBuffer(c, (char)1, 0x0C);
-
-	//Joint
-	c.X = (MINIMAP_WIDTH / 2) + 44;
-	c.Y = MINIMAP_HEIGHT / 2;
-	console.writeToBuffer(c, (char)196, 0x0B);
-
-	//MAP 1
-	c.X = (MINIMAP_WIDTH / 2) + 45;
-	c.Y = MINIMAP_HEIGHT / 2;
-	console.writeToBuffer(c, (char)1, 0x0C);
-
-	//Joint
 	c.X = (MINIMAP_WIDTH / 2) + 46;
 	c.Y = (MINIMAP_HEIGHT / 2) - 1;
-	console.writeToBuffer(c, '/', 0x0B);
+	console.writeToBuffer(c, (char)1, 0x0C);
 
-	c.X = (MINIMAP_WIDTH / 2) + 46;
-	c.Y = (MINIMAP_HEIGHT / 2) + 1;
-	console.writeToBuffer(c, '\\', 0x0B);
+	//Joint
+	c.X = (MINIMAP_WIDTH / 2) + 47;
+	c.Y = (MINIMAP_HEIGHT / 2) - 1;
+	console.writeToBuffer(c, (char)205, 0x0B);
+
+	//MAP 1
+	c.X = (MINIMAP_WIDTH / 2) + 48;
+	c.Y = (MINIMAP_HEIGHT / 2) - 1;
+	console.writeToBuffer(c, (char)1, 0x0C);
+
+	//Joint
+	c.X = (MINIMAP_WIDTH / 2) + 49;
+	c.Y = (MINIMAP_HEIGHT / 2) - 1;
+	console.writeToBuffer(c, (char)185, 0x0B);
+
+    //MAP 2
+    c.X = (MINIMAP_WIDTH / 2) + 49;
+    c.Y = (MINIMAP_HEIGHT / 2) - 2;
+    console.writeToBuffer(c, (char)1, 0x0C);
+
+    c.X = (MINIMAP_WIDTH / 2) + 49;
+    c.Y = (MINIMAP_HEIGHT / 2);
+    console.writeToBuffer(c, (char)1, 0x0C);
+
+    //Joint
+    c.X = (MINIMAP_WIDTH / 2) + 50;
+    c.Y = (MINIMAP_HEIGHT / 2) - 2;
+    console.writeToBuffer(c, (char)205, 0x0B);
+
+    c.X = (MINIMAP_WIDTH / 2) + 51;
+    c.Y = (MINIMAP_HEIGHT / 2) - 1;
+    console.writeToBuffer(c, (char)186, 0x0B);
+
+    c.X = (MINIMAP_WIDTH / 2) + 50;
+    c.Y = (MINIMAP_HEIGHT / 2);
+    console.writeToBuffer(c, (char)205, 0x0B);
+
+    //MAP 3
+    c.X = (MINIMAP_WIDTH / 2) + 51;
+    c.Y = (MINIMAP_HEIGHT / 2) - 2;
+    console.writeToBuffer(c, (char)1, 0x0C);
+
+    c.X = (MINIMAP_WIDTH / 2) + 51;
+    c.Y = (MINIMAP_HEIGHT / 2);
+    console.writeToBuffer(c, (char)1, 0x0C);
+
+    //Joint
+    c.X = (MINIMAP_WIDTH / 2) + 52;
+    c.Y = (MINIMAP_HEIGHT / 2) - 2;
+    console.writeToBuffer(c, (char)205, 0x0B);
+
+    c.X = (MINIMAP_WIDTH / 2) + 53;
+    c.Y = (MINIMAP_HEIGHT / 2) - 1;
+    console.writeToBuffer(c, (char)204, 0x0B);
+
+    c.X = (MINIMAP_WIDTH / 2) + 52;
+    c.Y = (MINIMAP_HEIGHT / 2);
+    console.writeToBuffer(c, (char)205, 0x0B);
+
+    //MAP 4
+    c.X = (MINIMAP_WIDTH / 2) + 53;
+    c.Y = (MINIMAP_HEIGHT / 2) - 2;
+    console.writeToBuffer(c, (char)1, 0x0C);
+
+    c.X = (MINIMAP_WIDTH / 2) + 53;
+    c.Y = (MINIMAP_HEIGHT / 2);
+    console.writeToBuffer(c, (char)1, 0x0C);
+
+    ////Boss
+    c.X = (MINIMAP_WIDTH / 2) + 54;
+    c.Y = (MINIMAP_HEIGHT / 2) - 1;
+    console.writeToBuffer(c, (char)1, 0x0C);
 }
 
 void HUD() {
@@ -650,6 +698,30 @@ void splash(){
 		c.Y += 1;
 	}
 }
+void gameend(){
+	clearScreen();
+	std::string gameover;
+	COORD c;
+	c.Y = 6;
+	c.X = 15;
+	std::ifstream myfile;
+	FILE * pFile;
+	myfile.open("screen/gameover.txt");
+	for (int i = 0; myfile.good(); i++){
+		std::getline(myfile, gameover);
+		console.writeToBuffer(c, gameover, 0x0E);
+		c.Y += 1;
+	}
+	c.X = 28;
+	c.Y = 13;
+	console.writeToBuffer(c, "Press R to retry", 0x0E);
+	if (keyPressed[K_R]) {
+		g_eGameState = GAME;
+		charLocation.X = 3;
+		charLocation.Y = 14;
+	}
+	health = 3;
+}
 void bombrefill(){
     if (printMap[charLocation.Y][charLocation.X] == 6){
         printMap[charLocation.Y][charLocation.X] = 0;
@@ -678,4 +750,10 @@ void mapChange(){
         fclose(map);
     }
 }
+void trapLava(){
+	if (printMap[charLocation.Y][charLocation.X] == 2){
+		health = 0;
+	}
+}
+
 

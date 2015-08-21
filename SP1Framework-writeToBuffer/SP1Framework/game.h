@@ -19,11 +19,18 @@ enum Keys
 	K_S,
 	K_D,
     K_E,
-    K_COUNT
+	K_R,
+	K_COUNT
 };
 enum GAMESTATES{
 	SPLASH,
-	GAME
+	GAME,
+	GAMEOVER
+};
+enum DEATHSTATE{
+	SAD,
+	RESTART,
+	QUIT
 };
 
 void splashwait();
@@ -59,9 +66,11 @@ void projKill1();
 void projKill();
 void mapChange();
 void refill();
-
 void gameplay();
 void startrender();
+void gameend();
+void trapLava();
+void Dead();
 
 
 #endif // _GAME_H
