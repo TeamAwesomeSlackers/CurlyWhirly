@@ -10,7 +10,6 @@
 #include "Framework\timer.h"
 int monsterdelay = 0; 
 int monster1delay = 0;
-int whipdelay = 0;
 int health = 3;
 int ammo = 5;
 int bomb = 3;
@@ -377,7 +376,7 @@ void projectile() {
             g_cProjectile.Y = charLocation.Y - 1;
             for (int i = 0; i < 2; ++i) {
                 if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
-                    console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
+					console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
                     projKill();
                     projKill1();
                     g_cProjectile.Y -= 1;
@@ -405,7 +404,6 @@ void projectile() {
         }
         else if (keyPressed[K_S]) {
             ammo -= 1;
-            whipdelay = 0;
             g_cProjectile.X = charLocation.X;
             g_cProjectile.Y = charLocation.Y + 1;
             for (int i = 0; i < 2; ++i) {
