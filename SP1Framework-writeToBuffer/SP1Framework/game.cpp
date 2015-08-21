@@ -11,7 +11,6 @@
 #include "Framework\timer.h"
 int monsterdelay = 0; 
 int monster1delay = 0;
-int whipdelay = 0;
 int health = 3;
 int ammo = 5;
 int bomb = 3;
@@ -407,7 +406,7 @@ void projectile() {
             g_cProjectile.Y = charLocation.Y - 1;
             for (int i = 0; i < 2; ++i) {
                 if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
-                    console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
+					console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
                     projKill();
                     projKill1();
                     g_cProjectile.Y -= 1;
@@ -435,7 +434,6 @@ void projectile() {
         }
         else if (keyPressed[K_S]) {
             ammo -= 1;
-            whipdelay = 0;
             g_cProjectile.X = charLocation.X;
             g_cProjectile.Y = charLocation.Y + 1;
             for (int i = 0; i < 2; ++i) {
@@ -490,7 +488,34 @@ void minimap() {
 			console.writeToBuffer(c, '_');
 		}
 	}
+	mapper();
+}
 
+void mapper() {
+	COORD c;
+	//Tutorial Map
+	c.X = (MINIMAP_WIDTH / 2) + 43;
+	c.Y = MINIMAP_HEIGHT / 2;
+	console.writeToBuffer(c, (char)1, 0x0C);
+
+	//Joint
+	c.X = (MINIMAP_WIDTH / 2) + 44;
+	c.Y = MINIMAP_HEIGHT / 2;
+	console.writeToBuffer(c, (char)196, 0x0B);
+
+	//MAP 1
+	c.X = (MINIMAP_WIDTH / 2) + 45;
+	c.Y = MINIMAP_HEIGHT / 2;
+	console.writeToBuffer(c, (char)1, 0x0C);
+
+	//Joint
+	c.X = (MINIMAP_WIDTH / 2) + 46;
+	c.Y = (MINIMAP_HEIGHT / 2) - 1;
+	console.writeToBuffer(c, '/', 0x0B);
+
+	c.X = (MINIMAP_WIDTH / 2) + 46;
+	c.Y = (MINIMAP_HEIGHT / 2) + 1;
+	console.writeToBuffer(c, '\\', 0x0B);
 }
 
 void HUD() {
