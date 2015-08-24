@@ -62,6 +62,7 @@ COORD	g_cConsoleSize;
 COORD	g_cChaserLoc;
 COORD	g_cChaser1Loc;
 COORD	g_cProjectile;
+COORD   pointerLoc;
 // Initialize variables, allocate memory, load data from file, etc. 
 // This is called once before entering into your main loop
 void init()
@@ -74,12 +75,12 @@ void init()
     g_cChaserLoc.Y = 2;
 	g_cChaser1Loc.X = 26;
 	g_cChaser1Loc.Y = 24;
-
-
 	//initial state
 	g_eGameState = SPLASH;
+    //Pointer location
+    pointerLoc.X = 32;
+    pointerLoc.Y = 15;
 	
-
 
     // sets the width, height and the font name to use in the console
     console.setConsoleFont(0, 16, L"Consolas");
@@ -109,6 +110,7 @@ void getInput()
     keyPressed[K_RIGHT] = isKeyPressed(VK_RIGHT);
     keyPressed[K_ESCAPE] = isKeyPressed(VK_ESCAPE);
 	keyPressed[K_SPACE] = isKeyPressed(VK_SPACE);
+    keyPressed[K_RETURN] = isKeyPressed(VK_RETURN);
 	keyPressed[K_W] = isKeyPressed('W');
 	keyPressed[K_A] = isKeyPressed('A');
 	keyPressed[K_S] = isKeyPressed('S');
@@ -1005,14 +1007,31 @@ void titlescreen(){
 	c.Y = 19;
 	c.X = 33;
 	console.writeToBuffer(c, "Exit");
+    pointer();
 }
-
-
 void bomb() {
     if (keyPressed[K_E]) {
         monsterDeath();
         monster1Death();
         player.bomb -= 1;
+    }
+}
+void pointer(){
+    if (keyPressed[K_UP]){
+        pointerLoc.Y = 15;
+    }
+    else if (keyPressed[K_DOWN]){
+        pointerLoc.Y = 19;
+    } 
+    console.writeToBuffer(pointerLoc, ">");
+    if (keyPressed[K_RETURN]){
+        if (pointerLoc.Y == 15){
+            g_eGameState = GAME;
+        }
+        else if (pointerLoc.Y == 19){
+            g_quitGame = true;
+        }
+
     }
 }
 
