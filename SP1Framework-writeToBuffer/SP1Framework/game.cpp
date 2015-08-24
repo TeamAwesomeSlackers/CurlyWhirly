@@ -34,10 +34,10 @@ char printMap[MAP_HEIGHT][MAP_WIDTH] = {
     { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
     { 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0,3, 0, 0, 0, 4, 0, 0, 0, 5, 0, 0, 0, 6, 0, 0, 0, 7, 0, 0, 0, 8, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
     { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
     { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
     { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'A', 1, 1 },
     { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
@@ -422,7 +422,7 @@ void collision(){
 }
 // PROJECTILE
 void projectile() {
-    if (player.ammo >= 0){
+    if (player.ammo > 0){
         if (keyPressed[K_W]) {
             player.ammo -= 1;
             g_cProjectile.X = charLocation.X;
@@ -489,7 +489,7 @@ void projectile() {
         }
     }
 }
-
+//minimap
 void minimap() {
 	COORD c;
 	#define MINIMAP_WIDTH 22
@@ -593,7 +593,7 @@ void mapper() {
     c.Y = (MINIMAP_HEIGHT / 2) - 1;
     console.writeToBuffer(c, (char)1, 0x0C);
 }
-
+//HUD
 void HUD() {
 	COORD c;
 	#define HUD_WIDTH 22
@@ -638,10 +638,12 @@ void HUD() {
         console.writeToBuffer(c, (char)235);
     }
 }
+//seeding
 void randomSeed(){
     int seed = 1;
     srand(seed);
 }
+//move the 1st monster
 void moveMonster(){
     // CHASER MOVEMENT
     
@@ -669,6 +671,7 @@ void moveMonster(){
         collision();
     }
 }
+//move the 2nd monster
 void moveMonster1(){
 	// CHASER MOVEMENT
     if (Monster == STARTGAME){
@@ -695,17 +698,19 @@ void moveMonster1(){
         collision1();
     };
 }
-// check if monster gets shot
+// check if 1st monster gets shot
 void projKill(){
 	if (g_cChaserLoc.X == g_cProjectile.X && g_cChaserLoc.Y == g_cProjectile.Y){
 		monsterDeath();
 	}
 }
+// check if second monster gets shot
 void projKill1(){
 	if (g_cChaser1Loc.X == g_cProjectile.X && g_cChaser1Loc.Y == g_cProjectile.Y){
 		monster1Death();
 	}
 }
+//1st monster death
 void monsterDeath(){
 	int spawnLocation = rand() % 3;
 	g_cChaserLoc.X = 26;
@@ -719,6 +724,7 @@ void monsterDeath(){
 		g_cChaserLoc.Y = 24;
 	}
 }
+// 2nd monster death
 void monster1Death(){
 	int spawnLocation = rand() % 3;
 	g_cChaser1Loc.X = 26;
@@ -732,12 +738,14 @@ void monster1Death(){
 		g_cChaser1Loc.Y = 2;
 	}
 }
+//2nd monster collision check
 void collision1(){
 	if (charLocation.X == g_cChaser1Loc.X && charLocation.Y  == g_cChaser1Loc.Y){
 		monster1Death();
 		player.health -= 1;
 	} // Top left
 }
+//Refill Ammo
 void refill(){
     if (printMap[charLocation.Y][charLocation.X] == 7){
         printMap[charLocation.Y][charLocation.X] = 0;
@@ -749,6 +757,7 @@ void refill(){
         }
 	}
 }
+//Splash Screen
 void splash(){
 	std::string gamesplash;
 	COORD c = console.getConsoleSize();
@@ -763,6 +772,7 @@ void splash(){
 		c.Y += 1;
 	}
 }
+//Dies
 void gameend(){
 	clearScreen();
 	std::string gameover;
@@ -787,12 +797,14 @@ void gameend(){
 	}
 	player.health = 3;
 }
+//Refill Bomb
 void bombrefill(){
     if (printMap[charLocation.Y][charLocation.X] == 6){
         printMap[charLocation.Y][charLocation.X] = 0;
         player.bomb += 1;
     }
 }
+// Changes the map
 void mapChange(){
     if (printMap[charLocation.Y][charLocation.X] == 'A'){
         map1();
@@ -807,6 +819,7 @@ void mapChange(){
         Monster = STARTGAME;
     }
 }
+//Dying to traps
 void trapLava(){
 	if (printMap[charLocation.Y][charLocation.X] == 2){
 		player.health = 0;
@@ -816,6 +829,7 @@ void trapLava(){
 
     }
 }
+//Renders Library
 void map1(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
@@ -824,6 +838,7 @@ void map1(){
     }
     setmonsterlocation();
 }
+//Renders Lecture Hall
 void map2(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
@@ -832,6 +847,7 @@ void map2(){
     }
     setmonsterlocation();
 }
+//Renders River
 void map3(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
@@ -843,6 +859,7 @@ void map3(){
     monsterDeath();
     monster1Death();
 }
+//Restarts the game
 void tutorial(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
@@ -852,6 +869,7 @@ void tutorial(){
     setmonsterlocation();
     Monster = TUTORIAL;
 }
+// initial monster spawn
 void setmonsterlocation(){
     g_cChaserLoc.X = 26;
     g_cChaserLoc.Y = 2;
