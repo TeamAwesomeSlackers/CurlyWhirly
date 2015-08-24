@@ -83,6 +83,6 @@ void status();
 void setmonsterlocation();
 void textbox();
 void titlescreen();
-
+void bomb();
 
 #endif // _GAME_H
