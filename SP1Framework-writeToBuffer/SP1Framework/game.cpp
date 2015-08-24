@@ -13,6 +13,7 @@ int monsterdelay = 0;
 int monster1delay = 0;
 FILE *map;
 GAMESTATES g_eGameState = SPLASH;
+CLASSES classes = ARCHER;
 DEATHSTATE die = SAD;
 MONSTERSTATE Monster = TUTORIAL;
 // Console object
@@ -127,14 +128,36 @@ struct Stats {
 }player;
 
 void status() {
+    switch (classes) {
+    case BALANCED: balanced();
+        break;
+    case ARCHER: archer();
+        break;
+    case WARRIOR: warrior();
+        break;
+    default:
+        break;
+    }
+}
+
+void balanced() {
     player.health = 3;
     player.ammo = 5;
     player.bomb = 1;
 }
 
-struct Classes {
-    short ID;
-};
+void archer() {
+    player.health = 2;
+    player.ammo = 5;
+    player.bomb = 1;
+}
+
+void warrior() {
+    player.health = 4;
+    player.ammo = 1;
+    player.bomb = 1;
+}
+
 
 /*
 	This is the update function
@@ -480,15 +503,44 @@ void projectile() {
             player.ammo -= 1;
             g_cProjectile.X = charLocation.X;
             g_cProjectile.Y = charLocation.Y - 1;
-            for (int i = 0; i < 2; ++i) {
-                if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
-                    console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
-                    projKill();
-                    projKill1();
-                    g_cProjectile.Y -= 1;
+            if (classes == WARRIOR) {
+                player.ammo += 1;
+                for (int i = 0; i < 1; ++i) {
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                        console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
+                        projKill();
+                        projKill1();
+                        g_cProjectile.Y -= 1;
+                    }
+                    else{
+                        break;
+                    }
                 }
-                else{
-                    break;
+            }
+            else if (classes == ARCHER) {
+                for (int i = 0; i < 3; ++i) {
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                        console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
+                        projKill();
+                        projKill1();
+                        g_cProjectile.Y -= 1;
+                    }
+                    else{
+                        break;
+                    }
+                }
+            }
+            else {
+                for (int i = 0; i < 2; ++i) {
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                        console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
+                        projKill();
+                        projKill1();
+                        g_cProjectile.Y -= 1;
+                    }
+                    else{
+                        break;
+                    }
                 }
             }
         }
@@ -496,15 +548,44 @@ void projectile() {
             player.ammo -= 1;
             g_cProjectile.X = charLocation.X - 1;
             g_cProjectile.Y = charLocation.Y;
-            for (int i = 0; i < 2; ++i) {
-                if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
-                    console.writeToBuffer(g_cProjectile, (char)17, 0x0B);
-                    projKill();
-                    projKill1();
-                    g_cProjectile.X -= 1;
+            if (classes == WARRIOR) {
+                player.ammo += 1;
+                for (int i = 0; i < 1; ++i) {
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                        console.writeToBuffer(g_cProjectile, (char)17, 0x0B);
+                        projKill();
+                        projKill1();
+                        g_cProjectile.X -= 1;
+                    }
+                    else{
+                        break;
+                    }
                 }
-                else{
-                    break;
+            }
+            else if (classes == ARCHER) {
+                for (int i = 0; i < 3; ++i) {
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                        console.writeToBuffer(g_cProjectile, (char)17, 0x0B);
+                        projKill();
+                        projKill1();
+                        g_cProjectile.X -= 1;
+                    }
+                    else{
+                        break;
+                    }
+                }
+            }
+            else {
+                for (int i = 0; i < 2; ++i) {
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                        console.writeToBuffer(g_cProjectile, (char)17, 0x0B);
+                        projKill();
+                        projKill1();
+                        g_cProjectile.X -= 1;
+                    }
+                    else{
+                        break;
+                    }
                 }
             }
         }
@@ -512,15 +593,44 @@ void projectile() {
             player.ammo -= 1;
             g_cProjectile.X = charLocation.X;
             g_cProjectile.Y = charLocation.Y + 1;
-            for (int i = 0; i < 2; ++i) {
-                if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
-                    console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
-                    projKill();
-                    projKill1();
-                    g_cProjectile.Y += 1;
+            if (classes == WARRIOR) {
+                player.ammo += 1;
+                for (int i = 0; i < 1; ++i) {
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                        console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
+                        projKill();
+                        projKill1();
+                        g_cProjectile.Y += 1;
+                    }
+                    else{
+                        break;
+                    }
                 }
-                else{
-                    break;
+            }
+            else if (classes == ARCHER) {
+                for (int i = 0; i < 3; ++i) {
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                        console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
+                        projKill();
+                        projKill1();
+                        g_cProjectile.Y += 1;
+                    }
+                    else{
+                        break;
+                    }
+                }
+            }
+            else {
+                for (int i = 0; i < 2; ++i) {
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                        console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
+                        projKill();
+                        projKill1();
+                        g_cProjectile.Y += 1;
+                    }
+                    else{
+                        break;
+                    }
                 }
             }
         }
@@ -528,15 +638,44 @@ void projectile() {
             player.ammo -= 1;
             g_cProjectile.X = charLocation.X + 1;
             g_cProjectile.Y = charLocation.Y;
-            for (int i = 0; i < 2; ++i) {
-                if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
-                    console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
-                    projKill();
-                    projKill1();
-                    g_cProjectile.X += 1;
+            if (classes == WARRIOR) {
+                player.ammo += 1;
+                for (int i = 0; i < 1; ++i) {
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                        console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
+                        projKill();
+                        projKill1();
+                        g_cProjectile.X += 1;
+                    }
+                    else{
+                        break;
+                    }
                 }
-                else{
-                    break;
+            }
+            else if (classes == ARCHER) {
+                for (int i = 0; i < 3; ++i) {
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                        console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
+                        projKill();
+                        projKill1();
+                        g_cProjectile.X += 1;
+                    }
+                    else{
+                        break;
+                    }
+                }
+            }
+            else {
+                for (int i = 0; i < 2; ++i) {
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                        console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
+                        projKill();
+                        projKill1();
+                        g_cProjectile.X += 1;
+                    }
+                    else{
+                        break;
+                    }
                 }
             }
         }

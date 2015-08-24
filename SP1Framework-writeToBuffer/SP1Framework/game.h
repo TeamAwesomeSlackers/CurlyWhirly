@@ -40,6 +40,12 @@ enum MONSTERSTATE{
     ENDGAME
 };
 
+enum CLASSES {
+    BALANCED,
+    ARCHER,
+    WARRIOR
+};
+
 void splashwait();
 void splash();
 void init();                // initialize your variables, allocate memory, etc
@@ -86,5 +92,8 @@ void textbox();
 void titlescreen();
 void bomb();
 void pointer();
+void balanced();
+void archer();
+void warrior();
 
 #endif // _GAME_H
