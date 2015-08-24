@@ -611,6 +611,32 @@ void HUD() {
 		c.Y = console.getConsoleSize().Y - 15;
 		console.writeToBuffer(c, (char)233);
 	}
+
+    c.X = console.getConsoleSize().X - 21;
+    c.Y = console.getConsoleSize().Y - 13;
+
+    for (int m = 0; m < 4; m++) {
+        console.writeToBuffer(c, "AMMO");
+    }
+
+    for (int m = 0; m < player.ammo; m++){
+        c.X = console.getConsoleSize().X - 21 + m;
+        c.Y = console.getConsoleSize().Y - 12;
+        console.writeToBuffer(c, (char)248);
+    }
+
+    c.X = console.getConsoleSize().X - 21;
+    c.Y = console.getConsoleSize().Y - 10;
+
+    for (int m = 0; m < 4; m++) {
+        console.writeToBuffer(c, "BOMB");
+    }
+
+    for (int m = 0; m < player.bomb; m++){
+        c.X = console.getConsoleSize().X - 21 + m;
+        c.Y = console.getConsoleSize().Y - 9;
+        console.writeToBuffer(c, (char)235);
+    }
 }
 void randomSeed(){
     int seed = 1;
