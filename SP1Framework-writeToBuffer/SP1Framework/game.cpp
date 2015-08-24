@@ -151,6 +151,7 @@ void update(double dt)
 		default: SPLASH : splashwait();
 	}
 }
+// waiting time before Splash Screen switches
 void splashwait(){
 	if (elapsedTime > 3.0){
 		g_eGameState = GAME;
@@ -162,6 +163,7 @@ void gameplay(){
 	moveMonster();		//moves the monsters
 	moveMonster1();
     // sound can be played here too.
+    // When the player dies and the gamestate switches to the game over screen
 	if (player.health <= 0){
 		g_eGameState = GAMEOVER;
 	}
@@ -192,7 +194,7 @@ void renderGame() {
 	renderCharacter();  // renders the character into the buffer
 	projectile();     //projectile
 }
-
+//Renders the map according to data
 void renderMap()
 {
     //Print Map
