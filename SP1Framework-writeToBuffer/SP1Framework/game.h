@@ -78,6 +78,6 @@ void map1();
 void map2();
 void map3();
 void tutorial();
-
+void status();
 
 #endif // _GAME_H

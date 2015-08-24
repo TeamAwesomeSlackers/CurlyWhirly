@@ -11,9 +11,6 @@
 
 int monsterdelay = 0; 
 int monster1delay = 0;
-int health = 3;
-int ammo = 5;
-int bomb = 3;
 FILE *map;
 GAMESTATES g_eGameState = SPLASH;
 DEATHSTATE die = SAD;
@@ -119,6 +116,18 @@ void getInput()
 
 }
 
+struct Stats {
+    short health;
+    short ammo;
+    short bomb;
+}player;
+
+void status() {
+    player.health = 3;
+    player.ammo = 5;
+    player.bomb = 1;
+}
+
 /*
 	This is the update function
 	double dt - This is the amount of time in seconds since the previous call was made
@@ -153,7 +162,7 @@ void gameplay(){
 	moveMonster();		//moves the monsters
 	moveMonster1();
     // sound can be played here too.
-	if (health <= 0){
+	if (player.health <= 0){
 		g_eGameState = GAMEOVER;
 	}
 }
@@ -398,18 +407,19 @@ void renderToScreen()
     // Writes the buffer to the console, hence you will see what you have written
     console.flushBufferToConsole();
 }
+
 //collision check/damage calculation
 void collision(){
     if (charLocation.X == g_cChaserLoc.X && charLocation.Y == g_cChaserLoc.Y){
-		health -= 1;
+		player.health -= 1;
 		monsterDeath();
 	}
 }
 // PROJECTILE
 void projectile() {
-    if (ammo >= 0){
+    if (player.ammo >= 0){
         if (keyPressed[K_W]) {
-            ammo -= 1;
+            player.ammo -= 1;
             g_cProjectile.X = charLocation.X;
             g_cProjectile.Y = charLocation.Y - 1;
             for (int i = 0; i < 2; ++i) {
@@ -425,7 +435,7 @@ void projectile() {
             }
         }
         else if (keyPressed[K_A]) {
-            ammo -= 1;
+            player.ammo -= 1;
             g_cProjectile.X = charLocation.X - 1;
             g_cProjectile.Y = charLocation.Y;
             for (int i = 0; i < 2; ++i) {
@@ -441,7 +451,7 @@ void projectile() {
             }
         }
         else if (keyPressed[K_S]) {
-            ammo -= 1;
+            player.ammo -= 1;
             g_cProjectile.X = charLocation.X;
             g_cProjectile.Y = charLocation.Y + 1;
             for (int i = 0; i < 2; ++i) {
@@ -457,7 +467,7 @@ void projectile() {
             }
         }
         else if (keyPressed[K_D]) {
-            ammo -= 1;
+            player.ammo -= 1;
             g_cProjectile.X = charLocation.X + 1;
             g_cProjectile.Y = charLocation.Y;
             for (int i = 0; i < 2; ++i) {
@@ -591,7 +601,7 @@ void HUD() {
 		console.writeToBuffer(c, "HEALTH");
 	}
 	
-	for (int m = 0; m < health; m++){
+	for (int m = 0; m < player.health; m++){
 		c.X = console.getConsoleSize().X - 21 + m;
 		c.Y = console.getConsoleSize().Y - 15;
 		console.writeToBuffer(c, (char)233);
@@ -694,17 +704,17 @@ void monster1Death(){
 void collision1(){
 	if (charLocation.X == g_cChaser1Loc.X && charLocation.Y  == g_cChaser1Loc.Y){
 		monster1Death();
-		health -= 1;
+		player.health -= 1;
 	} // Top left
 }
 void refill(){
     if (printMap[charLocation.Y][charLocation.X] == 7){
         printMap[charLocation.Y][charLocation.X] = 0;
-        if (ammo + 10 >= 20){
-            ammo = 20;
+        if (player.ammo + 10 >= 20){
+            player.ammo = 20;
         }
         else{
-            ammo += 10;
+            player.ammo += 10;
         }
 	}
 }
@@ -744,12 +754,12 @@ void gameend(){
 		charLocation.X = 3;
 		charLocation.Y = 14;
 	}
-	health = 3;
+	player.health = 3;
 }
 void bombrefill(){
     if (printMap[charLocation.Y][charLocation.X] == 6){
         printMap[charLocation.Y][charLocation.X] = 0;
-        bomb += 1;
+        player.bomb += 1;
     }
 }
 void mapChange(){
