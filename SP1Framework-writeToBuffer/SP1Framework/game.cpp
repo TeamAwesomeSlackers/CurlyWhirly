@@ -222,7 +222,7 @@ void renderMap()
                 console.writeToBuffer(c, (char)247, 0x0C);
             }
             else if (printMap[i][j] == 3){
-                console.writeToBuffer(c, '^');
+                console.writeToBuffer(c, 'X');
             }
             else if (printMap[i][j] == 4){
                 console.writeToBuffer(c, (char)236, 0x0B);
@@ -380,9 +380,14 @@ void clearScreen()
 void renderCharacter()
 {
     // Draw the location of the character
-    console.writeToBuffer(charLocation, (char)232, 0x0E);
-    console.writeToBuffer(g_cChaserLoc, (char)238, 0x0A);
-    console.writeToBuffer(g_cChaser1Loc, (char)238, 0x0A);
+    console.writeToBuffer(charLocation, (char)232, 0x0A);
+    if (g_cChaserLoc.X == g_cChaser1Loc.X && g_cChaserLoc.Y == g_cChaser1Loc.Y){
+        console.writeToBuffer(g_cChaserLoc, (char)238, 0x0D);
+    }
+    else{
+        console.writeToBuffer(g_cChaserLoc, (char)238, 0x0E);
+        console.writeToBuffer(g_cChaser1Loc, (char)238, 0x0E);
+    }
 }
 void renderFramerate()
 {
@@ -751,8 +756,8 @@ void gameend(){
 	console.writeToBuffer(c, "Press R to retry", 0x0E);
 	if (keyPressed[K_R]) {
 		g_eGameState = GAME;
-		charLocation.X = 3;
-		charLocation.Y = 14;
+        tutorial();
+        player.ammo = 5;
 	}
 	player.health = 3;
 }
@@ -777,15 +782,13 @@ void mapChange(){
     }
 }
 void trapLava(){
-    /*
 	if (printMap[charLocation.Y][charLocation.X] == 2){
-		health = 0;
+		player.health = 0;
 	}
     if (printMap[charLocation.Y][charLocation.X] == 3){
-        health = 0;
+        player.health = 0;
 
     }
-    */
 }
 void map1(){
     for (int i = 0; i < MAP_HEIGHT; i++){
@@ -793,10 +796,7 @@ void map1(){
             printMap[i][j] = library[i][j];
            }
     }
-    charLocation.X = 3;
-    charLocation.Y = 13;
-    monsterDeath();
-    monster1Death();
+    setmonsterlocation();
 }
 void map2(){
     for (int i = 0; i < MAP_HEIGHT; i++){
@@ -804,10 +804,7 @@ void map2(){
             printMap[i][j] = LectureHall[i][j];
         }
     }
-    charLocation.X = 3;
-    charLocation.Y = 13;
-    monsterDeath();
-    monster1Death();
+    setmonsterlocation();
 }
 void map3(){
     for (int i = 0; i < MAP_HEIGHT; i++){
@@ -821,8 +818,21 @@ void map3(){
     monster1Death();
 }
 void tutorial(){
-
-
+    for (int i = 0; i < MAP_HEIGHT; i++){
+        for (int j = 0; j < MAP_WIDTH; j++){
+            printMap[i][j] = Tutorial[i][j];
+        }
+    }
+    setmonsterlocation();
+    Monster = TUTORIAL;
+}
+void setmonsterlocation(){
+    g_cChaserLoc.X = 26;
+    g_cChaserLoc.Y = 2;
+    g_cChaser1Loc.X = 26;
+    g_cChaser1Loc.Y = 24;
+    charLocation.X = 3;
+    charLocation.Y = 13;
 
 }
 
