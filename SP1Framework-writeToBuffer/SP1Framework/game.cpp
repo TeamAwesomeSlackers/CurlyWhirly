@@ -987,6 +987,7 @@ void gameend(){
 		g_eGameState = GAME;
         tutorial();
         player.ammo = 5;
+        player.bomb = 1;
 	}
 	player.health = 3;
 }
