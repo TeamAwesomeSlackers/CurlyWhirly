@@ -81,6 +81,6 @@ void tutorial();
 void status();
 void setmonsterlocation();
 void textbox();
-
+void bomb();
 
 #endif // _GAME_H

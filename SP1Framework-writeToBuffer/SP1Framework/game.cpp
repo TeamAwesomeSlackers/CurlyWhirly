@@ -195,6 +195,7 @@ void renderGame() {
 	renderMap(); // renders the character into the buffer
 	renderCharacter();  // renders the character into the buffer
 	projectile();     //projectile
+    bomb();
 }
 //Renders the map according to data
 void renderMap()
@@ -974,4 +975,13 @@ void textbox() {
 	if (printMap[charLocation.Y][charLocation.X] == 'P')
 	console.writeToBuffer(c, "Step on each item to know what it is!");
 }
+
+void bomb() {
+    if (keyPressed[K_E]) {
+        monsterDeath();
+        monster1Death();
+        player.bomb -= 1;
+    }
+}
+
 
