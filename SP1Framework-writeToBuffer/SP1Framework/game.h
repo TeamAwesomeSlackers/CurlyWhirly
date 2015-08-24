@@ -20,6 +20,7 @@ enum Keys
 	K_D,
     K_E,
 	K_R,
+    K_RETURN,
 	K_COUNT
 };
 enum GAMESTATES{
@@ -84,5 +85,6 @@ void setmonsterlocation();
 void textbox();
 void titlescreen();
 void bomb();
+void pointer();
 
 #endif // _GAME_H
