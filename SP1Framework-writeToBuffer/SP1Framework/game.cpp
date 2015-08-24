@@ -156,7 +156,7 @@ void update(double dt)
 // waiting time before Splash Screen switches
 void splashwait(){
 	if (elapsedTime > 3.0){
-		g_eGameState = GAME;
+		g_eGameState = TITLE;
 	}
 }
 void gameplay(){
@@ -182,6 +182,8 @@ void render()
     clearScreen();      // clears the current screen and draw from scratch 
 	switch (g_eGameState) {
 	case SPLASH: splash();
+		break;
+	case TITLE: titlescreen();
 		break;
 	case GAME: renderGame();
 		break;
@@ -920,7 +922,7 @@ void setmonsterlocation(){
     charLocation.X = 3;
     charLocation.Y = 13;
 }
-
+// textbox for tutorial screen
 void textbox() {
 	COORD c;	
 	c.X = 3;
@@ -974,4 +976,27 @@ void textbox() {
 	if (printMap[charLocation.Y][charLocation.X] == 'P')
 	console.writeToBuffer(c, "Step on each item to know what it is!");
 }
-
+// title screen
+void titlescreen(){
+	clearScreen();
+	std::string title;
+	COORD c;
+	c.Y = 3;
+	c.X = 10;
+	std::ifstream myfile;
+	FILE * pFile;
+	myfile.open("screen/title.txt");
+	for (int i = 0; myfile.good(); i++){
+		std::getline(myfile, title);
+		console.writeToBuffer(c, title, 0x0E);
+		c.Y += 1;
+	}
+	// start button
+	c.Y = 15;
+	c.X = 33;
+	console.writeToBuffer(c, "Start");
+	// exit button
+	c.Y = 19;
+	c.X = 33;
+	console.writeToBuffer(c, "Exit");
+}

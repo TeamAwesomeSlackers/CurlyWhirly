@@ -24,6 +24,7 @@ enum Keys
 };
 enum GAMESTATES{
 	SPLASH,
+	TITLE,
 	GAME,
 	GAMEOVER
 };
@@ -81,6 +82,7 @@ void tutorial();
 void status();
 void setmonsterlocation();
 void textbox();
+void titlescreen();
 
 
 #endif // _GAME_H
