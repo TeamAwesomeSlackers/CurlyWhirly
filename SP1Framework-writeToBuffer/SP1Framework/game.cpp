@@ -32,7 +32,7 @@ char printMap[MAP_HEIGHT][MAP_WIDTH] = {
     { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
     { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
     { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0,3, 0, 0, 0, 4, 0, 0, 0, 5, 0, 0, 0, 6, 0, 0, 0, 7, 0, 0, 0, 8, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
     { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
     { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
     { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
@@ -809,15 +809,15 @@ void bombrefill(){
 // Changes the map
 void mapChange(){
     if (printMap[charLocation.Y][charLocation.X] == 'A'){
-        map1();
+        mapRiver();
         Monster = STARTGAME;
     }
     else if (printMap[charLocation.Y][charLocation.X] == 'B'){
-        map2();
+        mapLectureHall();
         Monster = STARTGAME;
     }
     else if (printMap[charLocation.Y][charLocation.X] == 'C'){
-        map3();
+        mapLibrary();
         Monster = STARTGAME;
     }
 }
@@ -832,7 +832,7 @@ void trapLava(){
     }
 }
 //Renders Library
-void map1(){
+void mapLibrary(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
             printMap[i][j] = library[i][j];
@@ -841,25 +841,22 @@ void map1(){
     setmonsterlocation();
 }
 //Renders Lecture Hall
-void map2(){
+void mapLectureHall(){
     for (int i = 0; i < MAP_HEIGHT; i++){
-        for (int j = 0; j < MAP_WIDTH; j++){
+        for (int  j = 0; j < MAP_WIDTH; j++){
             printMap[i][j] = LectureHall[i][j];
         }
     }
     setmonsterlocation();
 }
 //Renders River
-void map3(){
+void mapRiver(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
             printMap[i][j] = River[i][j];
         }
     }
-    charLocation.X = 3;
-    charLocation.Y = 13;
-    monsterDeath();
-    monster1Death();
+    setmonsterlocation();
 }
 //Restarts the game
 void tutorial(){
