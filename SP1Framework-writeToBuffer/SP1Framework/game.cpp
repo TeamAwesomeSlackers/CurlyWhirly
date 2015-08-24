@@ -130,6 +130,10 @@ void status() {
     player.bomb = 1;
 }
 
+struct Classes {
+    short ID;
+};
+
 /*
 	This is the update function
 	double dt - This is the amount of time in seconds since the previous call was made
