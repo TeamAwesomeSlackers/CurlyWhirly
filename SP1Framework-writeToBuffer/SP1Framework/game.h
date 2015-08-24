@@ -80,5 +80,7 @@ void map3();
 void tutorial();
 void status();
 void setmonsterlocation();
+void textbox();
+
 
 #endif // _GAME_H
