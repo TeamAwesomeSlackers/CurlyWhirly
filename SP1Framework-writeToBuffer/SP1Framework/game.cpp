@@ -63,7 +63,8 @@ COORD	g_cConsoleSize;
 COORD	g_cChaserLoc;
 COORD	g_cChaser1Loc;
 COORD	g_cProjectile;
-COORD   pointerLoc;
+COORD   TpointerLoc;
+COORD   PpointerLoc;
 // Initialize variables, allocate memory, load data from file, etc. 
 // This is called once before entering into your main loop
 void init()
@@ -79,8 +80,10 @@ void init()
 	//initial state
 	g_eGameState = SPLASH;
     //Pointer location
-    pointerLoc.X = 32;
-    pointerLoc.Y = 15;
+    TpointerLoc.X = 32;
+    TpointerLoc.Y = 15;
+    PpointerLoc.X = 32;
+    PpointerLoc.Y = 15;
 	
 
     // sets the width, height and the font name to use in the console
@@ -177,6 +180,8 @@ void update(double dt)
 	switch (g_eGameState){
 		case GAME: gameplay();
 			break;
+        case PAUSE: pausemenu();
+            break;
 		case GAMEOVER: gameend();
 			break;
 		default: SPLASH : splashwait();
@@ -214,6 +219,8 @@ void render()
 		break;
 	case TITLE: titlescreen();
 		break;
+    case PAUSE: pausemenu();
+        break;
 	case GAME: renderGame();
 		break;
 	case GAMEOVER: gameend();
@@ -443,8 +450,9 @@ void moveCharacter()
 void processUserInput()
 {
     // quits the game if player hits the escape key
-    if (keyPressed[K_ESCAPE])
-        g_quitGame = true;
+    if (keyPressed[K_ESCAPE]){
+        g_eGameState = PAUSE;
+    }
 }
 
 void clearScreen()
@@ -1147,8 +1155,9 @@ void titlescreen(){
 	c.Y = 19;
 	c.X = 33;
 	console.writeToBuffer(c, "Exit");
-    pointer();
+    Tpointer();
 }
+//BOMB
 void bomb() {
     if (keyPressed[K_E]) {
         monsterDeath();
@@ -1156,25 +1165,68 @@ void bomb() {
         player.bomb -= 1;
     }
 }
-void pointer(){
+//TITLE POINTER
+void Tpointer(){
     if (keyPressed[K_UP]){
-        pointerLoc.Y = 15;
+        TpointerLoc.Y = 15;
     }
     else if (keyPressed[K_DOWN]){
-        pointerLoc.Y = 19;
+        TpointerLoc.Y = 19;
     } 
-    console.writeToBuffer(pointerLoc, ">");
+    console.writeToBuffer(TpointerLoc, ">");
     if (keyPressed[K_RETURN]){
-        if (pointerLoc.Y == 15){
+        if (TpointerLoc.Y == 15){
             g_eGameState = GAME;
         }
-        else if (pointerLoc.Y == 19){
+        else if (TpointerLoc.Y == 19){
             g_quitGame = true;
         }
-
     }
 }
 // pause screen
+void Ppointer(){
+    //Up button pressed
+    if (keyPressed[K_UP]){
+        if (PpointerLoc.Y == 15){
+            PpointerLoc.Y = 17;
+        }
+        else if (PpointerLoc.Y == 17){
+            PpointerLoc.Y = 19;
+        }
+        else{
+            PpointerLoc.Y = 15;
+        }
+    }
+    //Down button pressed
+    else if (keyPressed[K_DOWN]){
+        if (PpointerLoc.Y == 19){
+            PpointerLoc.Y = 17;
+        }
+        else if (PpointerLoc.Y == 17){
+            PpointerLoc.Y = 15;
+        }
+        else{
+            PpointerLoc.Y = 19;
+        }
+        
+    }
+    console.writeToBuffer(PpointerLoc, ">");
+    //Confirming option
+    if(keyPressed[K_RETURN]){
+        if (PpointerLoc.Y == 15){
+            g_eGameState = GAME;
+        }
+        else if (PpointerLoc.Y == 17){
+            tutorial();
+            g_eGameState = GAME;
+        }
+        else if (PpointerLoc.Y == 19){
+            tutorial();
+            g_eGameState = SPLASH;
+            elapsedTime = 0;
+        }
+    }
+}
 void pausemenu(){
 		clearScreen();
 		std::string pause;
@@ -1189,7 +1241,7 @@ void pausemenu(){
 			console.writeToBuffer(c, pause, 0x0E);
 			c.Y += 1;
 		}
-		// start button
+		//continue button
 		c.Y = 15;
 		c.X = 33;
 		console.writeToBuffer(c, "Continue");
@@ -1201,7 +1253,7 @@ void pausemenu(){
 		c.Y = 19;
 		c.X = 33;
 		console.writeToBuffer(c, "Exit to Main Menu");
-		
+        Ppointer();
 }
 
 

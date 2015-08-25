@@ -92,10 +92,12 @@ void setmonsterlocation();
 void textbox();
 void titlescreen();
 void bomb();
-void pointer();
+void Tpointer();
 void balanced();
 void archer();
 void warrior();
 void pause();
+void Ppointer();
+void pausemenu();
 
 #endif // _GAME_H
