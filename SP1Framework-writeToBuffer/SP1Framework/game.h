@@ -27,6 +27,7 @@ enum GAMESTATES{
 	SPLASH,
 	TITLE,
 	GAME,
+	PAUSE,
 	GAMEOVER
 };
 enum DEATHSTATE{
@@ -95,5 +96,6 @@ void pointer();
 void balanced();
 void archer();
 void warrior();
+void pause();
 
 #endif // _GAME_H

@@ -1174,6 +1174,34 @@ void pointer(){
 
     }
 }
-
+// pause screen
+void pausemenu(){
+		clearScreen();
+		std::string pause;
+		COORD c;
+		c.Y = 3;
+		c.X = 10;
+		std::ifstream myfile;
+		FILE * pFile;
+		myfile.open("screen/pause.txt");
+		for (int i = 0; myfile.good(); i++){
+			std::getline(myfile, pause);
+			console.writeToBuffer(c, pause, 0x0E);
+			c.Y += 1;
+		}
+		// start button
+		c.Y = 15;
+		c.X = 33;
+		console.writeToBuffer(c, "Continue");
+		// Restart button
+		c.Y = 17;
+		c.X = 33;
+		console.writeToBuffer(c, "Restart");
+		// Exit to main Menu button
+		c.Y = 19;
+		c.X = 33;
+		console.writeToBuffer(c, "Exit to Main Menu");
+		
+}
 
 
