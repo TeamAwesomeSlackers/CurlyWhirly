@@ -46,6 +46,10 @@ enum CLASSES {
     ARCHER,
     WARRIOR
 };
+enum BOSS{
+	NORMAL,
+	BATTLE
+};
 
 void splashwait();
 void splash();
@@ -100,4 +104,6 @@ void pause();
 void Ppointer();
 void pausemenu();
 void BossAttack();
+void Getdamagedbyboss();
+void BossFight();
 #endif // _GAME_H

@@ -11,15 +11,32 @@
 
 int monsterdelay = 0; 
 int monster1delay = 0;
-int BAdelay = 0;
+int Bhealth = 100;
+int BAdelay1 = 0; // for btm right
+int RandAtk1 = rand() % 4 + 1; // random atk 
+int BAdelay2 = 0; // for btm left
+int RandAtk2 = rand() % 4 + 1;
+int BAdelay3 = 0; //for top right
+int RandAtk3 = rand() % 4 + 1;
+int BAdelay4 = 0; // for top left
+int RandAtk4 = rand() % 4 + 1;
+int BAdelay5 = 0; // for top
+int RandAtk5 = rand() % 4 + 1;
+int BAdelay6 = 0; // for right
+int RandAtk6 = rand() % 4 + 1;
+int BAdelay7 = 0; //for down
+int RandAtk7 = rand() % 4 + 1;
+int BAdelay8 = 0; //for left
+int RandAtk8 = rand() % 4 + 1;
 FILE *map;
 GAMESTATES g_eGameState = SPLASH;
-CLASSES classes = ARCHER;
+CLASSES classes = BALANCED;
 DEATHSTATE die = SAD;
 MONSTERSTATE Monster = TUTORIAL;
+BOSS fight = NORMAL;
 // Console object
 
-Console console(75, 27, "SP1 Framework");
+Console console(75, 27, "Spooky Spooky Ghosts");
 
 
 double elapsedTime;
@@ -28,33 +45,33 @@ bool keyPressed[K_COUNT];
 
 // Initial print map
 char printMap[MAP_HEIGHT][MAP_WIDTH] = {
-    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 'Q', 0, 0, 0, 0, 'R', 0, 0, 0, 0, 'S', 0, 0, 0, 0, 'T', 0, 0, 0, 0, 'U', 0, 0, 0, 0, 'V', 0, 0, 0, 0, 'W', 0, 0, 0, 0, 'X', 0, 0, 0, 0, 'Y', 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 'P', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'A', 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
 
 };
 // Game specific variables here
@@ -66,6 +83,14 @@ COORD	g_cProjectile;
 COORD   TpointerLoc;
 COORD   PpointerLoc;
 COORD   Bprojectile1;
+COORD   Bprojectile2;
+COORD	Bprojectile3;
+COORD	Bprojectile4;
+COORD	Bprojectile5;
+COORD	Bprojectile6;
+COORD	Bprojectile7;
+COORD	Bprojectile8;
+
 // Initialize variables, allocate memory, load data from file, etc. 
 // This is called once before entering into your main loop
 void init()
@@ -88,6 +113,22 @@ void init()
     //Boss Projectile
     Bprojectile1.X = 26;
     Bprojectile1.Y = 13;
+	Bprojectile2.X = 26;
+	Bprojectile2.Y = 13;
+	Bprojectile3.X = 26;
+	Bprojectile3.Y = 13;
+	Bprojectile4.X = 26;
+	Bprojectile4.Y = 13;
+	Bprojectile5.X = 26;
+	Bprojectile5.Y = 13;
+	Bprojectile6.X = 26;
+	Bprojectile6.Y = 13;
+	Bprojectile7.X = 26;
+	Bprojectile7.Y = 13;
+	Bprojectile8.X = 26;
+	Bprojectile8.Y = 13;
+
+	
 
 	
 
@@ -239,7 +280,10 @@ void renderGame() {
 	renderCharacter();  // renders the character into the buffer
 	projectile();     //projectile
     bomb();
-    BossAttack();
+	if (fight == BATTLE){
+		BossAttack();
+
+	}
 }
 //Renders the map according to data
 void renderMap()
@@ -452,6 +496,7 @@ void moveCharacter()
         mapChange();
 		trapLava();
         refill();
+		Getdamagedbyboss();
 }
 void processUserInput()
 {
@@ -520,6 +565,9 @@ void projectile() {
             if (classes == WARRIOR) {
                 player.ammo += 1;
                 for (int i = 0; i < 1; ++i) {
+					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+						Bhealth -= 1;
+					}
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
                         projKill();
@@ -533,6 +581,9 @@ void projectile() {
             }
             else if (classes == ARCHER) {
                 for (int i = 0; i < 3; ++i) {
+					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+						Bhealth -= 1;
+					}
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
                         projKill();
@@ -546,6 +597,9 @@ void projectile() {
             }
             else {
                 for (int i = 0; i < 2; ++i) {
+					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+						Bhealth -= 1;
+					}
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
                         projKill();
@@ -563,6 +617,9 @@ void projectile() {
             g_cProjectile.X = charLocation.X - 1;
             g_cProjectile.Y = charLocation.Y;
             if (classes == WARRIOR) {
+				if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+					Bhealth -= 1;
+				}
                 player.ammo += 1;
                 for (int i = 0; i < 1; ++i) {
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
@@ -578,6 +635,9 @@ void projectile() {
             }
             else if (classes == ARCHER) {
                 for (int i = 0; i < 3; ++i) {
+					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+						Bhealth -= 1;
+					}
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)17, 0x0B);
                         projKill();
@@ -591,6 +651,9 @@ void projectile() {
             }
             else {
                 for (int i = 0; i < 2; ++i) {
+					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+						Bhealth -= 1;
+					}
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)17, 0x0B);
                         projKill();
@@ -610,6 +673,9 @@ void projectile() {
             if (classes == WARRIOR) {
                 player.ammo += 1;
                 for (int i = 0; i < 1; ++i) {
+					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+						Bhealth -= 1;
+					}
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
                         projKill();
@@ -623,6 +689,9 @@ void projectile() {
             }
             else if (classes == ARCHER) {
                 for (int i = 0; i < 3; ++i) {
+					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+						Bhealth -= 1;
+					}
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
                         projKill();
@@ -636,6 +705,9 @@ void projectile() {
             }
             else {
                 for (int i = 0; i < 2; ++i) {
+					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+						Bhealth -= 1;
+					}
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
                         projKill();
@@ -655,6 +727,9 @@ void projectile() {
             if (classes == WARRIOR) {
                 player.ammo += 1;
                 for (int i = 0; i < 1; ++i) {
+					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+						Bhealth -= 1;
+					}
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
                         projKill();
@@ -668,6 +743,9 @@ void projectile() {
             }
             else if (classes == ARCHER) {
                 for (int i = 0; i < 3; ++i) {
+					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+						Bhealth -= 1;
+					}
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
                         projKill();
@@ -681,6 +759,9 @@ void projectile() {
             }
             else {
                 for (int i = 0; i < 2; ++i) {
+					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+						Bhealth -= 1;
+					}
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
                         projKill();
@@ -844,10 +925,17 @@ void HUD() {
 		c.Y = console.getConsoleSize().Y - 9;
 		console.writeToBuffer(c, (char)235);
 	}
+	c.X = console.getConsoleSize().X - 21;
+	c.Y = console.getConsoleSize().Y - 5;
+	
+		console.writeToBuffer(c, Bhealth);
+	
+
+
 }
 //seeding
 void randomSeed(){
-    int seed = 1;
+    int seed = 6;
     srand(seed);
 }
 //move the 1st monster
@@ -1004,6 +1092,7 @@ void gameend(){
         player.bomb = 1;
 	}
 	player.health = 3;
+	fight = NORMAL;
 }
 //Refill Bomb
 void bombrefill(){
@@ -1026,6 +1115,10 @@ void mapChange(){
         mapLibrary();
         Monster = STARTGAME;
     }
+	else if (printMap[charLocation.Y][charLocation.X] == 'K'){
+		BossFight();
+		Monster = STARTGAME;
+	}
 }
 //Dying to traps
 void trapLava(){
@@ -1166,9 +1259,11 @@ void titlescreen(){
 //BOMB
 void bomb() {
     if (keyPressed[K_E]) {
-        monsterDeath();
-        monster1Death();
-        player.bomb -= 1;
+		if (player.bomb > 0){
+			monsterDeath();
+			monster1Death();
+			player.bomb -= 1;
+		}
     }
 }
 //TITLE POINTER
@@ -1262,8 +1357,9 @@ void pausemenu(){
         Ppointer();
 }
 void BossAttack(){
-   console.writeToBuffer(Bprojectile1, (char)30, 0x0B);
-   if (BAdelay == 1){
+	//btm right
+   console.writeToBuffer(Bprojectile1, (char)30, 0x0B); 
+   if (BAdelay1 == RandAtk1){
        if (printMap[Bprojectile1.Y][Bprojectile1.X] == 1){
            Bprojectile1.X = 26;
            Bprojectile1.Y = 13;
@@ -1272,8 +1368,142 @@ void BossAttack(){
            Bprojectile1.X += 2;
            Bprojectile1.Y += 1;
        }
-       BAdelay = 0;
-    }
-   BAdelay++;
+       BAdelay1 = 0;
+   }  
+  
+   //btm left
+   console.writeToBuffer(Bprojectile2, (char)30, 0x0B);
+   if (BAdelay2 == RandAtk2){
+	   if (printMap[Bprojectile2.Y][Bprojectile2.X] == 1){
+		   Bprojectile2.X = 26;
+		   Bprojectile2.Y = 13;
+	   }
+	   else{
+		   Bprojectile2.X -= 2;
+		   Bprojectile2.Y += 1;
+	   }
+	   BAdelay2 = 0;
+   }
+   //top right
+   console.writeToBuffer(Bprojectile3, (char)30, 0x0B);
+   if (BAdelay3 == RandAtk3){
+	   if (printMap[Bprojectile3.Y][Bprojectile3.X] == 1){
+		   Bprojectile3.X = 26;
+		   Bprojectile3.Y = 13;
+	   }
+	   else{
+		   Bprojectile3.X += 2;
+		   Bprojectile3.Y -= 1;
+	   }
+	   BAdelay3 = 0;
+   }
+   // top left
+   console.writeToBuffer(Bprojectile4, (char)30, 0x0B);
+   if (BAdelay4 == RandAtk4){
+	   if (printMap[Bprojectile4.Y][Bprojectile4.X] == 1){
+		   Bprojectile4.X = 26;
+		   Bprojectile4.Y = 13;
+	   }
+	   else{
+		   Bprojectile4.X -= 2;
+		   Bprojectile4.Y -= 1;
+	   }
+	   BAdelay4 = 0;
+   }
+   //top
+   console.writeToBuffer(Bprojectile5, (char)30, 0x0B);
+   if (BAdelay5 == RandAtk5){
+	   if (printMap[Bprojectile5.Y][Bprojectile5.X] == 1){
+		   Bprojectile5.X = 26;
+		   Bprojectile5.Y = 13;
+	   }
+	   else{
+		   Bprojectile5.Y -= 1;
+	   }
+	   BAdelay5 = 0;
+   }
+   // right
+   console.writeToBuffer(Bprojectile6, (char)30, 0x0B);
+   if (BAdelay6 == RandAtk6){
+	   if (printMap[Bprojectile6.Y][Bprojectile6.X] == 1){
+		   Bprojectile6.X = 26;
+		   Bprojectile6.Y = 13;
+	   }
+	   else{
+		   Bprojectile6.X += 1;
+		  
+	   }
+	   BAdelay6 = 0;
+   }
+   // down
+   console.writeToBuffer(Bprojectile7, (char)30, 0x0B);
+   if (BAdelay7 == RandAtk7){
+	   if (printMap[Bprojectile7.Y][Bprojectile7.X] == 1){
+		   Bprojectile7.X = 26;
+		   Bprojectile7.Y = 13;
+	   }
+	   else{
+		   Bprojectile7.Y += 1;
+	   }
+	   BAdelay7 = 0;
+   }
+   //left
+   console.writeToBuffer(Bprojectile8, (char)30, 0x0B);
+   if (BAdelay8 == RandAtk8){
+	   if (printMap[Bprojectile8.Y][Bprojectile8.X] == 1){
+		   Bprojectile8.X = 26;
+		   Bprojectile8.Y = 13;
+	   }
+	   else{
+		   Bprojectile8.X -= 1;
+	   }
+	   BAdelay8 = 0;
+   }
+   BAdelay1++;
+   BAdelay2++;
+   BAdelay3++;
+   BAdelay4++;
+   BAdelay5++;
+   BAdelay6++;
+   BAdelay7++;
+   BAdelay8++;
 }
+void Getdamagedbyboss(){
+	if (charLocation.X == Bprojectile1.X && charLocation.Y == Bprojectile1.Y){
+		player.health -= 1;
+	}
+	else if (charLocation.X == Bprojectile2.X && charLocation.Y == Bprojectile2.Y){
+		player.health -= 1;
+	}
+	else if (charLocation.X == Bprojectile3.X && charLocation.Y == Bprojectile3.Y){
+		player.health -= 1;
+	}
+	else if (charLocation.X == Bprojectile4.X && charLocation.Y == Bprojectile4.Y){
+		player.health -= 1;
+	}
+	else if (charLocation.X == Bprojectile5.X && charLocation.Y == Bprojectile5.Y){
+		player.health -= 1;
+	}
+	else if (charLocation.X == Bprojectile6.X && charLocation.Y == Bprojectile6.Y){
+		player.health -= 1;
+	}
+	else if (charLocation.X == Bprojectile7.X && charLocation.Y == Bprojectile7.Y){
+		player.health -= 1;
+	}
+	else if (charLocation.X == Bprojectile8.X && charLocation.Y == Bprojectile8.Y){
+		player.health -= 1;
+	}
+	
+}
+void BossFight(){
+	for (int i = 0; i < MAP_HEIGHT; i++){
+		for (int j = 0; j < MAP_WIDTH; j++){
+			printMap[i][j] = BossMap[i][j];
+		}
+	}
+	setmonsterlocation();
+	fight = BATTLE;
+}
+
+
 
