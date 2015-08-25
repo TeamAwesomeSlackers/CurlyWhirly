@@ -110,5 +110,7 @@ void Getdamagedbyboss();
 void BossFight();
 void classSelect();
 void pointerCS();
+void invincibility();
+void monsterDamage();
 
 #endif // _GAME_H

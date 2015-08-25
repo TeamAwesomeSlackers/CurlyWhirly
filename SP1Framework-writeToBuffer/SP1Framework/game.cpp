@@ -9,6 +9,8 @@
 #include <fstream>
 #include <sstream>
 
+int iToken = 0;
+int Phealth = 0;
 int monsterdelay = 0; 
 int monster1delay = 0;
 int Bhealth = 100;
@@ -34,6 +36,7 @@ CLASSES classes;
 DEATHSTATE die = SAD;
 MONSTERSTATE Monster = TUTORIAL;
 BOSS fight = NORMAL;
+
 // Console object
 
 Console console(75, 27, "Spooky Spooky Ghosts");
@@ -42,7 +45,7 @@ Console console(75, 27, "Spooky Spooky Ghosts");
 double elapsedTime;
 double deltaTime;
 bool keyPressed[K_COUNT];
-
+double t_invincibility = elapsedTime + 2;
 // Initial print map
 char printMap[MAP_HEIGHT][MAP_WIDTH] = {
 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -58,7 +61,7 @@ char printMap[MAP_HEIGHT][MAP_WIDTH] = {
 	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
 	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
 	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-	{ 1, 1, 0, 'P', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'K', 1, 1 },
+	{ 1, 1, 0, 'P', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'A', 1, 1 },
 	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
 	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
 	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
@@ -231,9 +234,10 @@ void splashwait(){
 }
 void gameplay(){
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
-    moveCharacter();    // moves the character, collision detection, physics, etc
-	moveMonster();		//moves the monsters
+    moveCharacter();// moves the character, collision detection, physics, etc
+	moveMonster();//moves the monsters
 	moveMonster1();
+    monsterDamage(); // check monster dmg
     // sound can be played here too.
     // When the player dies and the gamestate switches to the game over screen
 	if (player.health <= 0){
@@ -545,6 +549,11 @@ void collision(){
     if (charLocation.X == g_cChaserLoc.X && charLocation.Y == g_cChaserLoc.Y){
 		player.health -= 1;
 		monsterDeath();
+        if (iToken < 1){
+            t_invincibility = elapsedTime + 2;
+            Phealth = player.health;
+            iToken += 1;
+        }
 	}
 }
 // PROJECTILE
@@ -933,10 +942,10 @@ void randomSeed(){
 //move the 1st monster
 void moveMonster(){
     // CHASER MOVEMENT
-    
     if (Monster == STARTGAME){
         monsterdelay++;
-        if (monsterdelay == 10){
+        invincibility();
+        if (monsterdelay == 5){
             if (charLocation.Y < g_cChaserLoc.Y){
                 g_cChaserLoc.Y -= 1;
                 Beep(1440, 30);
@@ -955,7 +964,7 @@ void moveMonster(){
             } // down
             monsterdelay = 0;
         }
-        collision();
+        invincibility();
     }
 }
 //move the 2nd monster
@@ -963,7 +972,8 @@ void moveMonster1(){
 	// CHASER MOVEMENT
     if (Monster == STARTGAME){
         monster1delay++;
-        if (monster1delay == 10){
+        invincibility();
+        if (monster1delay == 5){
             if (charLocation.Y < g_cChaser1Loc.Y){
                 g_cChaser1Loc.Y -= 1;
                 Beep(1440, 30);
@@ -982,8 +992,8 @@ void moveMonster1(){
             } // down
             monster1delay = 0;
         }
-        collision1();
-    };
+        invincibility();
+    }
 }
 // check if 1st monster gets shot
 void projKill(){
@@ -1027,10 +1037,15 @@ void monster1Death(){
 }
 //2nd monster collision check
 void collision1(){
-	if (charLocation.X == g_cChaser1Loc.X && charLocation.Y  == g_cChaser1Loc.Y){
+     if (charLocation.X == g_cChaser1Loc.X && charLocation.Y  == g_cChaser1Loc.Y){
 		monster1Death();
 		player.health -= 1;
-	} // Top left
+        if (iToken < 1){
+            t_invincibility = elapsedTime + 2;
+            Phealth = player.health;
+            iToken += 1;
+        }
+	}
 }
 //Refill Ammo
 void refill(){
@@ -1644,8 +1659,31 @@ void pointerCS(){
         console.writeToBuffer(border2CLoc, "||");
         std::cout << std::endl;
     }
-
 }
 
-
-
+void invincibility(){
+     if (elapsedTime < t_invincibility){
+         if (Phealth > player.health) {
+              player.health = Phealth;
+         }
+     }
+     else{ 
+         iToken = 0;
+     }
+}
+void monsterDamage(){
+    if(charLocation.X == g_cChaser1Loc.X && charLocation.Y == g_cChaser1Loc.Y && charLocation.X == g_cChaserLoc.X && charLocation.Y == g_cChaserLoc.Y){
+        monsterDeath();
+        monster1Death();
+		player.health -= 2;
+        if (iToken < 1){
+            t_invincibility = elapsedTime + 2;
+            Phealth = player.health;
+            iToken += 1;
+        }
+    }
+    else{
+        collision();
+        collision1();
+    }
+}
