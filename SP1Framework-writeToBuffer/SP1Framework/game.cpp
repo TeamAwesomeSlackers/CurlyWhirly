@@ -30,7 +30,7 @@ int BAdelay8 = 0; //for left
 int RandAtk8 = rand() % 4 + 1;
 FILE *map;
 GAMESTATES g_eGameState = SPLASH;
-CLASSES classes = BALANCED;
+CLASSES classes;
 DEATHSTATE die = SAD;
 MONSTERSTATE Monster = TUTORIAL;
 BOSS fight = NORMAL;
@@ -58,7 +58,7 @@ char printMap[MAP_HEIGHT][MAP_WIDTH] = {
 	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
 	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
 	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-	{ 1, 1, 0, 'P', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'A', 1, 1 },
+	{ 1, 1, 0, 'P', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'K', 1, 1 },
 	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
 	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
 	{ 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
@@ -90,6 +90,10 @@ COORD	Bprojectile5;
 COORD	Bprojectile6;
 COORD	Bprojectile7;
 COORD	Bprojectile8;
+COORD   pointerCSLoc;
+COORD   pointerCLoc;
+COORD   border1CLoc;
+COORD   border2CLoc;
 
 // Initialize variables, allocate memory, load data from file, etc. 
 // This is called once before entering into your main loop
@@ -110,28 +114,15 @@ void init()
     TpointerLoc.Y = 15;
     PpointerLoc.X = 32;
     PpointerLoc.Y = 15;
-    //Boss Projectile
-    Bprojectile1.X = 26;
-    Bprojectile1.Y = 13;
-	Bprojectile2.X = 26;
-	Bprojectile2.Y = 13;
-	Bprojectile3.X = 26;
-	Bprojectile3.Y = 13;
-	Bprojectile4.X = 26;
-	Bprojectile4.Y = 13;
-	Bprojectile5.X = 26;
-	Bprojectile5.Y = 13;
-	Bprojectile6.X = 26;
-	Bprojectile6.Y = 13;
-	Bprojectile7.X = 26;
-	Bprojectile7.Y = 13;
-	Bprojectile8.X = 26;
-	Bprojectile8.Y = 13;
-
+    pointerCSLoc.X = 32;
+    pointerCSLoc.Y = 22;
+    pointerCLoc.X = 7;
+    pointerCLoc.Y = 2;
+    border1CLoc.X = 6;
+    border1CLoc.Y = 2;
+    border2CLoc.X = 26;
+    border2CLoc.Y = 2;
 	
-
-	
-
     // sets the width, height and the font name to use in the console
     console.setConsoleFont(0, 16, L"Consolas");
 }
@@ -180,11 +171,9 @@ void status() {
     switch (classes) {
     case BALANCED: balanced();
         break;
-    case ARCHER: archer();
-        break;
     case WARRIOR: warrior();
         break;
-    default:
+    case ARCHER: archer();
         break;
     }
 }
@@ -195,18 +184,17 @@ void balanced() {
     player.bomb = 1;
 }
 
-void archer() {
-    player.health = 2;
-    player.ammo = 5;
-    player.bomb = 1;
-}
-
 void warrior() {
     player.health = 4;
     player.ammo = 1;
     player.bomb = 1;
 }
 
+void archer() {
+    player.health = 2;
+    player.ammo = 5;
+    player.bomb = 1;
+}
 
 /*
 	This is the update function
@@ -224,6 +212,8 @@ void update(double dt)
     elapsedTime += dt;
     deltaTime = dt;
 	switch (g_eGameState){
+        case CLASSSELECT: classSelect();
+            break;
 		case GAME: gameplay();
 			break;
         case PAUSE: pausemenu();
@@ -267,6 +257,8 @@ void render()
 		break;
     case PAUSE: pausemenu();
         break;
+    case CLASSSELECT: classSelect();
+        break;
 	case GAME: renderGame();
 		break;
 	case GAMEOVER: gameend();
@@ -278,8 +270,8 @@ void render()
 void renderGame() {
 	renderMap(); // renders the character into the buffer
 	renderCharacter();  // renders the character into the buffer
-	projectile();     //projectile
-    bomb();
+	projectile();     // projectile
+    bomb(); // bomb
 	if (fight == BATTLE){
 		BossAttack();
 
@@ -1091,9 +1083,34 @@ void gameend(){
         player.ammo = 5;
         player.bomb = 1;
 	}
-	player.health = 3;
 	fight = NORMAL;
+    if (classes == BALANCED) {
+        player.health = 3;
+    }
+    else if (classes == WARRIOR) {
+        player.health = 4;
+    }
+    else if (classes == ARCHER) {
+        player.health = 2;
+    }//Boss Projectile
+    Bprojectile1.X = 0;
+    Bprojectile1.Y = 0;
+    Bprojectile2.X = 0;
+    Bprojectile2.Y = 0;
+    Bprojectile3.X = 0;
+    Bprojectile3.Y = 0;
+    Bprojectile4.X = 0;
+    Bprojectile4.Y = 0;
+    Bprojectile5.X = 0;
+    Bprojectile5.Y = 0;
+    Bprojectile6.X = 0;
+    Bprojectile6.Y = 0;
+    Bprojectile7.X = 0;
+    Bprojectile7.Y = 0;
+    Bprojectile8.X = 0;
+    Bprojectile8.Y = 0;
 }
+
 //Refill Bomb
 void bombrefill(){
     if (printMap[charLocation.Y][charLocation.X] == 6){
@@ -1248,14 +1265,15 @@ void titlescreen(){
 	}
 	// start button
 	c.Y = 15;
-	c.X = 33;
+	c.X = 34;
 	console.writeToBuffer(c, "Start");
 	// exit button
 	c.Y = 19;
-	c.X = 33;
+	c.X = 34;
 	console.writeToBuffer(c, "Exit");
     Tpointer();
 }
+
 //BOMB
 void bomb() {
     if (keyPressed[K_E]) {
@@ -1273,11 +1291,11 @@ void Tpointer(){
     }
     else if (keyPressed[K_DOWN]){
         TpointerLoc.Y = 19;
-    } 
+    }
     console.writeToBuffer(TpointerLoc, ">");
     if (keyPressed[K_RETURN]){
         if (TpointerLoc.Y == 15){
-            g_eGameState = GAME;
+            g_eGameState = CLASSSELECT;
         }
         else if (TpointerLoc.Y == 19){
             g_quitGame = true;
@@ -1319,12 +1337,12 @@ void Ppointer(){
         }
         else if (PpointerLoc.Y == 17){
             tutorial();
-            g_eGameState = GAME;
+            g_eGameState = GAMEOVER;
         }
         else if (PpointerLoc.Y == 19){
             tutorial();
             g_eGameState = SPLASH;
-            elapsedTime = 0;
+            elapsedTime = 2;
         }
     }
 }
@@ -1503,6 +1521,130 @@ void BossFight(){
 	}
 	setmonsterlocation();
 	fight = BATTLE;
+    //Boss Projectile
+    Bprojectile1.X = 26;
+    Bprojectile1.Y = 13;
+    Bprojectile2.X = 26;
+    Bprojectile2.Y = 13;
+    Bprojectile3.X = 26;
+    Bprojectile3.Y = 13;
+    Bprojectile4.X = 26;
+    Bprojectile4.Y = 13;
+    Bprojectile5.X = 26;
+    Bprojectile5.Y = 13;
+    Bprojectile6.X = 26;
+    Bprojectile6.Y = 13;
+    Bprojectile7.X = 26;
+    Bprojectile7.Y = 13;
+    Bprojectile8.X = 26;
+    Bprojectile8.Y = 13;
+}
+
+void classSelect() {
+    clearScreen();
+    std::string classSel;
+    COORD c;
+    c.Y = 3;
+    c.X = 10;
+    std::ifstream myfile;
+
+    myfile.open("screen/classSel.txt");
+    for (int i = 0; myfile.good(); i++){
+        std::getline(myfile, classSel);
+        console.writeToBuffer(c, classSel, 0x0E);
+        c.Y += 1;
+    }
+    // start button
+    c.Y = 22;
+    c.X = 34;
+    console.writeToBuffer(c, "Start");
+    // exit button
+    c.Y = 23;
+    c.X = 34;
+    console.writeToBuffer(c, "Back");
+    pointerCS();
+    status();
+}
+
+void pointerCS(){
+    if (keyPressed[K_UP]){
+        pointerCSLoc.Y = 22;
+    }
+    else if (keyPressed[K_DOWN]){
+        pointerCSLoc.Y = 23;
+    }
+
+    console.writeToBuffer(pointerCSLoc, ">");
+    if (keyPressed[K_RETURN]){
+        if (pointerCSLoc.Y == 22){
+            if (pointerCLoc.X == 7){
+                classes = BALANCED;
+                g_eGameState = GAME;
+            }
+            else if (pointerCLoc.X == 27){
+                classes = WARRIOR;
+                g_eGameState = GAME;
+            }
+            else if (pointerCLoc.X == 47){
+                classes = ARCHER;
+                g_eGameState = GAME;
+            }
+        }
+        else if (pointerCSLoc.Y == 23){
+            g_eGameState = SPLASH;
+            elapsedTime = 2;
+        }
+    }
+
+    if (keyPressed[K_LEFT]) {
+        if (pointerCLoc.X > 7) {
+            pointerCLoc.X -= 10;
+        }
+    }
+    else if (keyPressed[K_RIGHT]) {
+        if (pointerCLoc.X <= 37) {
+            pointerCLoc.X += 10;
+        }
+    }
+
+    console.writeToBuffer(pointerCLoc, "||||||||||||||||||||");
+
+
+    if (keyPressed[K_LEFT]) {
+        if (border1CLoc.X > 10) {
+            border1CLoc.X -= 10;
+        }
+    }
+    else if (keyPressed[K_RIGHT]) {
+        if (border1CLoc.X <= 40) {
+            border1CLoc.X += 10;
+        }
+    }
+
+    console.writeToBuffer(border1CLoc, "||||||||||||||||||||");
+    for (int i = 2; i < 22; i++) {
+        border1CLoc.Y = i;
+        console.writeToBuffer(border1CLoc, "||");
+        std::cout << std::endl;
+    }
+
+    if (keyPressed[K_LEFT]) {
+        if (border2CLoc.X > 26) {
+            border2CLoc.X -= 10;
+        }
+    }
+    else if (keyPressed[K_RIGHT]) {
+        if (border2CLoc.X <= 56) {
+            border2CLoc.X += 10;
+        }
+    }
+
+    for (int i = 2; i < 22; i++) {
+        border2CLoc.Y = i;
+        console.writeToBuffer(border2CLoc, "||");
+        std::cout << std::endl;
+    }
+
 }
 
 
