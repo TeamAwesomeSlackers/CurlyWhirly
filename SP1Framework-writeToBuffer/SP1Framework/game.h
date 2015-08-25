@@ -99,5 +99,6 @@ void warrior();
 void pause();
 void Ppointer();
 void pausemenu();
+void bossattack();
 
 #endif // _GAME_H
