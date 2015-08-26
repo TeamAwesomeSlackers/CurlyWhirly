@@ -1492,7 +1492,7 @@ void bomb() {
 			monster1Death();
 			player.bomb -= 1;
             if (fight == BATTLE) {
-                Bhealth -= 10;
+                Bhealth -= 5;
             }
 		}
     }
@@ -2017,7 +2017,7 @@ void Ultimate() {
                 uCooldown = elapsedTime + 60;
                 if (iToken == 0){
                     iToken += 1;
-                    t_invincibility = elapsedTime + 1;
+                    t_invincibility = elapsedTime + 1.5;
                 }
             }
         }
