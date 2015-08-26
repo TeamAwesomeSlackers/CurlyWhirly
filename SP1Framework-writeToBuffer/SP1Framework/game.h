@@ -112,5 +112,6 @@ void classSelect();
 void pointerCS();
 void invincibility();
 void monsterDamage();
+void CSdesc();
 
 #endif // _GAME_H

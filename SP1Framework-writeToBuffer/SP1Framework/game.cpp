@@ -101,6 +101,7 @@ COORD   pointerCSLoc;
 COORD   pointerCLoc;
 COORD   border1CLoc;
 COORD   border2CLoc;
+COORD   CSdescLoc;
 
 // Initialize variables, allocate memory, load data from file, etc. 
 // This is called once before entering into your main loop
@@ -121,14 +122,16 @@ void init()
     TpointerLoc.Y = 15;
     PpointerLoc.X = 32;
     PpointerLoc.Y = 15;
-    pointerCSLoc.X = 32;
-    pointerCSLoc.Y = 22;
+    pointerCSLoc.X = 65;
+    pointerCSLoc.Y = 24;
     pointerCLoc.X = 7;
     pointerCLoc.Y = 2;
     border1CLoc.X = 6;
     border1CLoc.Y = 2;
     border2CLoc.X = 26;
     border2CLoc.Y = 2;
+    CSdescLoc.X = 0;
+    CSdescLoc.Y = 0;
 	
     // sets the width, height and the font name to use in the console
     console.setConsoleFont(0, 16, L"Consolas");
@@ -550,6 +553,7 @@ void renderToScreen()
     // Writes the buffer to the console, hence you will see what you have written
     console.flushBufferToConsole();
 }
+
 // PROJECTILE
 void projectile() {
     if (player.ammo > 0){
@@ -558,7 +562,7 @@ void projectile() {
             g_cProjectile.X = charLocation.X;
             g_cProjectile.Y = charLocation.Y - 1;
             if (classes == WARRIOR) {
-                player.ammo += 1;
+                player.ammo = 1;
                 for (int i = 0; i < 1; ++i) {
 					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
 						Bhealth -= 1;
@@ -1039,6 +1043,7 @@ void monster1Death(){
 		g_cChaser1Loc.Y = 2;
 	}
 }
+
 //collision check/damage calculation
 void collision(){
     if (charLocation.X == g_cChaserLoc.X && charLocation.Y == g_cChaserLoc.Y){
@@ -1067,6 +1072,9 @@ void refill(){
         printMap[charLocation.Y][charLocation.X] = 0;
         if (player.ammo + 10 >= 20){
             player.ammo = 20;
+        }
+        else if (classes == WARRIOR) {
+            player.ammo = 1;
         }
         else{
             player.ammo += 10;
@@ -1165,6 +1173,7 @@ void mapChange(){
 		Monster = STARTGAME;
 	}
 }
+
 //Renders Library
 void mapLibrary(){
     for (int i = 0; i < MAP_HEIGHT; i++){
@@ -1573,28 +1582,29 @@ void classSelect() {
         c.Y += 1;
     }
     // start button
-    c.Y = 22;
-    c.X = 34;
+    c.Y = 24;
+    c.X = 66;
     console.writeToBuffer(c, "Start");
     // exit button
-    c.Y = 23;
-    c.X = 34;
+    c.Y = 25;
+    c.X = 66;
     console.writeToBuffer(c, "Back");
     pointerCS();
+    CSdesc();
     status();
 }
 
 void pointerCS(){
     if (keyPressed[K_UP]){
-        pointerCSLoc.Y = 22;
+        pointerCSLoc.Y = 24;
     }
     else if (keyPressed[K_DOWN]){
-        pointerCSLoc.Y = 23;
+        pointerCSLoc.Y = 25;
     }
 
     console.writeToBuffer(pointerCSLoc, ">");
     if (keyPressed[K_RETURN]){
-        if (pointerCSLoc.Y == 22){
+        if (pointerCSLoc.Y == 24){
             if (pointerCLoc.X == 7){
                 classes = BALANCED;
                 g_eGameState = GAME;
@@ -1608,7 +1618,7 @@ void pointerCS(){
                 g_eGameState = GAME;
             }
         }
-        else if (pointerCSLoc.Y == 23){
+        else if (pointerCSLoc.Y == 25){
             g_eGameState = SPLASH;
             elapsedTime = 2;
         }
@@ -1664,10 +1674,55 @@ void pointerCS(){
     }
 }
 
+void CSdesc() {
+    if (pointerCLoc.X == 7){
+        CSdescLoc.X = 6;
+        CSdescLoc.Y = 23;
+        console.writeToBuffer(CSdescLoc, "Health: 3");
+        CSdescLoc.X = 6;
+        CSdescLoc.Y = 24;
+        console.writeToBuffer(CSdescLoc, "Ammo: 5");
+        CSdescLoc.X = 6;
+        CSdescLoc.Y = 25;
+        console.writeToBuffer(CSdescLoc, "Bomb: 1");
+        CSdescLoc.X = 22;
+        CSdescLoc.Y = 23;
+        console.writeToBuffer(CSdescLoc, "Projectile Range: 2");
+    }
+    else if (pointerCLoc.X == 27){
+        CSdescLoc.X = 6;
+        CSdescLoc.Y = 23;
+        console.writeToBuffer(CSdescLoc, "Health: 4");
+        CSdescLoc.X = 6;
+        CSdescLoc.Y = 24;
+        console.writeToBuffer(CSdescLoc, "Ammo: Infinite");
+        CSdescLoc.X = 6;
+        CSdescLoc.Y = 25;
+        console.writeToBuffer(CSdescLoc, "Bomb: 1");
+        CSdescLoc.X = 22;
+        CSdescLoc.Y = 23;
+        console.writeToBuffer(CSdescLoc, "Projectile Range: 1");
+    }
+    else if (pointerCLoc.X == 47){
+        CSdescLoc.X = 6;
+        CSdescLoc.Y = 23;
+        console.writeToBuffer(CSdescLoc, "Health: 2");
+        CSdescLoc.X = 6;
+        CSdescLoc.Y = 24;
+        console.writeToBuffer(CSdescLoc, "Ammo: 5");
+        CSdescLoc.X = 6;
+        CSdescLoc.Y = 25;
+        console.writeToBuffer(CSdescLoc, "Bomb: 1");
+        CSdescLoc.X = 22;
+        CSdescLoc.Y = 23;
+        console.writeToBuffer(CSdescLoc, "Projectile Range: 3");
+    }
+}
+
 void invincibility(){
-     if (elapsedTime > t_invincibility){
-         iToken = 0;
-     }
+    if (elapsedTime > t_invincibility){
+        iToken = 0;
+    }
 }
 // checking monster dmg
 void monsterDamage(){
