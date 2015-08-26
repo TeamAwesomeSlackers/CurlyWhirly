@@ -11,6 +11,7 @@
 
 int iToken = 0;
 int Phealth = 0;
+int cobwebToken = 0;
 int monsterdelay = 0; 
 int monster1delay = 0;
 int Bhealth = 100;
@@ -30,6 +31,12 @@ int BAdelay7 = 0; //for down
 int RandAtk7 = rand() % 4 + 1;
 int BAdelay8 = 0; //for left
 int RandAtk8 = rand() % 4 + 1;
+double elapsedTime;
+double deltaTime;
+bool keyPressed[K_COUNT];
+double t_invincibility = elapsedTime;
+double cobweb = elapsedTime;
+double cobwebInvul = elapsedTime;
 FILE *map;
 GAMESTATES g_eGameState = SPLASH;
 CLASSES classes;
@@ -42,10 +49,7 @@ BOSS fight = NORMAL;
 Console console(75, 27, "Spooky Spooky Ghosts");
 
 
-double elapsedTime;
-double deltaTime;
-bool keyPressed[K_COUNT];
-double t_invincibility = elapsedTime;
+
 // Initial print map
 char printMap[MAP_HEIGHT][MAP_WIDTH] = {
 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -233,11 +237,15 @@ void splashwait(){
 	}
 }
 void gameplay(){
-    processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
-    moveCharacter();// moves the character, collision detection, physics, etc
+    processUserInput();// checks if you should change states or do something else with the game, e.g. pause, exit
+    // Cobwebbed
+    if (cobwebToken == 0){
+        moveCharacter();// moves the character, collision detection, physics, etc
+    }
 	moveMonster();//moves the monsters
 	moveMonster1();
     monsterDamage(); // check monster dmg
+    trapLava();// check traps
     // sound can be played here too.
     // When the player dies and the gamestate switches to the game over screen
 	if (player.health <= 0){
@@ -490,7 +498,6 @@ void moveCharacter()
             }
         }
         mapChange();
-		trapLava();
         refill();
 		Getdamagedbyboss();
 }
@@ -1039,7 +1046,7 @@ void collision(){
         if (iToken == 0){
             player.health -= 1;
             iToken += 1;
-            t_invincibility = elapsedTime + 2;
+            t_invincibility = elapsedTime + 0.5;
         }
     }
 }
@@ -1050,7 +1057,7 @@ void collision1(){
         if (iToken == 0){
             player.health -= 1;
             iToken += 1;
-            t_invincibility = elapsedTime + 2;
+            t_invincibility = elapsedTime + 0.5;
         }
 	}
 }
@@ -1157,24 +1164,6 @@ void mapChange(){
 		BossFight();
 		Monster = STARTGAME;
 	}
-}
-//Dying to traps
-void trapLava(){
-	if (printMap[charLocation.Y][charLocation.X] == 2){
-        if (iToken == 0){
-            player.health -= 3;
-            iToken += 1;
-            t_invincibility = elapsedTime + 0.5;
-        }
-	}
-    if (printMap[charLocation.Y][charLocation.X] == 3){
-        if (iToken == 0){
-            player.health -= 3;
-            iToken += 1;
-            t_invincibility = elapsedTime + 0.5;
-        }
-
-    }
 }
 //Renders Library
 void mapLibrary(){
@@ -1688,7 +1677,7 @@ void monsterDamage(){
         if (iToken == 0){
             player.health -= 2;
             iToken += 1;
-            t_invincibility = elapsedTime + 2;
+            t_invincibility = elapsedTime + 0.5;
         }
     }
     else{
@@ -1696,4 +1685,28 @@ void monsterDamage(){
         collision1();
     }
     invincibility();
+}
+//Dying to traps
+void trapLava(){
+    //LAVA
+    if (printMap[charLocation.Y][charLocation.X] == 2){
+        if (iToken == 0){
+            player.health -= 3;
+            iToken += 1;
+            t_invincibility = elapsedTime + 0.5;
+        }
+    }
+    //COBWEBBED
+    if (printMap[charLocation.Y][charLocation.X] == 3){
+        if (elapsedTime > cobwebInvul){
+            if (cobwebToken == 0){
+                cobwebToken += 1;
+                cobweb = elapsedTime + 1.5;
+                cobwebInvul = elapsedTime + 3.5;
+            }
+        }
+        if(elapsedTime < cobwebInvul && elapsedTime > cobweb){
+            cobwebToken = 0;
+        }
+    } 
 }
