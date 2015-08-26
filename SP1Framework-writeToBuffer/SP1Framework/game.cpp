@@ -247,7 +247,9 @@ void gameplay(){
     }
 	moveMonster();//moves the monsters
 	moveMonster1();
-    monsterDamage(); // check monster dmg
+    if (Monster == STARTGAME){
+        monsterDamage();
+    }// check monster dmg
     trapLava();// check traps
     // sound can be played here too.
     // When the player dies and the gamestate switches to the game over screen
@@ -1757,11 +1759,11 @@ void trapLava(){
             if (cobwebToken == 0){
                 cobwebToken += 1;
                 cobweb = elapsedTime + 1.5;
-                cobwebInvul = elapsedTime + 3.5;
+                cobwebInvul = elapsedTime +2.5;
             }
         }
-        if(elapsedTime < cobwebInvul && elapsedTime > cobweb){
-            cobwebToken = 0;
-        }
-    } 
+    }
+    if (elapsedTime < cobwebInvul && elapsedTime > cobweb){
+        cobwebToken = 0;
+    }
 }
