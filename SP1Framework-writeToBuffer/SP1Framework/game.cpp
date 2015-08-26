@@ -9,12 +9,13 @@
 #include <fstream>
 #include <sstream>
 
+bool keyPressed[K_COUNT];
 int iToken = 0;
 int Phealth = 0;
 int cobwebToken = 0;
 int monsterdelay = 0; 
 int monster1delay = 0;
-int Bhealth = 100;
+int Bhealth = 50;
 int BAdelay1 = 0; // for btm right
 int RandAtk1 = rand() % 4 + 1; // random atk 
 int BAdelay2 = 0; // for btm left
@@ -33,7 +34,7 @@ int BAdelay8 = 0; //for left
 int RandAtk8 = rand() % 4 + 1;
 double elapsedTime;
 double deltaTime;
-bool keyPressed[K_COUNT];
+double bossFightTime = elapsedTime;
 double t_invincibility = elapsedTime;
 double cobweb = elapsedTime;
 double cobwebInvul = elapsedTime;
@@ -52,34 +53,33 @@ Console console(75, 27, "Spooky Spooky Ghosts");
 
 // Initial print map
 char printMap[MAP_HEIGHT][MAP_WIDTH] = {
-	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'Q', 'P', 'P', 'P', 'P', 'R', 'P', 'P', 'P', 'P', 'S', 'P', 'P', 'P', 'P', 'T', 'P', 'P', 'P', 'P', 'U', 'P', 'P', 'P', 'P', 'V', 'P', 'P', 'P', 'P', 'W', 'P', 'P', 'P', 'P', 'X', 'P', 'P', 'P', 'P', 'Y', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'A', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'Q', 'P', 'P', 'P', 'P', 'R', 'P', 'P', 'P', 'P', 'S', 'P', 'P', 'P', 'P', 'T', 'P', 'P', 'P', 'P', 'U', 'P', 'P', 'P', 'P', 'V', 'P', 'P', 'P', 'P', 'W', 'P', 'P', 'P', 'P', 'X', 'P', 'P', 'P', 'P', 'Y', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'K', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
 };
 // Game specific variables here
 COORD	charLocation;
@@ -291,7 +291,14 @@ void renderGame() {
     bomb(); // bomb
 	if (fight == BATTLE){
 		BossAttack();
-
+        if (elapsedTime > bossFightTime){
+            bossFightTime = elapsedTime + 15;
+            for (int i = 0; i < MAP_HEIGHT; i++){
+                for (int j = 0; j < MAP_WIDTH; j++){
+                    printMap[i][j] = BossMap[i][j];
+                }
+            }
+        }
 	}
 }
 //Renders the map according to data
@@ -352,6 +359,7 @@ void renderMap()
             else if (printMap[i][j] == 9){
                 console.writeToBuffer(c, (char)241);
             }
+            // From A - K maps
             else if (printMap[i][j] == 'A'){
                 console.writeToBuffer(c, (char)456);
             }
@@ -361,6 +369,16 @@ void renderMap()
             else if (printMap[i][j] == 'C'){
                 console.writeToBuffer(c, (char)456);
             }
+            else if (printMap[i][j] == 'D'){
+                console.writeToBuffer(c, (char)456);
+            }
+            else if (printMap[i][j] == 'E'){
+                console.writeToBuffer(c, (char)456);
+            }
+            else if (printMap[i][j] == 'K'){
+                console.writeToBuffer(c, (char)456);
+            }
+            // From Z - P tutorial
 			else if (printMap[i][j] == 'Z') {
 
 			}
@@ -566,9 +584,11 @@ void projectile() {
             if (classes == WARRIOR) {
                 player.ammo = 1;
                 for (int i = 0; i < 1; ++i) {
-					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-						Bhealth -= 1;
-					}
+                    if (fight == BATTLE){
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                    }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
                         projKill();
@@ -582,9 +602,11 @@ void projectile() {
             }
             else if (classes == ARCHER) {
                 for (int i = 0; i < 3; ++i) {
-					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-						Bhealth -= 1;
-					}
+                    if (fight == BATTLE){
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                    }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
                         projKill();
@@ -598,9 +620,11 @@ void projectile() {
             }
             else {
                 for (int i = 0; i < 2; ++i) {
-					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-						Bhealth -= 1;
-					}
+                    if (fight == BATTLE){
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                    }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
                         projKill();
@@ -618,9 +642,11 @@ void projectile() {
             g_cProjectile.X = charLocation.X - 1;
             g_cProjectile.Y = charLocation.Y;
             if (classes == WARRIOR) {
-				if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-					Bhealth -= 1;
-				}
+                if (fight == BATTLE){
+                    if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                        Bhealth -= 1;
+                    }
+                }
                 player.ammo += 1;
                 for (int i = 0; i < 1; ++i) {
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
@@ -636,9 +662,11 @@ void projectile() {
             }
             else if (classes == ARCHER) {
                 for (int i = 0; i < 3; ++i) {
-					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-						Bhealth -= 1;
-					}
+                    if (fight == BATTLE){
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                    }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)17, 0x0B);
                         projKill();
@@ -652,9 +680,11 @@ void projectile() {
             }
             else {
                 for (int i = 0; i < 2; ++i) {
-					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-						Bhealth -= 1;
-					}
+                    if (fight == BATTLE){
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                    }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)17, 0x0B);
                         projKill();
@@ -674,9 +704,11 @@ void projectile() {
             if (classes == WARRIOR) {
                 player.ammo += 1;
                 for (int i = 0; i < 1; ++i) {
-					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-						Bhealth -= 1;
-					}
+                    if (fight == BATTLE){
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                    }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
                         projKill();
@@ -690,9 +722,11 @@ void projectile() {
             }
             else if (classes == ARCHER) {
                 for (int i = 0; i < 3; ++i) {
-					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-						Bhealth -= 1;
-					}
+                    if (fight == BATTLE){
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                    }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
                         projKill();
@@ -706,9 +740,11 @@ void projectile() {
             }
             else {
                 for (int i = 0; i < 2; ++i) {
-					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-						Bhealth -= 1;
-					}
+                    if (fight == BATTLE){
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                    }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
                         projKill();
@@ -728,9 +764,11 @@ void projectile() {
             if (classes == WARRIOR) {
                 player.ammo += 1;
                 for (int i = 0; i < 1; ++i) {
-					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-						Bhealth -= 1;
-					}
+                    if (fight == BATTLE){
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                    }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
                         projKill();
@@ -744,9 +782,11 @@ void projectile() {
             }
             else if (classes == ARCHER) {
                 for (int i = 0; i < 3; ++i) {
-					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-						Bhealth -= 1;
-					}
+                    if (fight == BATTLE){
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                    }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
                         projKill();
@@ -760,9 +800,11 @@ void projectile() {
             }
             else {
                 for (int i = 0; i < 2; ++i) {
-					if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-						Bhealth -= 1;
-					}
+                    if (fight == BATTLE){
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                    }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
                         console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
                         projKill();
@@ -1170,6 +1212,14 @@ void mapChange(){
         mapLibrary();
         Monster = STARTGAME;
     }
+    else if (printMap[charLocation.Y][charLocation.X] == 'D'){
+        mapMerryGR();
+        Monster = STARTGAME;
+    }
+    else if (printMap[charLocation.Y][charLocation.X] == 'E'){
+        mapTheH();
+        Monster = STARTGAME;
+    }
 	else if (printMap[charLocation.Y][charLocation.X] == 'K'){
 		BossFight();
 		Monster = STARTGAME;
@@ -1199,6 +1249,23 @@ void mapRiver(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
             printMap[i][j] = River[i][j];
+        }
+    }
+    setmonsterlocation();
+}
+//Renders MerryGR
+void mapMerryGR(){
+    for (int i = 0; i < MAP_HEIGHT; i++){
+        for (int j = 0; j < MAP_WIDTH; j++){
+            printMap[i][j] = MerryGR[i][j];
+        }
+    }
+    setmonsterlocation();
+}
+void mapTheH(){
+    for (int i = 0; i < MAP_HEIGHT; i++){
+        for (int j = 0; j < MAP_WIDTH; j++){
+            printMap[i][j] = TheH[i][j];
         }
     }
     setmonsterlocation();
@@ -1556,28 +1623,60 @@ void BossAttack(){
 }
 void Getdamagedbyboss(){
 	if (charLocation.X == Bprojectile1.X && charLocation.Y == Bprojectile1.Y){
-		player.health -= 1;
+        if (iToken == 0){
+            player.health -= 1;
+            iToken += 1;
+            t_invincibility = elapsedTime + 0.5;
+        }
 	}
 	else if (charLocation.X == Bprojectile2.X && charLocation.Y == Bprojectile2.Y){
-		player.health -= 1;
+        if (iToken == 0){
+            player.health -= 1;
+            iToken += 1;
+            t_invincibility = elapsedTime + 0.5;
+        }
 	}
 	else if (charLocation.X == Bprojectile3.X && charLocation.Y == Bprojectile3.Y){
-		player.health -= 1;
+        if (iToken == 0){
+            player.health -= 1;
+            iToken += 1;
+            t_invincibility = elapsedTime + 0.5;
+        }
 	}
 	else if (charLocation.X == Bprojectile4.X && charLocation.Y == Bprojectile4.Y){
-		player.health -= 1;
+        if (iToken == 0){
+            player.health -= 1;
+            iToken += 1;
+            t_invincibility = elapsedTime + 0.5;
+        }
 	}
 	else if (charLocation.X == Bprojectile5.X && charLocation.Y == Bprojectile5.Y){
-		player.health -= 1;
+        if (iToken == 0){
+            player.health -= 1;
+            iToken += 1;
+            t_invincibility = elapsedTime + 0.5;
+        }
 	}
 	else if (charLocation.X == Bprojectile6.X && charLocation.Y == Bprojectile6.Y){
-		player.health -= 1;
+        if (iToken == 0){
+            player.health -= 1;
+            iToken += 1;
+            t_invincibility = elapsedTime + 0.5;
+        }
 	}
 	else if (charLocation.X == Bprojectile7.X && charLocation.Y == Bprojectile7.Y){
-		player.health -= 1;
+        if (iToken == 0){
+            player.health -= 1;
+            iToken += 1;
+            t_invincibility = elapsedTime + 0.5;
+        }
 	}
 	else if (charLocation.X == Bprojectile8.X && charLocation.Y == Bprojectile8.Y){
-		player.health -= 1;
+        if (iToken == 0){
+            player.health -= 1;
+            iToken += 1;
+            t_invincibility = elapsedTime + 0.5;
+        }
 	}
 	
 }

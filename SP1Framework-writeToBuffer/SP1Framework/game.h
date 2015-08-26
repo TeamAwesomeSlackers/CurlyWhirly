@@ -113,5 +113,7 @@ void pointerCS();
 void invincibility();
 void monsterDamage();
 void CSdesc();
+void mapMerryGR();
+void mapTheH();
 
 #endif // _GAME_H
