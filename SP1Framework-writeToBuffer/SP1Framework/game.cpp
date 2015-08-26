@@ -48,6 +48,7 @@ CLASSES classes;
 DEATHSTATE die = SAD;
 MONSTERSTATE Monster = TUTORIAL;
 BOSS fight = NORMAL;
+MAPSTATE level = TUTORIALROOM;
 
 // Console object
 
@@ -193,8 +194,8 @@ void status() {
 }
 
 void balanced() {
-    player.health = 3;
-    player.ammo = 5;
+    player.health = 3000;
+    player.ammo = 5000;
     player.bomb = 1;
     MaxHP = 3;
 }
@@ -1001,9 +1002,7 @@ void HUD() {
 	c.Y = console.getConsoleSize().Y - 16;
 
 	//Health
-	for (int m = 0; m < 4; m++){
-		console.writeToBuffer(c, "HEALTH");
-	}
+    console.writeToBuffer(c, "HEALTH");
     if (player.health > 2){
         for (int m = 0; m < player.health * 2; m++){
             c.X = console.getConsoleSize().X - 21 + m;
@@ -1025,7 +1024,6 @@ void HUD() {
             console.writeToBuffer(c, (char)220, 0x0C);
         }
     }
-
     c.X = console.getConsoleSize().X - 21;
     c.Y = console.getConsoleSize().Y - 13;
 	//Ammo
@@ -1041,10 +1039,7 @@ void HUD() {
     //Bomb
     c.X = console.getConsoleSize().X - 21;
     c.Y = console.getConsoleSize().Y - 10;
-    for (int m = 0; m < 4; m++) {
-        console.writeToBuffer(c, "BOMB");
-    }
-
+    console.writeToBuffer(c, "BOMB");
 	for (int m = 0; m < player.bomb; m++){
 		c.X = console.getConsoleSize().X - 21 + m;
 		c.Y = console.getConsoleSize().Y - 9;
@@ -1053,16 +1048,41 @@ void HUD() {
     //Ultimate
 	c.X = console.getConsoleSize().X - 21;
 	c.Y = console.getConsoleSize().Y - 7;
-    for (int m = 0; m < 4; m++) {
-        console.writeToBuffer(c, "Ultimate");
-    }
+    console.writeToBuffer(c, "Ultimate");
     c.X = console.getConsoleSize().X - 21;
     c.Y = console.getConsoleSize().Y - 6;
     if (elapsedTime > uCooldown) {
         console.writeToBuffer(c, (char)15);
     }
-    Ultimate();
+    //Boss HP
+    if (level == BOSSROOM){
+        c.X = console.getConsoleSize().X - 21;
+        c.Y = console.getConsoleSize().Y - 4;
+        console.writeToBuffer(c, "BOSS HP");
+        if (Bhealth >= 30){
+            for (int m = 0; m < Bhealth / 5; m++){
+                c.X = console.getConsoleSize().X - 21 + m;
+                c.Y = console.getConsoleSize().Y - 3;
+                console.writeToBuffer(c, (char)220);
+            }
+        }
+        else if (Bhealth >= 10){
+             for (int m = 0; m < Bhealth / 5; m++){
+                 c.X = console.getConsoleSize().X - 21 + m;
+                 c.Y = console.getConsoleSize().Y - 3;
+                 console.writeToBuffer(c, (char)220, 0x0E);
+             }
+        }
+        else if (Bhealth < 10){
+            for (int m = 0; m < Bhealth/5; m++){
+                c.X = console.getConsoleSize().X - 21 + m;
+                c.Y = console.getConsoleSize().Y - 3;
+                console.writeToBuffer(c, (char)220, 0x0C);
+            }
+        }
+    }
 }
+
 //seeding
 void randomSeed(){
     int seed = 6;
@@ -1238,12 +1258,12 @@ void gameend(){
 	console.writeToBuffer(c, "Press R to retry", 0x0E);
 	if (keyPressed[K_R]) {
 		g_eGameState = GAME;
-        tutorial();
         player.ammo = 5;
         player.bomb = 1;
         uCooldown = 0;
+        fight = NORMAL;
+        retry();
 	}
-	fight = NORMAL;
     if (classes == BALANCED) {
         player.health = 3;
     }
@@ -1269,6 +1289,7 @@ void gameend(){
     Bprojectile7.Y = 0;
     Bprojectile8.X = 0;
     Bprojectile8.Y = 0;
+    Bhealth = 50;
 }
 
 //Refill Bomb
@@ -1314,6 +1335,7 @@ void mapLibrary(){
            }
     }
     setmonsterlocation();
+    level = LIBRARYROOM;
 }
 //Renders Lecture Hall
 void mapLectureHall(){
@@ -1323,6 +1345,7 @@ void mapLectureHall(){
         }
     }
     setmonsterlocation();
+    level = LECTUREHALLROOM;
 }
 //Renders River
 void mapRiver(){
@@ -1332,6 +1355,7 @@ void mapRiver(){
         }
     }
     setmonsterlocation();
+    level = RIVERROOM;
 }
 //Renders MerryGR
 void mapMerryGR(){
@@ -1341,6 +1365,7 @@ void mapMerryGR(){
         }
     }
     setmonsterlocation();
+    level = MERRYGRROOM;
 }
 void mapTheH(){
     for (int i = 0; i < MAP_HEIGHT; i++){
@@ -1349,6 +1374,7 @@ void mapTheH(){
         }
     }
     setmonsterlocation();
+    level = THEHROOM;
 }
 //Restarts the game
 void tutorial(){
@@ -1359,6 +1385,7 @@ void tutorial(){
     }
     setmonsterlocation();
     Monster = TUTORIAL;
+    level = TUTORIALROOM;
 }
 // initial monster spawn
 void setmonsterlocation(){
@@ -1564,6 +1591,7 @@ void Ppointer(){
         }
     }
 }
+//Pause menu
 void pausemenu(){
 		clearScreen();
 		std::string pause;
@@ -1592,6 +1620,7 @@ void pausemenu(){
 		console.writeToBuffer(c, "Exit to Main Menu");
         Ppointer();
 }
+//Bosses's attack
 void BossAttack(){
 	//btm right
    console.writeToBuffer(Bprojectile1, (char)30, 0x0B); 
@@ -1704,6 +1733,7 @@ void BossAttack(){
    BAdelay7++;
    BAdelay8++;
 }
+// check if boss damages u
 void Getdamagedbyboss(){
 	if (charLocation.X == Bprojectile1.X && charLocation.Y == Bprojectile1.Y){
         if (iToken == 0){
@@ -1763,6 +1793,7 @@ void Getdamagedbyboss(){
 	}
 	
 }
+
 void BossFight(){
 	for (int i = 0; i < MAP_HEIGHT; i++){
 		for (int j = 0; j < MAP_WIDTH; j++){
@@ -1788,6 +1819,7 @@ void BossFight(){
     Bprojectile7.Y = 13;
     Bprojectile8.X = 26;
     Bprojectile8.Y = 13;
+    level = BOSSROOM;
 }
 
 void classSelect() {
@@ -2034,5 +2066,21 @@ void Ultimate() {
                 t_maxRange = elapsedTime + 3;
             }
         }
+    }
+}
+void retry(){
+    switch (level){
+        case RIVERROOM: mapRiver();
+            break;
+        case LIBRARYROOM: mapLibrary();
+            break;
+        case LECTUREHALLROOM: mapLectureHall();
+            break;
+        case MERRYGRROOM: mapMerryGR();
+            break;
+        case THEHROOM: mapTheH();
+            break;
+        case BOSSROOM: BossFight();  
+            break;
     }
 }

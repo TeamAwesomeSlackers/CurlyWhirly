@@ -24,6 +24,15 @@ enum Keys
     K_RETURN,
 	K_COUNT
 };
+enum MAPSTATE{
+    TUTORIALROOM,
+    RIVERROOM,
+    LIBRARYROOM,
+    LECTUREHALLROOM,
+    MERRYGRROOM,
+    THEHROOM,
+    BOSSROOM
+};
 enum GAMESTATES{
 	SPLASH,
 	TITLE,
@@ -117,5 +126,6 @@ void CSdesc();
 void mapMerryGR();
 void mapTheH();
 void Ultimate();
+void retry();
 
 #endif // _GAME_H
