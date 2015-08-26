@@ -39,6 +39,7 @@ double elapsedTime;
 double deltaTime;
 double bossFightTime = elapsedTime;
 double t_invincibility = elapsedTime;
+double t_tDamage = elapsedTime;
 double t_maxRange = elapsedTime;
 double cobweb = elapsedTime;
 double cobwebInvul = elapsedTime;
@@ -71,7 +72,7 @@ char printMap[MAP_HEIGHT][MAP_WIDTH] = {
     { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
     { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
     { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'A', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'K', 1, 1 },
     { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
     { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
     { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
@@ -194,22 +195,22 @@ void status() {
 }
 
 void balanced() {
-    player.health = 3000;
-    player.ammo = 5000;
-    player.bomb = 1;
-    MaxHP = 3;
-}
-
-void warrior() {
     player.health = 4;
-    player.ammo = 1;
+    player.ammo = 5;
     player.bomb = 1;
     MaxHP = 4;
 }
 
+void warrior() {
+    player.health = 6000;
+    player.ammo = 1;
+    player.bomb = 1;
+    MaxHP = 6;
+}
+
 void archer() {
     player.health = 2;
-    player.ammo = 5;
+    player.ammo = 8;
     player.bomb = 1;
     MaxHP = 2;
 }
@@ -590,7 +591,12 @@ void projectile() {
                 for (int i = 0; i < 1; ++i) {
                     if (fight == BATTLE){
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-                            Bhealth -= 1;
+                            if (elapsedTime < t_tDamage) {
+                                Bhealth -= 3;
+                            }
+                            else {
+                                Bhealth -= 1;
+                            }
                         }
                     }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
@@ -622,7 +628,7 @@ void projectile() {
                     }
                 }
                 else {
-                    for (int i = 0; i < 3; ++i) {
+                    for (int i = 0; i < 4; ++i) {
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
                             Bhealth -= 1;
                         }
@@ -664,7 +670,12 @@ void projectile() {
             if (classes == WARRIOR) {
                 if (fight == BATTLE){
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-                        Bhealth -= 1;
+                        if (elapsedTime < t_tDamage) {
+                            Bhealth -= 3;
+                        }
+                        else {
+                            Bhealth -= 1;
+                        }
                     }
                 }
                 player.ammo += 1;
@@ -698,7 +709,7 @@ void projectile() {
                     }
                 }
                 else {
-                    for (int i = 0; i < 3; ++i) {
+                    for (int i = 0; i < 4; ++i) {
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
                             Bhealth -= 1;
                         }
@@ -742,7 +753,12 @@ void projectile() {
                 for (int i = 0; i < 1; ++i) {
                     if (fight == BATTLE){
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-                            Bhealth -= 1;
+                            if (elapsedTime < t_tDamage) {
+                                Bhealth -= 3;
+                            }
+                            else {
+                                Bhealth -= 1;
+                            }
                         }
                     }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
@@ -774,7 +790,7 @@ void projectile() {
                     }
                 }
                 else {
-                    for (int i = 0; i < 3; ++i) {
+                    for (int i = 0; i < 4; ++i) {
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
                             Bhealth -= 1;
                         }
@@ -818,7 +834,12 @@ void projectile() {
                 for (int i = 0; i < 1; ++i) {
                     if (fight == BATTLE){
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
-                            Bhealth -= 1;
+                            if (elapsedTime < t_tDamage) {
+                                Bhealth -= 3;
+                            }
+                            else {
+                                Bhealth -= 1;
+                            }
                         }
                     }
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
@@ -850,7 +871,7 @@ void projectile() {
                     }
                 }
                 else {
-                    for (int i = 0; i < 3; ++i) {
+                    for (int i = 0; i < 4; ++i) {
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
                             Bhealth -= 1;
                         }
@@ -1214,7 +1235,7 @@ void refill(){
             player.ammo = 1;
         }
         else{
-            player.ammo += 10;
+            player.ammo += 5;
         }
 	}
     if ((printMap[charLocation.Y][charLocation.X] == 8)){
@@ -1258,20 +1279,22 @@ void gameend(){
 	console.writeToBuffer(c, "Press R to retry", 0x0E);
 	if (keyPressed[K_R]) {
 		g_eGameState = GAME;
-        player.ammo = 5;
         player.bomb = 1;
         uCooldown = 0;
         fight = NORMAL;
         retry();
 	}
     if (classes == BALANCED) {
-        player.health = 3;
+        player.health = 4;
+        player.ammo = 5;
     }
     else if (classes == WARRIOR) {
-        player.health = 4;
+        player.health = 6;
+        player.ammo = 1;
     }
     else if (classes == ARCHER) {
         player.health = 2;
+        player.ammo = 8;
     }//Boss Projectile
     Bprojectile1.X = 0;
     Bprojectile1.Y = 0;
@@ -1933,7 +1956,7 @@ void CSdesc() {
     if (pointerCLoc.X == 7){
         CSdescLoc.X = 6;
         CSdescLoc.Y = 23;
-        console.writeToBuffer(CSdescLoc, "Health: 3");
+        console.writeToBuffer(CSdescLoc, "Health: 4");
         CSdescLoc.X = 6;
         CSdescLoc.Y = 24;
         console.writeToBuffer(CSdescLoc, "Ammo: 5");
@@ -1953,7 +1976,7 @@ void CSdesc() {
     else if (pointerCLoc.X == 27){
         CSdescLoc.X = 6;
         CSdescLoc.Y = 23;
-        console.writeToBuffer(CSdescLoc, "Health: 4");
+        console.writeToBuffer(CSdescLoc, "Health: 6");
         CSdescLoc.X = 6;
         CSdescLoc.Y = 24;
         console.writeToBuffer(CSdescLoc, "Ammo: Infinite");
@@ -1968,7 +1991,7 @@ void CSdesc() {
         console.writeToBuffer(CSdescLoc, "Ultimate: Warrior's Rage");
         CSdescLoc.X = 32;
         CSdescLoc.Y = 25;
-        console.writeToBuffer(CSdescLoc, "Invulnerable for 1 second");
+        console.writeToBuffer(CSdescLoc, "Triple damage for 1 second");
     }
     else if (pointerCLoc.X == 47){
         CSdescLoc.X = 6;
@@ -1976,19 +1999,19 @@ void CSdesc() {
         console.writeToBuffer(CSdescLoc, "Health: 2");
         CSdescLoc.X = 6;
         CSdescLoc.Y = 24;
-        console.writeToBuffer(CSdescLoc, "Ammo: 5");
+        console.writeToBuffer(CSdescLoc, "Ammo: 8");
         CSdescLoc.X = 6;
         CSdescLoc.Y = 25;
         console.writeToBuffer(CSdescLoc, "Bomb: 1");
         CSdescLoc.X = 22;
         CSdescLoc.Y = 23;
-        console.writeToBuffer(CSdescLoc, "Projectile Range: 3");
+        console.writeToBuffer(CSdescLoc, "Projectile Range: 4");
         CSdescLoc.X = 22;
         CSdescLoc.Y = 24;
         console.writeToBuffer(CSdescLoc, "Ultimate: True Marksman");
         CSdescLoc.X = 32;
         CSdescLoc.Y = 25;
-        console.writeToBuffer(CSdescLoc, "Max projectile range");
+        console.writeToBuffer(CSdescLoc, "Max range for half a second");
     }
 }
 
@@ -2054,7 +2077,7 @@ void Ultimate() {
                 uCooldown = elapsedTime + 60;
                 if (iToken == 0){
                     iToken += 1;
-                    t_invincibility = elapsedTime + 1.5;
+                    t_tDamage = elapsedTime + 1;
                 }
             }
         }
@@ -2063,7 +2086,7 @@ void Ultimate() {
         if (elapsedTime > uCooldown) {
             if (keyPressed[K_Q]) {
                 uCooldown = elapsedTime + 60;
-                t_maxRange = elapsedTime + 3;
+                t_maxRange = elapsedTime + 0.5;
             }
         }
     }
