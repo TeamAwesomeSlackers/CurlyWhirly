@@ -45,7 +45,7 @@ Console console(75, 27, "Spooky Spooky Ghosts");
 double elapsedTime;
 double deltaTime;
 bool keyPressed[K_COUNT];
-double t_invincibility = elapsedTime + 2;
+double t_invincibility = elapsedTime;
 // Initial print map
 char printMap[MAP_HEIGHT][MAP_WIDTH] = {
 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -543,19 +543,6 @@ void renderToScreen()
     // Writes the buffer to the console, hence you will see what you have written
     console.flushBufferToConsole();
 }
-
-//collision check/damage calculation
-void collision(){
-    if (charLocation.X == g_cChaserLoc.X && charLocation.Y == g_cChaserLoc.Y){
-		player.health -= 1;
-		monsterDeath();
-        if (iToken < 1){
-            t_invincibility = elapsedTime + 2;
-            Phealth = player.health;
-            iToken += 1;
-        }
-	}
-}
 // PROJECTILE
 void projectile() {
     if (player.ammo > 0){
@@ -944,7 +931,6 @@ void moveMonster(){
     // CHASER MOVEMENT
     if (Monster == STARTGAME){
         monsterdelay++;
-        invincibility();
         if (monsterdelay == 5){
             if (charLocation.Y < g_cChaserLoc.Y){
                 g_cChaserLoc.Y -= 1;
@@ -964,7 +950,6 @@ void moveMonster(){
             } // down
             monsterdelay = 0;
         }
-        invincibility();
     }
 }
 //move the 2nd monster
@@ -972,7 +957,6 @@ void moveMonster1(){
 	// CHASER MOVEMENT
     if (Monster == STARTGAME){
         monster1delay++;
-        invincibility();
         if (monster1delay == 5){
             if (charLocation.Y < g_cChaser1Loc.Y){
                 g_cChaser1Loc.Y -= 1;
@@ -992,7 +976,6 @@ void moveMonster1(){
             } // down
             monster1delay = 0;
         }
-        invincibility();
     }
 }
 // check if 1st monster gets shot
@@ -1035,15 +1018,25 @@ void monster1Death(){
 		g_cChaser1Loc.Y = 2;
 	}
 }
+//collision check/damage calculation
+void collision(){
+    if (charLocation.X == g_cChaserLoc.X && charLocation.Y == g_cChaserLoc.Y){
+        monsterDeath();
+        if (iToken == 0){
+            player.health -= 1;
+            iToken += 1;
+            t_invincibility = elapsedTime + 2;
+        }
+    }
+}
 //2nd monster collision check
 void collision1(){
      if (charLocation.X == g_cChaser1Loc.X && charLocation.Y  == g_cChaser1Loc.Y){
 		monster1Death();
-		player.health -= 1;
-        if (iToken < 1){
-            t_invincibility = elapsedTime + 2;
-            Phealth = player.health;
+        if (iToken == 0){
+            player.health -= 1;
             iToken += 1;
+            t_invincibility = elapsedTime + 2;
         }
 	}
 }
@@ -1066,7 +1059,6 @@ void splash(){
 	c.Y /= 5;
 	c.X /= 9;
 	std::ifstream myfile;
-	FILE * pFile;
 	myfile.open("screen/Spooky.txt");
 	for (int i = 0; myfile.good(); i++){
 		std::getline(myfile, gamesplash);
@@ -1662,28 +1654,24 @@ void pointerCS(){
 }
 
 void invincibility(){
-     if (elapsedTime < t_invincibility){
-         if (Phealth > player.health) {
-              player.health = Phealth;
-         }
-     }
-     else{ 
+     if (elapsedTime > t_invincibility){
          iToken = 0;
      }
 }
+// checking monster dmg
 void monsterDamage(){
     if(charLocation.X == g_cChaser1Loc.X && charLocation.Y == g_cChaser1Loc.Y && charLocation.X == g_cChaserLoc.X && charLocation.Y == g_cChaserLoc.Y){
         monsterDeath();
         monster1Death();
-		player.health -= 2;
-        if (iToken < 1){
-            t_invincibility = elapsedTime + 2;
-            Phealth = player.health;
+        if (iToken == 0){
+            player.health -= 2;
             iToken += 1;
+            t_invincibility = elapsedTime + 2;
         }
     }
     else{
         collision();
         collision1();
     }
+    invincibility();
 }
