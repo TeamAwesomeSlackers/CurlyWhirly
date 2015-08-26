@@ -881,12 +881,27 @@ void HUD() {
 	for (int m = 0; m < 4; m++){
 		console.writeToBuffer(c, "HEALTH");
 	}
-	
-	for (int m = 0; m < player.health; m++){
-		c.X = console.getConsoleSize().X - 21 + m;
-		c.Y = console.getConsoleSize().Y - 15;
-		console.writeToBuffer(c, (char)233);
-	}
+    if (player.health > 2){
+        for (int m = 0; m < player.health * 2; m++){
+            c.X = console.getConsoleSize().X - 21 + m;
+            c.Y = console.getConsoleSize().Y - 15;
+            console.writeToBuffer(c, (char)220);
+        }
+    }
+    else if (player.health == 2){
+        for (int m = 0; m < player.health * 2; m++){
+            c.X = console.getConsoleSize().X - 21 + m;
+            c.Y = console.getConsoleSize().Y - 15;
+            console.writeToBuffer(c, (char)220, 0x0E);
+        }
+    }
+    else if (player.health == 1){
+        for (int m = 0; m < player.health * 2; m++){
+            c.X = console.getConsoleSize().X - 21 + m;
+            c.Y = console.getConsoleSize().Y - 15;
+            console.writeToBuffer(c, (char)220, 0x0C);
+        }
+    }
 
     c.X = console.getConsoleSize().X - 21;
     c.Y = console.getConsoleSize().Y - 13;
@@ -916,7 +931,6 @@ void HUD() {
 	c.X = console.getConsoleSize().X - 21;
 	c.Y = console.getConsoleSize().Y - 5;
 	
-		console.writeToBuffer(c, Bhealth);
 	
 
 
@@ -1147,10 +1161,18 @@ void mapChange(){
 //Dying to traps
 void trapLava(){
 	if (printMap[charLocation.Y][charLocation.X] == 2){
-		player.health = 0;
+        if (iToken == 0){
+            player.health -= 3;
+            iToken += 1;
+            t_invincibility = elapsedTime + 0.5;
+        }
 	}
     if (printMap[charLocation.Y][charLocation.X] == 3){
-        player.health = 0;
+        if (iToken == 0){
+            player.health -= 3;
+            iToken += 1;
+            t_invincibility = elapsedTime + 0.5;
+        }
 
     }
 }
