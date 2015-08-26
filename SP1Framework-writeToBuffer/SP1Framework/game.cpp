@@ -18,6 +18,7 @@ int monster1delay = 0;
 int Bhealth = 50;
 int uCooldown = 0;
 int showCD = 0;
+int MaxHP = 0;
 int BAdelay1 = 0; // for btm right
 int RandAtk1 = rand() % 4 + 1; // random atk 
 int BAdelay2 = 0; // for btm left
@@ -69,7 +70,7 @@ char printMap[MAP_HEIGHT][MAP_WIDTH] = {
     { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
     { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
     { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
-    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'A', 1, 1 },
+    { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'K', 1, 1 },
     { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
     { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
     { 1, 1, 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 1, 1 },
@@ -195,18 +196,21 @@ void balanced() {
     player.health = 3;
     player.ammo = 5;
     player.bomb = 1;
+    MaxHP = 3;
 }
 
 void warrior() {
     player.health = 4;
     player.ammo = 1;
     player.bomb = 1;
+    MaxHP = 4;
 }
 
 void archer() {
     player.health = 2;
     player.ammo = 5;
     player.bomb = 1;
+    MaxHP = 2;
 }
 
 /*
@@ -296,7 +300,7 @@ void renderGame() {
 	if (fight == BATTLE){
 		BossAttack();
         if (elapsedTime > bossFightTime){
-            bossFightTime = elapsedTime + 15;
+            bossFightTime = elapsedTime + 30;
             for (int i = 0; i < MAP_HEIGHT; i++){
                 for (int j = 0; j < MAP_WIDTH; j++){
                     printMap[i][j] = BossMap[i][j];
@@ -517,11 +521,6 @@ void moveCharacter()
             else{
                 Beep(1440, 30);
                 charLocation.X += 1;
-            }
-        }
-        else if (keyPressed[K_E])
-        {
-            if (printMap[charLocation.Y][charLocation.X] != 6){
             }
         }
         mapChange();
@@ -1198,6 +1197,12 @@ void refill(){
             player.ammo += 10;
         }
 	}
+    if ((printMap[charLocation.Y][charLocation.X] == 8)){
+        if (player.health < MaxHP){
+            player.health += 1;
+            printMap[charLocation.Y][charLocation.X] = 0;
+        }
+    }
 }
 //Splash Screen
 void splash(){
@@ -1289,7 +1294,7 @@ void mapChange(){
     }
     else if (printMap[charLocation.Y][charLocation.X] == 'D'){
         mapMerryGR();
-        Monster = STARTGAME;
+        Monster = TUTORIAL;
     }
     else if (printMap[charLocation.Y][charLocation.X] == 'E'){
         mapTheH();
@@ -1993,7 +1998,7 @@ void trapLava(){
             if (cobwebToken == 0){
                 cobwebToken += 1;
                 cobweb = elapsedTime + 1.5;
-                cobwebInvul = elapsedTime +2.5;
+                cobwebInvul = elapsedTime + 1.7;
             }
         }
     }
