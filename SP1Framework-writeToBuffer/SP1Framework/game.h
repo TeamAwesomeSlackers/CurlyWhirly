@@ -20,6 +20,7 @@ enum Keys
 	K_D,
     K_E,
 	K_R,
+    K_Q,
     K_RETURN,
 	K_COUNT
 };
@@ -115,5 +116,6 @@ void monsterDamage();
 void CSdesc();
 void mapMerryGR();
 void mapTheH();
+void Ultimate();
 
 #endif // _GAME_H

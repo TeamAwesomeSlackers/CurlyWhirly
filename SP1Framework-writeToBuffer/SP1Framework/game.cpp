@@ -16,6 +16,8 @@ int cobwebToken = 0;
 int monsterdelay = 0; 
 int monster1delay = 0;
 int Bhealth = 50;
+int uCooldown = 0;
+int showCD = 0;
 int BAdelay1 = 0; // for btm right
 int RandAtk1 = rand() % 4 + 1; // random atk 
 int BAdelay2 = 0; // for btm left
@@ -36,6 +38,7 @@ double elapsedTime;
 double deltaTime;
 double bossFightTime = elapsedTime;
 double t_invincibility = elapsedTime;
+double t_maxRange = elapsedTime;
 double cobweb = elapsedTime;
 double cobwebInvul = elapsedTime;
 FILE *map;
@@ -168,7 +171,7 @@ void getInput()
 	keyPressed[K_D] = isKeyPressed('D');
 	keyPressed[K_E] = isKeyPressed('E');
 	keyPressed[K_R] = isKeyPressed('R');
-
+    keyPressed[K_Q] = isKeyPressed('Q');
 }
 
 struct Stats {
@@ -289,6 +292,7 @@ void renderGame() {
 	renderCharacter();  // renders the character into the buffer
 	projectile();     // projectile
     bomb(); // bomb
+    Ultimate(); // ultimate skills
 	if (fight == BATTLE){
 		BossAttack();
         if (elapsedTime > bossFightTime){
@@ -601,20 +605,36 @@ void projectile() {
                 }
             }
             else if (classes == ARCHER) {
-                for (int i = 0; i < 3; ++i) {
-                    if (fight == BATTLE){
+                if (elapsedTime < t_maxRange) {
+                    for (int i = 0; i < 22; ++i) {
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
                             Bhealth -= 1;
                         }
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                            console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
+                            projKill();
+                            projKill1();
+                            g_cProjectile.Y -= 1;
+                        }
+                        else{
+                            break;
+                        }
                     }
-                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
-                        console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
-                        projKill();
-                        projKill1();
-                        g_cProjectile.Y -= 1;
-                    }
-                    else{
-                        break;
+                }
+                else {
+                    for (int i = 0; i < 3; ++i) {
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                            console.writeToBuffer(g_cProjectile, (char)30, 0x0B);
+                            projKill();
+                            projKill1();
+                            g_cProjectile.Y -= 1;
+                        }
+                        else{
+                            break;
+                        }
                     }
                 }
             }
@@ -661,20 +681,36 @@ void projectile() {
                 }
             }
             else if (classes == ARCHER) {
-                for (int i = 0; i < 3; ++i) {
-                    if (fight == BATTLE){
+                if (elapsedTime < t_maxRange) {
+                    for (int i = 0; i < 75; ++i) {
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
                             Bhealth -= 1;
                         }
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                            console.writeToBuffer(g_cProjectile, (char)17, 0x0B);
+                            projKill();
+                            projKill1();
+                            g_cProjectile.X -= 1;
+                        }
+                        else{
+                            break;
+                        }
                     }
-                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
-                        console.writeToBuffer(g_cProjectile, (char)17, 0x0B);
-                        projKill();
-                        projKill1();
-                        g_cProjectile.X -= 1;
-                    }
-                    else{
-                        break;
+                }
+                else {
+                    for (int i = 0; i < 3; ++i) {
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                            console.writeToBuffer(g_cProjectile, (char)17, 0x0B);
+                            projKill();
+                            projKill1();
+                            g_cProjectile.X -= 1;
+                        }
+                        else{
+                            break;
+                        }
                     }
                 }
             }
@@ -721,20 +757,36 @@ void projectile() {
                 }
             }
             else if (classes == ARCHER) {
-                for (int i = 0; i < 3; ++i) {
-                    if (fight == BATTLE){
+                if (elapsedTime < t_maxRange) {
+                    for (int i = 0; i < 22; ++i) {
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
                             Bhealth -= 1;
                         }
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                            console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
+                            projKill();
+                            projKill1();
+                            g_cProjectile.Y += 1;
+                        }
+                        else{
+                            break;
+                        }
                     }
-                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
-                        console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
-                        projKill();
-                        projKill1();
-                        g_cProjectile.Y += 1;
-                    }
-                    else{
-                        break;
+                }
+                else {
+                    for (int i = 0; i < 3; ++i) {
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                            console.writeToBuffer(g_cProjectile, (char)31, 0x0B);
+                            projKill();
+                            projKill1();
+                            g_cProjectile.Y += 1;
+                        }
+                        else{
+                            break;
+                        }
                     }
                 }
             }
@@ -781,20 +833,36 @@ void projectile() {
                 }
             }
             else if (classes == ARCHER) {
-                for (int i = 0; i < 3; ++i) {
-                    if (fight == BATTLE){
+                if (elapsedTime < t_maxRange) {
+                    for (int i = 0; i < 71; ++i) {
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
                             Bhealth -= 1;
                         }
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                            console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
+                            projKill();
+                            projKill1();
+                            g_cProjectile.X += 1;
+                        }
+                        else{
+                            break;
+                        }
                     }
-                    if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
-                        console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
-                        projKill();
-                        projKill1();
-                        g_cProjectile.X += 1;
-                    }
-                    else{
-                        break;
+                }
+                else {
+                    for (int i = 0; i < 3; ++i) {
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] == 9){
+                            Bhealth -= 1;
+                        }
+                        if (printMap[g_cProjectile.Y][g_cProjectile.X] != 1){
+                            console.writeToBuffer(g_cProjectile, (char)16, 0x0B);
+                            projKill();
+                            projKill1();
+                            g_cProjectile.X += 1;
+                        }
+                        else{
+                            break;
+                        }
                     }
                 }
             }
@@ -818,6 +886,7 @@ void projectile() {
             }
         }
     }
+    Ultimate();
 }
 //minimap
 void minimap() {
@@ -970,10 +1039,9 @@ void HUD() {
         c.Y = console.getConsoleSize().Y - 12;
         console.writeToBuffer(c, (char)248);
     }
-
+    //Bomb
     c.X = console.getConsoleSize().X - 21;
     c.Y = console.getConsoleSize().Y - 10;
-	//Bomb
     for (int m = 0; m < 4; m++) {
         console.writeToBuffer(c, "BOMB");
     }
@@ -983,12 +1051,18 @@ void HUD() {
 		c.Y = console.getConsoleSize().Y - 9;
 		console.writeToBuffer(c, (char)235);
 	}
+    //Ultimate
 	c.X = console.getConsoleSize().X - 21;
-	c.Y = console.getConsoleSize().Y - 5;
-	
-	
-
-
+	c.Y = console.getConsoleSize().Y - 7;
+    for (int m = 0; m < 4; m++) {
+        console.writeToBuffer(c, "Ultimate");
+    }
+    c.X = console.getConsoleSize().X - 21;
+    c.Y = console.getConsoleSize().Y - 6;
+    if (elapsedTime > uCooldown) {
+        console.writeToBuffer(c, (char)15);
+    }
+    Ultimate();
 }
 //seeding
 void randomSeed(){
@@ -1162,6 +1236,7 @@ void gameend(){
         tutorial();
         player.ammo = 5;
         player.bomb = 1;
+        uCooldown = 0;
 	}
 	fight = NORMAL;
     if (classes == BALANCED) {
@@ -1416,6 +1491,9 @@ void bomb() {
 			monsterDeath();
 			monster1Death();
 			player.bomb -= 1;
+            if (fight == BATTLE) {
+                Bhealth -= 10;
+            }
 		}
     }
 }
@@ -1828,6 +1906,12 @@ void CSdesc() {
         CSdescLoc.X = 22;
         CSdescLoc.Y = 23;
         console.writeToBuffer(CSdescLoc, "Projectile Range: 2");
+        CSdescLoc.X = 22;
+        CSdescLoc.Y = 24;
+        console.writeToBuffer(CSdescLoc, "Ultimate: Trusty First-Aid Kit");
+        CSdescLoc.X = 32;
+        CSdescLoc.Y = 25;
+        console.writeToBuffer(CSdescLoc, "Restore health to 3");
     }
     else if (pointerCLoc.X == 27){
         CSdescLoc.X = 6;
@@ -1842,6 +1926,12 @@ void CSdesc() {
         CSdescLoc.X = 22;
         CSdescLoc.Y = 23;
         console.writeToBuffer(CSdescLoc, "Projectile Range: 1");
+        CSdescLoc.X = 22;
+        CSdescLoc.Y = 24;
+        console.writeToBuffer(CSdescLoc, "Ultimate: Warrior's Rage");
+        CSdescLoc.X = 32;
+        CSdescLoc.Y = 25;
+        console.writeToBuffer(CSdescLoc, "Invulnerable for 1 second");
     }
     else if (pointerCLoc.X == 47){
         CSdescLoc.X = 6;
@@ -1856,6 +1946,12 @@ void CSdesc() {
         CSdescLoc.X = 22;
         CSdescLoc.Y = 23;
         console.writeToBuffer(CSdescLoc, "Projectile Range: 3");
+        CSdescLoc.X = 22;
+        CSdescLoc.Y = 24;
+        console.writeToBuffer(CSdescLoc, "Ultimate: True Marksman");
+        CSdescLoc.X = 32;
+        CSdescLoc.Y = 25;
+        console.writeToBuffer(CSdescLoc, "Max projectile range");
     }
 }
 
@@ -1903,5 +1999,35 @@ void trapLava(){
     }
     if (elapsedTime < cobwebInvul && elapsedTime > cobweb){
         cobwebToken = 0;
+    }
+}
+
+void Ultimate() {
+    if (classes == BALANCED) {
+        if (elapsedTime > uCooldown) {
+            if (keyPressed[K_Q]) {
+                uCooldown = elapsedTime + 60;
+                player.health = 3;
+            }
+        }
+    }
+    if (classes == WARRIOR) {
+        if (elapsedTime > uCooldown) {
+            if (keyPressed[K_Q]) {
+                uCooldown = elapsedTime + 60;
+                if (iToken == 0){
+                    iToken += 1;
+                    t_invincibility = elapsedTime + 1;
+                }
+            }
+        }
+    }
+    if (classes == ARCHER) {
+        if (elapsedTime > uCooldown) {
+            if (keyPressed[K_Q]) {
+                uCooldown = elapsedTime + 60;
+                t_maxRange = elapsedTime + 3;
+            }
+        }
     }
 }
