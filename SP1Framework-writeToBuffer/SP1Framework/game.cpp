@@ -1,6 +1,4 @@
 // This is the main file for the game logic and function
-//
-//
 #include "game.h"
 #include "Map.h"
 #include "Framework\console.h"
@@ -16,7 +14,6 @@ int cobwebToken = 0;
 int monsterdelay = 0; 
 int monster1delay = 0;
 int Bhealth = 50;
-int uCooldown = 0;
 int showCD = 0;
 int MaxHP = 0;
 int BAdelay1 = 0; // for btm right
@@ -35,6 +32,7 @@ int BAdelay7 = 0; //for down
 int RandAtk7 = rand() % 4 + 1;
 int BAdelay8 = 0; //for left
 int RandAtk8 = rand() % 4 + 1;
+double uCooldown = 0;
 double elapsedTime;
 double deltaTime;
 double bossFightTime = elapsedTime;
@@ -248,7 +246,7 @@ void update(double dt)
             break;
 		case GAMEOVER: gameend();
 			break;
-		default: SPLASH : splashwait();
+		case SPLASH : splashwait();
 	}
 }
 // waiting time before Splash Screen switches
@@ -1370,7 +1368,6 @@ void gameend(){
 	c.Y = 6;
 	c.X = 15;
 	std::ifstream myfile;
-	FILE * pFile;
 	myfile.open("screen/gameover.txt");
 	for (int i = 0; myfile.good(); i++){
 		std::getline(myfile, gameover);
@@ -1629,7 +1626,6 @@ void titlescreen(){
 	c.Y = 3;
 	c.X = 10;
 	std::ifstream myfile;
-	FILE * pFile;
 	myfile.open("screen/title.txt");
 	for (int i = 0; myfile.good(); i++){
 		std::getline(myfile, title);
@@ -1732,7 +1728,6 @@ void pausemenu(){
 		c.Y = 3;
 		c.X = 10;
 		std::ifstream myfile;
-		FILE * pFile;
 		myfile.open("screen/pause.txt"); // prints the characters from text files to screen
 		for (int i = 0; myfile.good(); i++){
 			std::getline(myfile, pause);
