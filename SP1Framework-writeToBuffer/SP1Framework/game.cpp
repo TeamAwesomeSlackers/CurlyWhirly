@@ -196,7 +196,6 @@ void status() {
 
 void balanced() {
     player.health = 4;
-    player.health = 3;
     player.ammo = 5;
     player.bomb = 1;
     MaxHP = 4;
@@ -933,89 +932,180 @@ void minimap() {
 			console.writeToBuffer(c, '_');
 		}
 	}
-	mapper();
+
+    //Tutorial
+    if (level == TUTORIALROOM) {
+        c.X = 55;
+        c.Y = 4;
+        console.writeToBuffer(c, (char)234, 0x0A);
+    }
+    else {
+        c.X = 55;
+        c.Y = 4;
+        console.writeToBuffer(c, (char)234);
+    }
+
+    //connect Tutorial - A
+    for (int i = 0; i < 3; i++) {
+        c.X = 56 + i;
+        c.Y = 4;
+        console.writeToBuffer(c, (char)196);
+    }
+
+    //A
+    if (level == RIVERROOM) {
+        c.X = 59;
+        c.Y = 4;
+        console.writeToBuffer(c, "A", 0x0A);
+    }
+    else {
+        c.X = 59;
+        c.Y = 4;
+        console.writeToBuffer(c, "A");
+    }
+
+    //connect A - B
+    for (int i = 0; i < 3; i++) {
+        c.X = 60 + i;
+        c.Y = 4;
+        console.writeToBuffer(c, (char)196);
+    }
+
+    //connect A - C
+    for (int i = 0; i < 2; i++) {
+        c.X = 59;
+        c.Y = 5 + i;
+        console.writeToBuffer(c, (char)179);
+    }
+
+    //B
+    if (level == LECTUREHALLROOM) {
+        c.X = 63;
+        c.Y = 4;
+        console.writeToBuffer(c, "B", 0x0A);
+    }
+    else {
+        c.X = 63;
+        c.Y = 4;
+        console.writeToBuffer(c, "B");
+    }
+
+    //connect B - C
+    for (int i = 0; i < 2; i++) {
+        c.X = 62 - i;
+        c.Y = 5 + i;
+        console.writeToBuffer(c, (char)47);
+    }
+
+    //connect B - E
+    for (int i = 0; i < 2; i++) {
+        c.X = 63;
+        c.Y = 2 + i;
+        console.writeToBuffer(c, (char)179);
+    }
+
+    //C
+    if (level == LIBRARYROOM) {
+        c.X = 59;
+        c.Y = 7;
+        console.writeToBuffer(c, "C", 0x0A);
+    }
+    else {
+        c.X = 59;
+        c.Y = 7;
+        console.writeToBuffer(c, "C");
+    }
+
+    //connect C - D
+    for (int i = 0; i < 3; i++) {
+        c.X = 60 + i;
+        c.Y = 7;
+        console.writeToBuffer(c, (char)196);
+    }
+
+    //D
+    if (level == MERRYGRROOM) {
+        c.X = 63;
+        c.Y = 7;
+        console.writeToBuffer(c, "D", 0x0A);
+    }
+    else {
+        c.X = 63;
+        c.Y = 7;
+        console.writeToBuffer(c, "D");
+    }
+
+    //E
+    if (level == THEHROOM) {
+        c.X = 63;
+        c.Y = 1;
+        console.writeToBuffer(c, "E", 0x0A);
+    }
+    else {
+        c.X = 63;
+        c.Y = 1;
+        console.writeToBuffer(c, "E");
+    }
+
+    //connect E <-> D
+    for (int i = 0; i < 2; i++) {
+        c.X = 64 + i;
+        c.Y = 1;
+        console.writeToBuffer(c, (char)196);
+    }
+    c.X = 66;
+    c.Y = 1;
+    console.writeToBuffer(c, (char)194);
+    for (int i = 0; i < 5; i++) {
+        c.X = 66;
+        c.Y = 2 + i;
+        console.writeToBuffer(c, (char)179);
+    }
+    c.X = 66;
+    c.Y = 7;
+    console.writeToBuffer(c, (char)193);
+    for (int i = 0; i < 2; i++) {
+        c.X = 64 + i;
+        c.Y = 7;
+        console.writeToBuffer(c, (char)196);
+    }
+
+    //connect E & D - Boss
+    for (int i = 0; i < 3; i++) {
+        c.X = 67 + i;
+        c.Y = 1;
+        console.writeToBuffer(c, (char)196);
+    }
+    c.X = 70;
+    c.Y = 1;
+    console.writeToBuffer(c, (char)191);
+    for (int i = 0; i < 5; i++) {
+        c.X = 70;
+        c.Y = 2 + i;
+        console.writeToBuffer(c, (char)179);
+    }
+    c.X = 70;
+    c.Y = 7;
+    console.writeToBuffer(c, (char)217);
+    for (int i = 0; i < 3; i++) {
+        c.X = 67 + i;
+        c.Y = 7;
+        console.writeToBuffer(c, (char)196);
+    }
+
+    //Boss
+    if (level == BOSSROOM) {
+        c.X = 70;
+        c.Y = 4;
+        console.writeToBuffer(c, (char)234, 0x0A);
+    }
+    else {
+        c.X = 70;
+        c.Y = 4;
+        console.writeToBuffer(c, (char)234);
+    }
 }
 
-void mapper() {
-	COORD c;
-	//Tutorial Map
-	c.X = (MINIMAP_WIDTH / 2) + 46;
-	c.Y = (MINIMAP_HEIGHT / 2) - 1;
-	console.writeToBuffer(c, (char)1, 0x0C);
-
-	//Joint
-	c.X = (MINIMAP_WIDTH / 2) + 47;
-	c.Y = (MINIMAP_HEIGHT / 2) - 1;
-	console.writeToBuffer(c, (char)205, 0x0B);
-
-	//MAP 1
-	c.X = (MINIMAP_WIDTH / 2) + 48;
-	c.Y = (MINIMAP_HEIGHT / 2) - 1;
-	console.writeToBuffer(c, (char)1, 0x0C);
-
-	//Joint
-	c.X = (MINIMAP_WIDTH / 2) + 49;
-	c.Y = (MINIMAP_HEIGHT / 2) - 1;
-	console.writeToBuffer(c, (char)185, 0x0B);
-
-    //MAP 2
-    c.X = (MINIMAP_WIDTH / 2) + 49;
-    c.Y = (MINIMAP_HEIGHT / 2) - 2;
-    console.writeToBuffer(c, (char)1, 0x0C);
-
-    c.X = (MINIMAP_WIDTH / 2) + 49;
-    c.Y = (MINIMAP_HEIGHT / 2);
-    console.writeToBuffer(c, (char)1, 0x0C);
-
-    //Joint
-    c.X = (MINIMAP_WIDTH / 2) + 50;
-    c.Y = (MINIMAP_HEIGHT / 2) - 2;
-    console.writeToBuffer(c, (char)205, 0x0B);
-
-    c.X = (MINIMAP_WIDTH / 2) + 51;
-    c.Y = (MINIMAP_HEIGHT / 2) - 1;
-    console.writeToBuffer(c, (char)186, 0x0B);
-
-    c.X = (MINIMAP_WIDTH / 2) + 50;
-    c.Y = (MINIMAP_HEIGHT / 2);
-    console.writeToBuffer(c, (char)205, 0x0B);
-
-    //MAP 3
-    c.X = (MINIMAP_WIDTH / 2) + 51;
-    c.Y = (MINIMAP_HEIGHT / 2) - 2;
-    console.writeToBuffer(c, (char)1, 0x0C);
-
-    c.X = (MINIMAP_WIDTH / 2) + 51;
-    c.Y = (MINIMAP_HEIGHT / 2);
-    console.writeToBuffer(c, (char)1, 0x0C);
-
-    //Joint
-    c.X = (MINIMAP_WIDTH / 2) + 52;
-    c.Y = (MINIMAP_HEIGHT / 2) - 2;
-    console.writeToBuffer(c, (char)205, 0x0B);
-
-    c.X = (MINIMAP_WIDTH / 2) + 53;
-    c.Y = (MINIMAP_HEIGHT / 2) - 1;
-    console.writeToBuffer(c, (char)204, 0x0B);
-
-    c.X = (MINIMAP_WIDTH / 2) + 52;
-    c.Y = (MINIMAP_HEIGHT / 2);
-    console.writeToBuffer(c, (char)205, 0x0B);
-
-    //MAP 4
-    c.X = (MINIMAP_WIDTH / 2) + 53;
-    c.Y = (MINIMAP_HEIGHT / 2) - 2;
-    console.writeToBuffer(c, (char)1, 0x0C);
-
-    c.X = (MINIMAP_WIDTH / 2) + 53;
-    c.Y = (MINIMAP_HEIGHT / 2);
-    console.writeToBuffer(c, (char)1, 0x0C);
-
-    ////Boss
-    c.X = (MINIMAP_WIDTH / 2) + 54;
-    c.Y = (MINIMAP_HEIGHT / 2) - 1;
-    console.writeToBuffer(c, (char)1, 0x0C);
-}
 //HUD
 void HUD() {
 	COORD c;
@@ -1974,7 +2064,7 @@ void CSdesc() {
         console.writeToBuffer(CSdescLoc, "Ultimate: Trusty First-Aid Kit");
         CSdescLoc.X = 32;
         CSdescLoc.Y = 25;
-        console.writeToBuffer(CSdescLoc, "Restore health to 3");
+        console.writeToBuffer(CSdescLoc, "Restore health to 4");
     }
     else if (pointerCLoc.X == 27){
         CSdescLoc.X = 6;
@@ -2069,7 +2159,7 @@ void Ultimate() {
         if (elapsedTime > uCooldown) {
             if (keyPressed[K_Q]) {
                 uCooldown = elapsedTime + 60;
-                player.health = 3;
+                player.health = 4;
             }
         }
     }
@@ -2108,4 +2198,5 @@ void retry(){
         case BOSSROOM: BossFight();  
             break;
     }
+    minimap();
 }
