@@ -195,7 +195,11 @@ void status() {
 }
 
 void balanced() {
+<<<<<<< Updated upstream
     player.health = 4;
+=======
+    player.health = 3;
+>>>>>>> Stashed changes
     player.ammo = 5;
     player.bomb = 1;
     MaxHP = 4;
@@ -210,7 +214,11 @@ void warrior() {
 
 void archer() {
     player.health = 2;
+<<<<<<< Updated upstream
     player.ammo = 8;
+=======
+    player.ammo = 5000;
+>>>>>>> Stashed changes
     player.bomb = 1;
     MaxHP = 2;
 }
