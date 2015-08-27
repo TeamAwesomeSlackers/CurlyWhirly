@@ -195,11 +195,8 @@ void status() {
 }
 
 void balanced() {
-<<<<<<< Updated upstream
     player.health = 4;
-=======
     player.health = 3;
->>>>>>> Stashed changes
     player.ammo = 5;
     player.bomb = 1;
     MaxHP = 4;
@@ -214,11 +211,8 @@ void warrior() {
 
 void archer() {
     player.health = 2;
-<<<<<<< Updated upstream
     player.ammo = 8;
-=======
-    player.ammo = 5000;
->>>>>>> Stashed changes
+    player.ammo = 5;
     player.bomb = 1;
     MaxHP = 2;
 }
@@ -2050,7 +2044,7 @@ void trapLava(){
     //LAVA
     if (printMap[charLocation.Y][charLocation.X] == 2){
         if (iToken == 0){
-            player.health -= 3;
+            player.health -= 2;
             iToken += 1;
             t_invincibility = elapsedTime + 0.5;
         }
