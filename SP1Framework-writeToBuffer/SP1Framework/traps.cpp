@@ -43,7 +43,7 @@ void trapLava(){
             }
         }
     }
-    if (elapsedTime < cobwebInvul && elapsedTime > cobweb){
-        cobwebToken = 0;
-    }
+	if (elapsedTime < cobwebInvul && elapsedTime > cobweb){
+		cobwebToken = 0;
+	}
 }

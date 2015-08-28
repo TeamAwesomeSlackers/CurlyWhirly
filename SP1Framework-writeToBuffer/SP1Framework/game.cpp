@@ -711,7 +711,6 @@ void gameend(){
 		console.writeToBuffer(c, gameover, 0x0E); // Prints the characters line by line after reading the text file
 		c.Y += 1;
 	}
-
 	// Text for retry
 	c.X = 28;
 	c.Y = 13;
@@ -722,6 +721,7 @@ void gameend(){
         uCooldown = 0;
         fight = NORMAL;
         retry();
+		cobwebToken = 0;
 	} // Change gamestate from gameover to game and allows player to retry the stage they are at
     if (classes == BALANCED) {
         player.health = 4;
