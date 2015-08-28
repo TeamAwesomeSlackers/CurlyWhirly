@@ -36,14 +36,17 @@ extern double bossFightTime;
 extern double t_invincibility;
 extern char BossMap[MAP_HEIGHT][MAP_WIDTH];
 extern MAPSTATE level;
-extern struct Stats {
+struct Stats {
     short health;
     short ammo;
     short bomb;
 };
 extern Stats player;
 
-//Bosses's attack
+//-----------------//
+// Bosses's attack //
+//-----------------//
+
 void BossAttack(){
     //btm right
     console.writeToBuffer(Bprojectile1, (char)30, 0x0B);
@@ -156,7 +159,11 @@ void BossAttack(){
     BAdelay7++;
     BAdelay8++;
 }
-// check if boss damages u
+
+//------------------------------//
+// Check if Boss damages Player //
+//------------------------------//
+
 void Getdamagedbyboss(){
     if (charLocation.X == Bprojectile1.X && charLocation.Y == Bprojectile1.Y){
         if (iToken == 0){
@@ -216,6 +223,10 @@ void Getdamagedbyboss(){
     }
 
 }
+
+//---------------------------------------//
+// Set Boss and Boss projectile location //
+//---------------------------------------//
 
 void BossFight(){
     for (int i = 0; i < MAP_HEIGHT; i++){

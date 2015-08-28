@@ -11,8 +11,10 @@ extern char MerryGR[MAP_HEIGHT][MAP_WIDTH];
 extern char TheH[MAP_HEIGHT][MAP_WIDTH];
 extern char Tutorial[MAP_HEIGHT][MAP_WIDTH];
 
+//-----------------//
+// Renders Library //
+//-----------------//
 
-//Renders Library
 void mapLibrary(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
@@ -22,7 +24,11 @@ void mapLibrary(){
     setmonsterlocation();
     level = LIBRARYROOM;
 }
-//Renders Lecture Hall
+
+//----------------------//
+// Renders Lecture Hall //
+//----------------------//
+
 void mapLectureHall(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
@@ -32,7 +38,11 @@ void mapLectureHall(){
     setmonsterlocation();
     level = LECTUREHALLROOM;
 }
-//Renders River
+
+//---------------//
+// Renders River //
+//---------------//
+
 void mapRiver(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
@@ -42,7 +52,11 @@ void mapRiver(){
     setmonsterlocation();
     level = RIVERROOM;
 }
-//Renders MerryGR
+
+//-----------------//
+// Renders MerryGR //
+//-----------------//
+
 void mapMerryGR(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
@@ -52,7 +66,11 @@ void mapMerryGR(){
     setmonsterlocation();
     level = MERRYGRROOM;
 }
-//Renders TheH
+
+//--------------//
+// Renders TheH //
+//--------------//
+
 void mapTheH(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
@@ -62,7 +80,10 @@ void mapTheH(){
     setmonsterlocation();
     level = THEHROOM;
 }
-//Restarts the game
+
+//-------------------//
+// Restarts the game //
+//-------------------//
 void tutorial(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){
