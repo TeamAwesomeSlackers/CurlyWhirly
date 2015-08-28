@@ -45,9 +45,6 @@
     <ClCompile Include="ability.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="classSelect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="projectile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,7 +54,17 @@
     <ClCompile Include="HUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< bf3ac347e2b26308a2bf4f1e2e873d5709fbecd5
     <ClCompile Include="Mapdefination.cpp">
+=======
+    <ClCompile Include="Screens.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterFight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Refills.cpp">
+>>>>>>> 760e36245dab2d67ed6f38aaa985874d6323f44d
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
