@@ -130,5 +130,6 @@ void retry();
 void spawnMonster();
 void spawnMonster1();
 void victory();
+void guardMovement();
 
 #endif // _GAME_H

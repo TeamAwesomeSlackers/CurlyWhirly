@@ -20,10 +20,9 @@ struct Stats {
 
 extern Stats player;
 
-/* Trap Functions
-Done by Ashley, 26 Aug 2015
-Checks if player coords are the same as the trap
-if true, trap does something to player*/
+//-----------------//
+// Traps Functions //
+//-----------------//
 
 void trapLava(){
     //LAVA

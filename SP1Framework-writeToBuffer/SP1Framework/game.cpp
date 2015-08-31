@@ -21,8 +21,11 @@ extern COORD	Bprojectile5;
 extern COORD	Bprojectile6;
 extern COORD	Bprojectile7;
 extern COORD	Bprojectile8;
-extern double t_monsterDied;
-extern double t_monster1Died;
+COORD	guarda;
+COORD	guardb;
+COORD	guardc;
+COORD	guardd;
+COORD	guarde;
 bool keyPressed[K_COUNT];
 int Phealth = 0;
 int cobwebToken = 0;
@@ -36,10 +39,11 @@ double elapsedTime;
 double deltaTime;
 double bossFightTime = elapsedTime;
 double t_invincibility = elapsedTime;
-double t_dDamage = elapsedTime;
+double t_tDamage = elapsedTime;
 double t_maxRange = elapsedTime;
 double cobweb = elapsedTime;
 double cobwebInvul = elapsedTime;
+FILE *map;
 GAMESTATES g_eGameState = SPLASH;
 CLASSES classes;
 DEATHSTATE die = SAD;
@@ -100,6 +104,17 @@ void init()
     border2CLoc.Y = 2;
     CSdescLoc.X = 0;
     CSdescLoc.Y = 0;
+    //Guards
+    guarda.X = 4;
+    guarda.Y = 13;
+    guardb.X = 14;
+    guardb.Y = 13;
+    guardc.X = 23;
+    guardc.Y = 13;
+    guardd.X = 31;
+    guardd.Y = 13;
+    guarde.X = 40;
+    guarde.Y = 13;
 	
     // sets the width, height and the font name to use in the console
     console.setConsoleFont(0, 16, L"Consolas");
@@ -157,7 +172,7 @@ void status() {
 }
 // Balanced/Adventure class
 void balanced() {
-    player.health = 4;
+    player.health = 400;
     player.ammo = 5;
     player.bomb = 1;
     MaxHP = 4;
@@ -225,6 +240,7 @@ void gameplay(){
     trapLava();// check traps
     spawnMonster();//check if enemy will spawn
     spawnMonster1();
+    guardMovement();
     // sound can be played here too.
     // When the player dies and the gamestate switches to the game over screen
 	if (player.health <= 0){
@@ -335,7 +351,7 @@ void renderMap()
             }
             //8 is health
             else if (printMap[i][j] == 8){
-                console.writeToBuffer(c, (char)3, 0x0D);
+                console.writeToBuffer(c, (char)3, 0x0C);
             }
             //9 spawn points
             else if (printMap[i][j] == 9){
@@ -367,7 +383,7 @@ void renderMap()
 			}
             // Health pack
 			else if (printMap[i][j] == 'X') {
-				console.writeToBuffer(c, (char)3, 0x0D);
+				console.writeToBuffer(c, (char)3, 0x0C);
 			}
             // Ammo pack
 			else if (printMap[i][j] == 'W') {
@@ -379,7 +395,7 @@ void renderMap()
 			}
             // Super ghost
 			else if (printMap[i][j] == 'U') {
-				console.writeToBuffer(c, (char)69, 0x09);
+				console.writeToBuffer(c, (char)69, 0x0D);
 			}
             // Ghost
 			else if (printMap[i][j] == 'T') {
@@ -427,6 +443,7 @@ void moveCharacter()
 
             }    
             else{
+                Beep(1440, 30);
                 charLocation.Y -= 2; 
             }
         }
@@ -437,6 +454,7 @@ void moveCharacter()
 
             }
             else{
+                Beep(202, 30);
                 charLocation.X -= 2;
             }
         }
@@ -446,6 +464,7 @@ void moveCharacter()
             if (printMap[charLocation.Y + 2][charLocation.X] == 1){
             }
             else{
+                Beep(1440, 30);
                 charLocation.Y += 2;
             }
         }
@@ -456,6 +475,7 @@ void moveCharacter()
 
             }
             else{
+                Beep(1440, 30);
                 charLocation.X += 2;
             }
         }
@@ -466,6 +486,7 @@ void moveCharacter()
                 
             }
             else{
+                Beep(1440, 30);
                 charLocation.Y -= 1;
             }
         }
@@ -476,6 +497,7 @@ void moveCharacter()
 
             }
             else{
+                Beep(1440, 30);
                 charLocation.X -= 1;
             }
         }
@@ -486,6 +508,7 @@ void moveCharacter()
 
             }
             else{
+                Beep(1440, 30);
                 charLocation.Y += 1;
             }
         }
@@ -496,6 +519,7 @@ void moveCharacter()
 
             }
             else{
+                Beep(1440, 30);
                 charLocation.X += 1;
             }
         }
@@ -529,7 +553,7 @@ void renderCharacter()
     // render super monster
     if (g_cChaserLoc.X == g_cChaser1Loc.X && g_cChaserLoc.Y == g_cChaser1Loc.Y){
         if (monsterToken == 1){
-            console.writeToBuffer(g_cChaserLoc, (char)238, 0x09);
+            console.writeToBuffer(g_cChaserLoc, (char)238, 0x0D);
         }
     }
     // normal monster
@@ -543,8 +567,23 @@ void renderCharacter()
             if (level != TUTORIALROOM){
                 console.writeToBuffer(g_cChaser1Loc, (char)238, 0x0E);
             }
-        }
-        
+        }   
+    }
+    if (level == LIBRARYROOM){
+        console.writeToBuffer(guarda, '*', 0x0E);
+    }
+    else if (level == RIVERROOM){
+        console.writeToBuffer(guardb, '*', 0x0E);
+    }
+    else if (level == THEHROOM){
+        console.writeToBuffer(guardc, '*', 0x0E);
+    }
+    if (level == MERRYGRROOM){
+        console.writeToBuffer(guardd, '*', 0x0E);
+    }
+    if (level == LECTUREHALLROOM)
+    {
+        console.writeToBuffer(guarde, '*', 0x0E);
     }
 }
 void renderFramerate()
@@ -596,8 +635,12 @@ void gameend(){
 	c.Y = 13;
 	console.writeToBuffer(c, "Press R to retry", 0x0E);
 	if (keyPressed[K_R]) {
+		g_eGameState = GAME;
+        player.bomb = 1;
+        uCooldown = 0;
+        fight = NORMAL;
         retry();
-		
+		cobwebToken = 0;
 	} // Change gamestate from gameover to game and allows player to retry the stage they are at
     if (classes == BALANCED) {
         player.health = 4;
@@ -806,13 +849,6 @@ void invincibility(){
 }
 
 void retry(){
-	t_monsterDied = 0;
-	t_monster1Died = 0;
-	g_eGameState = GAME;
-	player.bomb = 1;
-	uCooldown = 0;
-	fight = NORMAL;
-	cobwebToken = 0;
     switch (level){
         case RIVERROOM: mapRiver();
             break;

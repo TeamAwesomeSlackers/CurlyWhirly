@@ -2,13 +2,9 @@
 
 extern CLASSES classes;
 extern int iToken;
-extern double elapsedTime; 
-extern double uCooldown; // Ultimate skill cooldown
-extern double t_tDamage; // Triple damage for warrior
-extern double t_maxRange; // Ultimate skill for archer
 extern double elapsedTime;
 extern double uCooldown;
-extern double t_dDamage;
+extern double t_tDamage;
 extern double t_maxRange;
 extern bool keyPressed[K_COUNT];
 
@@ -19,11 +15,9 @@ struct Stats {
 };
 extern Stats player;
 
-/* Classes
-Done by Kwan Liang , 25 Aug 2015
-Changes Gamestate to different states depending on which class is chosen
-Changes player health and stats depending on class
-*/
+//---------------------//
+// Ability for Classes //
+//---------------------//
 
 void Ultimate() {
     if (classes == BALANCED) {
@@ -40,7 +34,7 @@ void Ultimate() {
                 uCooldown = elapsedTime + 60;
                 if (iToken == 0){
                     iToken += 1;
-                    t_dDamage = elapsedTime + 1;
+                    t_tDamage = elapsedTime + 1;
                 }
             }
         }

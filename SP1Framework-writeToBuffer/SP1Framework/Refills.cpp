@@ -15,12 +15,7 @@ struct Stats {
 
 extern Stats player;
 
-/* Refill
-Done by Cher Yi , 26 Aug 2015
-Checks for player ammo and refills it by 5 if possible when player steps on ammo pack
-Checks player health and increases it by 1 when player steps on health pack
-Checks player bomb and increases it by 1 when players steps on bomb kit
-*/
+//Refill Health, Ammo & Bomb
 void refill(){
     if (printMap[charLocation.Y][charLocation.X] == 7){
         printMap[charLocation.Y][charLocation.X] = 0;
