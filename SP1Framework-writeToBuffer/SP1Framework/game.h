@@ -39,6 +39,7 @@ enum GAMESTATES{
     CLASSSELECT,
 	GAME,
     VICTORY,
+    CREDITS,
 	PAUSE,
 	GAMEOVER
 };
@@ -130,6 +131,11 @@ void retry();
 void spawnMonster();
 void spawnMonster1();
 void victory();
+<<<<<<< bafcd8adcffe8cf35732bab0c2345320e63fc76c
 void guardMovement();
+=======
+void credits();
+void Statistics();
+>>>>>>> e4ae577bc638014e0c2c6f4aefdd9e44cbb00ce4
 
 #endif // _GAME_H

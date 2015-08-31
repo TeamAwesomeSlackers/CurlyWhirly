@@ -1,6 +1,6 @@
 #include "game.h"
 
-
+extern int healthDMG;
 extern COORD	guarda;
 extern COORD	guardb;
 extern COORD	guardc;
@@ -63,6 +63,7 @@ void collisiona(){
             iToken += 1;
             t_invincibility = elapsedTime + 0.5;
         }
+        healthDMG++;
     }
 }
 //guard b (trap) collision
@@ -74,6 +75,7 @@ void collisionb(){
             iToken += 1;
             t_invincibility = elapsedTime + 0.5;
         }
+        healthDMG++;
     }
 }
 //guard c (trap) collision
@@ -85,6 +87,7 @@ void collisionc(){
             iToken += 1;
             t_invincibility = elapsedTime + 0.5;
         }
+        healthDMG++;
     }
 }
 //guard d (trap) collision
@@ -96,6 +99,7 @@ void collisiond(){
             iToken += 1;
             t_invincibility = elapsedTime + 0.5;
         }
+        healthDMG++;
     }
 }
 //guard e (trap) collision
@@ -107,6 +111,7 @@ void collisione(){
             iToken += 1;
             t_invincibility = elapsedTime + 0.5;
         }
+        healthDMG++;
     }
 }
 //guard a movement

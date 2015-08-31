@@ -7,6 +7,7 @@ int spawn1Token = 0;
 extern int monsterdelay;
 extern int monster1delay;
 extern int iToken;
+extern int healthDMG;
 double t_monsterDied;
 double t_monster1Died;
 extern double elapsedTime;
@@ -162,6 +163,7 @@ void collision(){
             iToken += 1;
             t_invincibility = elapsedTime + 0.5; // allows player to have invicibility for 0.5 sec after being damaged
         }
+        healthDMG++;
     }
 }
 
@@ -177,6 +179,7 @@ void collision1(){
             iToken += 1;
             t_invincibility = elapsedTime + 0.5; // allows player to have invicibility for 0.5 sec after being damaged
         }
+        healthDMG++;
     }
 
 }
@@ -196,6 +199,7 @@ void monsterDamage(){
         }
         monsterDeath();
         monster1Death();
+        healthDMG += 2;
     }
     else{
         if (monsterToken == 1){

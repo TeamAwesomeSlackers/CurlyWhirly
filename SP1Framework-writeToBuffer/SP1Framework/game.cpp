@@ -1,11 +1,11 @@
 // This is the main file for the game logic and function
-#include "game.h"
-#include "Map.h"
-#include "Framework\console.h"
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <sstream>
+#include "game.h"
+#include "Map.h"
+#include "Framework\console.h"
 
 extern char BossMap[MAP_HEIGHT][MAP_WIDTH];
 extern char printMap[MAP_HEIGHT][MAP_WIDTH];
@@ -13,6 +13,7 @@ extern BOSS fight;
 extern int iToken; 
 extern int monsterToken;
 extern int monster1Token;
+extern int timesRetry;
 extern COORD    Bprojectile1;
 extern COORD    Bprojectile2;
 extern COORD	Bprojectile3;
@@ -43,7 +44,6 @@ double t_tDamage = elapsedTime;
 double t_maxRange = elapsedTime;
 double cobweb = elapsedTime;
 double cobwebInvul = elapsedTime;
-FILE *map;
 GAMESTATES g_eGameState = SPLASH;
 CLASSES classes;
 DEATHSTATE die = SAD;
@@ -179,10 +179,10 @@ void balanced() {
 }
 // Warrior class
 void warrior() {
-    player.health = 6;
+    player.health = 40;
     player.ammo = 1;
     player.bomb = 1;
-    MaxHP = 6;
+    MaxHP = 4;
 }
 // Archer class
 void archer() {
@@ -268,6 +268,8 @@ void render()
 		break;
     case VICTORY: victory(); // victory screen
         break;
+    case CREDITS: credits();
+        break;
     case PAUSE: pausemenu();  // pause screen
         break;
     case CLASSSELECT: classSelect();  // class selection screen
@@ -302,18 +304,6 @@ void renderGame() {
 //Renders the map according to data
 void renderMap()
 {
-    //Print Map
-    /* 0 = nothing
-    1 = wall
-    2 = trap
-    3 = trap
-    4 = bomb
-    5 = health
-    6 = BOMB
-    7 = ammo
-    8 = door
-    9 = spawn
-    */
     COORD c;
     std::cout << std::endl;
     std::cout << std::endl;
@@ -333,7 +323,7 @@ void renderMap()
             else if (printMap[i][j] == 3){
                 console.writeToBuffer(c, 'X');
             }
-			//
+			//Ammo for warrior
             else if (printMap[i][j] == 4){
                 console.writeToBuffer(c, (char)236, 0x0B);
             }
@@ -359,22 +349,22 @@ void renderMap()
             }
             // From A - K maps
             else if (printMap[i][j] == 'A'){
-                console.writeToBuffer(c, (char)239, 0x04);
+                console.writeToBuffer(c, (char)239, 0x0B);
             }
             else if (printMap[i][j] == 'B'){
-                console.writeToBuffer(c, (char)239, 0x04);
+                console.writeToBuffer(c, (char)239, 0x0B);
             }
             else if (printMap[i][j] == 'C'){
-                console.writeToBuffer(c, (char)239, 0x04);
+                console.writeToBuffer(c, (char)239, 0x0B);
             }
             else if (printMap[i][j] == 'D'){
-                console.writeToBuffer(c, (char)239, 0x04);
+                console.writeToBuffer(c, (char)239, 0x0B);
             }
             else if (printMap[i][j] == 'E'){
-                console.writeToBuffer(c, (char)239, 0x04);
+                console.writeToBuffer(c, (char)239, 0x0B);
             }
             else if (printMap[i][j] == 'K'){
-                console.writeToBuffer(c, (char)239, 0x04);
+                console.writeToBuffer(c, (char)239, 0x0B);
             }
             // From Y - P tutorial
             // Monster spawner
@@ -395,7 +385,11 @@ void renderMap()
 			}
             // Super ghost
 			else if (printMap[i][j] == 'U') {
+<<<<<<< bafcd8adcffe8cf35732bab0c2345320e63fc76c
 				console.writeToBuffer(c, (char)69, 0x0D);
+=======
+				console.writeToBuffer(c, (char)69, 0x0A);
+>>>>>>> e4ae577bc638014e0c2c6f4aefdd9e44cbb00ce4
 			}
             // Ghost
 			else if (printMap[i][j] == 'T') {
@@ -553,7 +547,11 @@ void renderCharacter()
     // render super monster
     if (g_cChaserLoc.X == g_cChaser1Loc.X && g_cChaserLoc.Y == g_cChaser1Loc.Y){
         if (monsterToken == 1){
+<<<<<<< bafcd8adcffe8cf35732bab0c2345320e63fc76c
             console.writeToBuffer(g_cChaserLoc, (char)238, 0x0D);
+=======
+            console.writeToBuffer(g_cChaserLoc, (char)238, 0x0A);
+>>>>>>> e4ae577bc638014e0c2c6f4aefdd9e44cbb00ce4
         }
     }
     // normal monster
@@ -641,13 +639,14 @@ void gameend(){
         fight = NORMAL;
         retry();
 		cobwebToken = 0;
+        timesRetry++;
 	} // Change gamestate from gameover to game and allows player to retry the stage they are at
     if (classes == BALANCED) {
         player.health = 4;
         player.ammo = 5;
     } // Adventurer/Balanced class, health 4, 4 ammo at start, 2 range 
     else if (classes == WARRIOR) {
-        player.health = 6;
+        player.health = 40;
         player.ammo = 1;
     } // Warrior class, health 6, infinite ammo, 1 range
     else if (classes == ARCHER) {
@@ -826,20 +825,6 @@ void textbox() {
         c.Y = 22;
         console.writeToBuffer(c, "'Esc' to pause game");
 	} // Basic instructions shown at start of game, hard coded into array
-}
-
-//BOMB
-void bomb() {
-    if (keyPressed[K_E]) {
-		if (player.bomb > 0){
-			monsterDeath();
-			monster1Death();
-			player.bomb -= 1;
-            if (fight == BATTLE) {
-                Bhealth -= 5;
-            } // Kills off enemy and reduces boss health by 5 if fighting boss
-		}
-    }
 }
 
 void invincibility(){
