@@ -4,7 +4,7 @@ extern CLASSES classes;
 extern int iToken;
 extern double elapsedTime;
 extern double uCooldown;
-extern double t_tDamage;
+extern double t_dDamage;
 extern double t_maxRange;
 extern bool keyPressed[K_COUNT];
 
@@ -34,7 +34,7 @@ void Ultimate() {
                 uCooldown = elapsedTime + 60;
                 if (iToken == 0){
                     iToken += 1;
-                    t_tDamage = elapsedTime + 1;
+                    t_dDamage = elapsedTime + 1;
                 }
             }
         }

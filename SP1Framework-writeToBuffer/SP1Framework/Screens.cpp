@@ -202,7 +202,6 @@ void classSelect() {
     c.Y = 3;
     c.X = 10;
     std::ifstream myfile;
-
     myfile.open("screen/classSel.txt");
     for (int i = 0; myfile.good(); i++){
         std::getline(myfile, classSel);
@@ -349,7 +348,7 @@ void CSdesc() {
         console.writeToBuffer(CSdescLoc, "Ultimate: Warrior's Rage");
         CSdescLoc.X = 32;
         CSdescLoc.Y = 25;
-        console.writeToBuffer(CSdescLoc, "Triple damage for 1 second");
+        console.writeToBuffer(CSdescLoc, "Double damage for 1 second");
     }
     else if (pointerCLoc.X == 47){
         CSdescLoc.X = 6;
@@ -384,14 +383,13 @@ void victory() {
     c.Y = 6;
     c.X = 15;
     std::ifstream myfile;
-    FILE * pFile;
     myfile.open("screen/victory.txt");
     for (int i = 0; myfile.good(); i++){
         std::getline(myfile, victory);
         console.writeToBuffer(c, victory, 0x0E);
         c.Y += 1;
     }
-    c.X = 28;
+    c.X = 20;
     c.Y = 13;
     console.writeToBuffer(c, "Press R to return to title screen", 0x0E);
     if (keyPressed[K_R]) {
