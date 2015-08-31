@@ -29,9 +29,11 @@ struct Stats {
 
 extern Stats player;
 
-//--------------------------------------------//
-// Waiting time before Splash Screen switches //
-//--------------------------------------------//
+/* Splash screen
+Done by Cher Yi , 20 Aug 2015
+Checks if 3 seconds have passed after splash screen shows, if true, show title screen
+if false, show splash screen till 3 seconds have passed
+*/
 
 void splashwait(){
     if (elapsedTime > 3.0){
@@ -57,9 +59,11 @@ void splash(){
     }
 }
 
-//------------//
-// Title Menu //
-//------------//
+/* Title Screen
+Done by Cher Yi , 24 Aug 2015
+Clears the screen and prints out the text from text file line by line
+Pointer then moves to coordinates depending on key pressed
+*/
 
 void titlescreen(){
     clearScreen();
@@ -108,9 +112,11 @@ void Tpointer(){
     }
 }
 
-//--------------//
-// Pause Screen //
-//--------------//
+/* Pause Menu
+Done by Cher Yi , 25 Aug 2015
+Clears the screen and prints out the text from text file line by line
+Pointer then moves to coordinates depending on key pressed
+*/
 
 void pausemenu(){
     clearScreen();
@@ -141,9 +147,7 @@ void pausemenu(){
     Ppointer();
 }
 
-//------------------------//
-// Pause Screen's pointer //
-//------------------------//
+
 
 void Ppointer(){
     //Up button pressed
@@ -191,9 +195,11 @@ void Ppointer(){
     }
 }
 
-//----------------------------------------//
-// Open design for Classes from text file //
-//----------------------------------------//
+/* Class Selection Screen
+Done by Kwan Liang, 25 Aug 2015
+Read from text file line by line
+Start and Back button to make selection
+*/
 
 void classSelect() {
     clearScreen();
@@ -373,9 +379,8 @@ void CSdesc() {
     }
 }
 
-//----------------//
-// Victory Screen //
-//----------------//
+/* Victory Screen
+Done by Seann, 27 Aug 2015*/
 
 void victory() {
     clearScreen();

@@ -10,7 +10,9 @@ extern char library[MAP_HEIGHT][MAP_WIDTH];
 extern char MerryGR[MAP_HEIGHT][MAP_WIDTH];
 extern char TheH[MAP_HEIGHT][MAP_WIDTH];
 extern char Tutorial[MAP_HEIGHT][MAP_WIDTH];
-
+/* Map rendering
+Done by Ashley, 24th Aug 2015
+Changes enum state whenever player goes to anothe room, and re-prints the monsters*/
 //-----------------//
 // Renders Library //
 //-----------------//

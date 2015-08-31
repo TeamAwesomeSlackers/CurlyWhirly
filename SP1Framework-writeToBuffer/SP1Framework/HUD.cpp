@@ -1,9 +1,9 @@
 #include "game.h"
 #include "Framework\console.h"
 
-extern int Bhealth;
+extern int Bhealth; //Boss health
 extern double elapsedTime;
-extern double uCooldown;
+extern double uCooldown; //Cooldown for Ultimate
 extern Console console;
 extern MAPSTATE level;
 extern CLASSES classes;
@@ -16,9 +16,11 @@ struct Stats {
 
 extern Stats player;
 
-//-----//
-// HUD //
-//-----//
+/* HUD
+The display for the player's health/ammo/bomb/boss hp
+Done by Cher Yi , 25 Aug 2015
+Checks using loops to add/minus respective stats
+*/
 
 void HUD() {
     COORD c;
