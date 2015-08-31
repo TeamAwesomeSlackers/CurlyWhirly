@@ -108,7 +108,7 @@ Updated on 27 Aug 2015, added monster delay when spawning
 */
 void monsterDeath(){
     monsterToken = 0;
-    t_monsterDied = elapsedTime + 3;
+    t_monsterDied = elapsedTime + 10;
     spawnToken = 1;
     int spawnLocation = rand() % 3; // Spawns the monster randomly between 3 different spawn locations
     g_cChaserLoc.X = 26;
@@ -129,7 +129,7 @@ void monsterDeath(){
 
 void monster1Death(){
     monster1Token = 0;
-    t_monster1Died = elapsedTime + 3;
+    t_monster1Died = elapsedTime + 10;
     spawn1Token = 1;
     int spawnLocation = rand() % 3; // Spawns the monster randomly between 3 different spawn locations
     g_cChaser1Loc.X = 26;

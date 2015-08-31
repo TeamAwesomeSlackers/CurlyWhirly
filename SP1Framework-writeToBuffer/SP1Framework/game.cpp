@@ -21,6 +21,8 @@ extern COORD	Bprojectile5;
 extern COORD	Bprojectile6;
 extern COORD	Bprojectile7;
 extern COORD	Bprojectile8;
+extern double t_monsterDied;
+extern double t_monster1Died;
 bool keyPressed[K_COUNT];
 int Phealth = 0;
 int cobwebToken = 0;
@@ -38,7 +40,6 @@ double t_dDamage = elapsedTime;
 double t_maxRange = elapsedTime;
 double cobweb = elapsedTime;
 double cobwebInvul = elapsedTime;
-FILE *map;
 GAMESTATES g_eGameState = SPLASH;
 CLASSES classes;
 DEATHSTATE die = SAD;
@@ -595,12 +596,8 @@ void gameend(){
 	c.Y = 13;
 	console.writeToBuffer(c, "Press R to retry", 0x0E);
 	if (keyPressed[K_R]) {
-		g_eGameState = GAME;
-        player.bomb = 1;
-        uCooldown = 0;
-        fight = NORMAL;
         retry();
-		cobwebToken = 0;
+		
 	} // Change gamestate from gameover to game and allows player to retry the stage they are at
     if (classes == BALANCED) {
         player.health = 4;
@@ -809,6 +806,13 @@ void invincibility(){
 }
 
 void retry(){
+	t_monsterDied = 0;
+	t_monster1Died = 0;
+	g_eGameState = GAME;
+	player.bomb = 1;
+	uCooldown = 0;
+	fight = NORMAL;
+	cobwebToken = 0;
     switch (level){
         case RIVERROOM: mapRiver();
             break;
