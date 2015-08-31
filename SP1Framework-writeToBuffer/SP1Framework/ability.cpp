@@ -2,15 +2,12 @@
 
 extern CLASSES classes;
 extern int iToken;
-<<<<<<< bafcd8adcffe8cf35732bab0c2345320e63fc76c
-=======
 extern int Bhealth;
 extern int bombUsed;
 extern double elapsedTime; 
 extern double uCooldown; // Ultimate skill cooldown
 extern double t_tDamage; // Triple damage for warrior
 extern double t_maxRange; // Ultimate skill for archer
->>>>>>> e4ae577bc638014e0c2c6f4aefdd9e44cbb00ce4
 extern double elapsedTime;
 extern double uCooldown;
 extern double t_tDamage;

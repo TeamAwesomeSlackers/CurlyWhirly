@@ -172,14 +172,14 @@ void status() {
 }
 // Balanced/Adventure class
 void balanced() {
-    player.health = 400;
+    player.health = 4;
     player.ammo = 5;
     player.bomb = 1;
     MaxHP = 4;
 }
 // Warrior class
 void warrior() {
-    player.health = 40;
+    player.health = 4;
     player.ammo = 1;
     player.bomb = 1;
     MaxHP = 4;
@@ -385,11 +385,7 @@ void renderMap()
 			}
             // Super ghost
 			else if (printMap[i][j] == 'U') {
-<<<<<<< bafcd8adcffe8cf35732bab0c2345320e63fc76c
-				console.writeToBuffer(c, (char)69, 0x0D);
-=======
 				console.writeToBuffer(c, (char)69, 0x0A);
->>>>>>> e4ae577bc638014e0c2c6f4aefdd9e44cbb00ce4
 			}
             // Ghost
 			else if (printMap[i][j] == 'T') {
@@ -547,11 +543,7 @@ void renderCharacter()
     // render super monster
     if (g_cChaserLoc.X == g_cChaser1Loc.X && g_cChaserLoc.Y == g_cChaser1Loc.Y){
         if (monsterToken == 1){
-<<<<<<< bafcd8adcffe8cf35732bab0c2345320e63fc76c
-            console.writeToBuffer(g_cChaserLoc, (char)238, 0x0D);
-=======
             console.writeToBuffer(g_cChaserLoc, (char)238, 0x0A);
->>>>>>> e4ae577bc638014e0c2c6f4aefdd9e44cbb00ce4
         }
     }
     // normal monster
@@ -646,7 +638,7 @@ void gameend(){
         player.ammo = 5;
     } // Adventurer/Balanced class, health 4, 4 ammo at start, 2 range 
     else if (classes == WARRIOR) {
-        player.health = 40;
+        player.health = 4;
         player.ammo = 1;
     } // Warrior class, health 6, infinite ammo, 1 range
     else if (classes == ARCHER) {
