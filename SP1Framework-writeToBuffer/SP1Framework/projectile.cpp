@@ -8,7 +8,7 @@ extern CLASSES classes;
 extern BOSS fight;
 extern Console console;
 extern double elapsedTime;
-extern double t_tDamage;
+extern double t_dDamage;
 extern double t_maxRange;
 extern int Bhealth;
 
@@ -23,9 +23,11 @@ struct Stats {
 
 extern Stats player;
 
-//---------------------------------//
-// Projectile for specific Classes //
-//---------------------------------//
+/* projectiles for the different classes
+Done by Kwan Liang , 21 Aug 2015
+Checks if theres ammo, direction of projectile, walls, enemies and class
+Checks classes and range of projectile
+*/
 
 void projectile() {
     if (player.ammo > 0){
@@ -38,8 +40,8 @@ void projectile() {
                 for (int i = 0; i < 1; ++i) {
                     if (fight == BATTLE){
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 'I'){
-                            if (elapsedTime < t_tDamage) {
-                                Bhealth -= 3;
+                            if (elapsedTime < t_dDamage) {
+                                Bhealth -= 2;
                             }
                             else {
                                 Bhealth -= 1;
@@ -117,8 +119,8 @@ void projectile() {
             if (classes == WARRIOR) {
                 if (fight == BATTLE){
                     if (printMap[g_cProjectile.Y][g_cProjectile.X] == 'I'){
-                        if (elapsedTime < t_tDamage) {
-                            Bhealth -= 3;
+                        if (elapsedTime < t_dDamage) {
+                            Bhealth -= 2;
                         }
                         else {
                             Bhealth -= 1;
@@ -200,8 +202,8 @@ void projectile() {
                 for (int i = 0; i < 1; ++i) {
                     if (fight == BATTLE){
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 'I'){
-                            if (elapsedTime < t_tDamage) {
-                                Bhealth -= 3;
+                            if (elapsedTime < t_dDamage) {
+                                Bhealth -= 2;
                             }
                             else {
                                 Bhealth -= 1;
@@ -281,8 +283,8 @@ void projectile() {
                 for (int i = 0; i < 1; ++i) {
                     if (fight == BATTLE){
                         if (printMap[g_cProjectile.Y][g_cProjectile.X] == 'I'){
-                            if (elapsedTime < t_tDamage) {
-                                Bhealth -= 3;
+                            if (elapsedTime < t_dDamage) {
+                                Bhealth -= 2;
                             }
                             else {
                                 Bhealth -= 1;

@@ -34,7 +34,7 @@ double elapsedTime;
 double deltaTime;
 double bossFightTime = elapsedTime;
 double t_invincibility = elapsedTime;
-double t_tDamage = elapsedTime;
+double t_dDamage = elapsedTime;
 double t_maxRange = elapsedTime;
 double cobweb = elapsedTime;
 double cobwebInvul = elapsedTime;
@@ -334,7 +334,7 @@ void renderMap()
             }
             //8 is health
             else if (printMap[i][j] == 8){
-                console.writeToBuffer(c, (char)3, 0x0C);
+                console.writeToBuffer(c, (char)3, 0x0D);
             }
             //9 spawn points
             else if (printMap[i][j] == 9){
@@ -366,7 +366,7 @@ void renderMap()
 			}
             // Health pack
 			else if (printMap[i][j] == 'X') {
-				console.writeToBuffer(c, (char)3, 0x0C);
+				console.writeToBuffer(c, (char)3, 0x0D);
 			}
             // Ammo pack
 			else if (printMap[i][j] == 'W') {
@@ -378,7 +378,7 @@ void renderMap()
 			}
             // Super ghost
 			else if (printMap[i][j] == 'U') {
-				console.writeToBuffer(c, (char)69, 0x0D);
+				console.writeToBuffer(c, (char)69, 0x09);
 			}
             // Ghost
 			else if (printMap[i][j] == 'T') {
@@ -426,7 +426,6 @@ void moveCharacter()
 
             }    
             else{
-                Beep(1440, 30);
                 charLocation.Y -= 2; 
             }
         }
@@ -437,7 +436,6 @@ void moveCharacter()
 
             }
             else{
-                Beep(202, 30);
                 charLocation.X -= 2;
             }
         }
@@ -447,7 +445,6 @@ void moveCharacter()
             if (printMap[charLocation.Y + 2][charLocation.X] == 1){
             }
             else{
-                Beep(1440, 30);
                 charLocation.Y += 2;
             }
         }
@@ -458,7 +455,6 @@ void moveCharacter()
 
             }
             else{
-                Beep(1440, 30);
                 charLocation.X += 2;
             }
         }
@@ -469,7 +465,6 @@ void moveCharacter()
                 
             }
             else{
-                Beep(1440, 30);
                 charLocation.Y -= 1;
             }
         }
@@ -480,7 +475,6 @@ void moveCharacter()
 
             }
             else{
-                Beep(1440, 30);
                 charLocation.X -= 1;
             }
         }
@@ -491,7 +485,6 @@ void moveCharacter()
 
             }
             else{
-                Beep(1440, 30);
                 charLocation.Y += 1;
             }
         }
@@ -502,7 +495,6 @@ void moveCharacter()
 
             }
             else{
-                Beep(1440, 30);
                 charLocation.X += 1;
             }
         }
@@ -536,7 +528,7 @@ void renderCharacter()
     // render super monster
     if (g_cChaserLoc.X == g_cChaser1Loc.X && g_cChaserLoc.Y == g_cChaser1Loc.Y){
         if (monsterToken == 1){
-            console.writeToBuffer(g_cChaserLoc, (char)238, 0x0D);
+            console.writeToBuffer(g_cChaserLoc, (char)238, 0x09);
         }
     }
     // normal monster

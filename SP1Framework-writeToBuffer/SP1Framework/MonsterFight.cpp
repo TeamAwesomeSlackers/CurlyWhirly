@@ -41,19 +41,15 @@ void moveMonster(){
         if (monsterdelay == 5){
             if (charLocation.Y < g_cChaserLoc.Y){
                 g_cChaserLoc.Y -= 1;
-                Beep(1440, 30);
             } // up
             if (charLocation.X < g_cChaserLoc.X){
                 g_cChaserLoc.X -= 1;
-                Beep(1440, 30);
             } // left
             if (charLocation.X > g_cChaserLoc.X){
                 g_cChaserLoc.X += 1;
-                Beep(1440, 30);
             } // right
             if (charLocation.Y > g_cChaserLoc.Y){
                 g_cChaserLoc.Y += 1;
-                Beep(1440, 30);
             } // down
             monsterdelay = 0; // resets delay after making a move
         }
@@ -67,19 +63,15 @@ void moveMonster1(){
         if (monster1delay == 5){
             if (charLocation.Y < g_cChaser1Loc.Y){
                 g_cChaser1Loc.Y -= 1;
-                Beep(1440, 30);
             } // up
             if (charLocation.X < g_cChaser1Loc.X){
                 g_cChaser1Loc.X -= 1;
-                Beep(1440, 30);
             } // left
             if (charLocation.X > g_cChaser1Loc.X){
                 g_cChaser1Loc.X += 1;
-                Beep(1440, 30);
             } // right
             if (charLocation.Y > g_cChaser1Loc.Y){
                 g_cChaser1Loc.Y += 1;
-                Beep(1440, 30);
             } // down
             monster1delay = 0; // resets delay after making a move
         }

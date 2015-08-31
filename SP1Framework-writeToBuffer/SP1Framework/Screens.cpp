@@ -380,7 +380,7 @@ void CSdesc() {
 }
 
 /* Victory Screen
-Done by Seann, 27 Aug 2015*/
+Done by Seann, 27 Aug 2015 */
 
 void victory() {
     clearScreen();
