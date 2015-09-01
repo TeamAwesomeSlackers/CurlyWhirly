@@ -153,7 +153,7 @@ void guardamovement(){
 
                     if (gdirectiona == 1)
                     {
-                        if (guarda.Y > 3)
+                        if (guarda.Y > 2)
                         {
                             guarda.Y -= 1;
                         }
@@ -190,7 +190,7 @@ void guardbmovement(){
 
                 if (gdirectionb == 1)
                 {
-                    if (guardb.Y > 1)
+                    if (guardb.Y > 2)
                     {
                         guardb.Y -= 1;
                     }
@@ -226,7 +226,7 @@ void guardcmovement(){
 
                 if (gdirectionc == 1)
                 {
-                    if (guardc.Y > 3)
+                    if (guardc.Y > 2)
                     {
                         guardc.Y -= 1;
                     }
@@ -263,7 +263,7 @@ void guarddmovement(){
 
                 if (gdirectiond == 1)
                 {
-                    if (guardd.Y > 3)
+                    if (guardd.Y > 2)
                     {
                         guardd.Y -= 1;
                     }
@@ -300,7 +300,7 @@ void guardemovement(){
 
                 if (gdirectione == 1)
                 {
-                    if (guarde.Y > 3)
+                    if (guarde.Y > 2)
                     {
                         guarde.Y -= 1;
                     }

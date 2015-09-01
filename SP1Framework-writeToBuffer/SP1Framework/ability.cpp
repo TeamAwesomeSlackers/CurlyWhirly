@@ -6,7 +6,7 @@ extern int Bhealth;
 extern int bombUsed;
 extern double elapsedTime; 
 extern double uCooldown; // Ultimate skill cooldown
-extern double t_dDamage; // Triple damage for warrior
+extern double t_dDamage; // Double damage for warrior
 extern double t_maxRange; // Ultimate skill for archer
 extern bool keyPressed[K_COUNT];
 
@@ -40,7 +40,7 @@ void Ultimate() {
                 uCooldown = elapsedTime + 60;
                 if (iToken == 0){
                     iToken += 1;
-                    t_dDamage = elapsedTime + 1;
+                    t_dDamage = elapsedTime + 2;
                 }
             }
         }

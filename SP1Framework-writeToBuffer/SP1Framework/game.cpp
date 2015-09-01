@@ -247,11 +247,12 @@ void gameplay(){
     // When the player dies and the gamestate switches to the game over screen
 	if (player.health <= 0){
 		g_eGameState = GAMEOVER;
-		PlaySound(L"sounds/dietheme.wav", NULL, SND_ASYNC|SND_LOOP);
+		PlaySound(L"sounds/dietheme.wav", NULL, SND_ASYNC | SND_LOOP);
 	}
     // When the boss dies and the gamestate switches to the victory screen
     if (Bhealth <= 0){
         g_eGameState = VICTORY;
+        PlaySound(L"sounds/victorytheme.wav", NULL, SND_ASYNC | SND_LOOP);
     }
 	if (gamesoundToken == 0){
 		if (level != BOSSROOM){
@@ -650,6 +651,10 @@ void gameend(){
 		cobwebToken = 0;
         timesRetry++;
 		soundreset();
+		gamesoundToken = 0;
+        monsterToken = 1;
+        monster1Token = 1;
+        Bhealth = 50;
 	} // Change gamestate from gameover to game and allows player to retry the stage they are at
     if (classes == BALANCED) {
         player.health = 4;

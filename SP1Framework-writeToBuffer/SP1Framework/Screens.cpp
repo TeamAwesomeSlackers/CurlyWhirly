@@ -363,7 +363,7 @@ void CSdesc() {
         console.writeToBuffer(CSdescLoc, "Ultimate: Warrior's Rage");
         CSdescLoc.X = 32;
         CSdescLoc.Y = 25;
-        console.writeToBuffer(CSdescLoc, "Triple damage for 1 second");
+        console.writeToBuffer(CSdescLoc, "Double damage for 2 seconds");
     }
     else if (pointerCLoc.X == 47){
         CSdescLoc.X = 6;
