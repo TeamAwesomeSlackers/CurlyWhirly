@@ -624,6 +624,9 @@ void gameend(){
 	c.X = 28;
 	c.Y = 13;
 	console.writeToBuffer(c, "Press R to retry", 0x0E);
+    //Text for game over
+    c.Y = 15;
+    console.writeToBuffer(c, "Press Q to quit game", 0x0E);
 	if (keyPressed[K_R]) {
 		g_eGameState = GAME;
         player.bomb = 1;
@@ -633,6 +636,9 @@ void gameend(){
 		cobwebToken = 0;
         timesRetry++;
 	} // Change gamestate from gameover to game and allows player to retry the stage they are at
+    if (keyPressed[K_Q]) {
+        g_quitGame = true;
+    }
     if (classes == BALANCED) {
         player.health = 4;
         player.ammo = 5;
