@@ -34,7 +34,6 @@ int monsterdelay = 0;
 int monster1delay = 0;
 int Bhealth = 50;
 int showCD = 0;
-int gamesoundToken = 0;
 int MaxHP = 0;
 double uCooldown = 0;
 double elapsedTime;
@@ -106,15 +105,15 @@ void init()
     CSdescLoc.X = 0;
     CSdescLoc.Y = 0;
     //Guards
-    guarda.X = 18;
+    guarda.X = 4;
     guarda.Y = 13;
-    guardb.X = 13;
+    guardb.X = 14;
     guardb.Y = 13;
-    guardc.X = 22;
+    guardc.X = 23;
     guardc.Y = 13;
-    guardd.X = 30;
+    guardd.X = 31;
     guardd.Y = 13;
-    guarde.X = 39;
+    guarde.X = 40;
     guarde.Y = 13;
 	
     // sets the width, height and the font name to use in the console
@@ -246,18 +245,11 @@ void gameplay(){
     // When the player dies and the gamestate switches to the game over screen
 	if (player.health <= 0){
 		g_eGameState = GAMEOVER;
-		PlaySound(L"sounds/dietheme.wav", NULL, SND_ASYNC|SND_LOOP);
 	}
     // When the boss dies and the gamestate switches to the victory screen
     if (Bhealth <= 0){
         g_eGameState = VICTORY;
     }
-	if (gamesoundToken == 0){
-
-		PlaySound(L"sounds/gametheme.wav", NULL, SND_ASYNC|SND_LOOP);
-		gamesoundToken++;
-	}
-
 }
 
 /*
@@ -441,7 +433,7 @@ void moveCharacter()
 
             }    
             else{
-                
+                Beep(1440, 30);
                 charLocation.Y -= 2; 
             }
         }
@@ -452,7 +444,7 @@ void moveCharacter()
 
             }
             else{
-       
+                Beep(202, 30);
                 charLocation.X -= 2;
             }
         }
@@ -462,7 +454,7 @@ void moveCharacter()
             if (printMap[charLocation.Y + 2][charLocation.X] == 1){
             }
             else{
-             
+                Beep(1440, 30);
                 charLocation.Y += 2;
             }
         }
@@ -473,7 +465,7 @@ void moveCharacter()
 
             }
             else{
-                
+                Beep(1440, 30);
                 charLocation.X += 2;
             }
         }
@@ -484,7 +476,7 @@ void moveCharacter()
                 
             }
             else{
-                
+                Beep(1440, 30);
                 charLocation.Y -= 1;
             }
         }
@@ -495,7 +487,7 @@ void moveCharacter()
 
             }
             else{
-                
+                Beep(1440, 30);
                 charLocation.X -= 1;
             }
         }
@@ -506,7 +498,7 @@ void moveCharacter()
 
             }
             else{
-          
+                Beep(1440, 30);
                 charLocation.Y += 1;
             }
         }
@@ -517,7 +509,7 @@ void moveCharacter()
 
             }
             else{
-            
+                Beep(1440, 30);
                 charLocation.X += 1;
             }
         }
@@ -621,7 +613,6 @@ void gameend(){
 	COORD c;
 	c.Y = 6;
 	c.X = 15;
-	
 	std::ifstream myfile;
 	myfile.open("screen/gameover.txt");
 	for (int i = 0; myfile.good(); i++){
@@ -633,6 +624,9 @@ void gameend(){
 	c.X = 28;
 	c.Y = 13;
 	console.writeToBuffer(c, "Press R to retry", 0x0E);
+    //Text for game over
+    c.Y = 15;
+    console.writeToBuffer(c, "Press Q to quit game", 0x0E);
 	if (keyPressed[K_R]) {
 		g_eGameState = GAME;
         player.bomb = 1;
@@ -641,8 +635,10 @@ void gameend(){
         retry();
 		cobwebToken = 0;
         timesRetry++;
-		gamesoundToken = 0;
 	} // Change gamestate from gameover to game and allows player to retry the stage they are at
+    if (keyPressed[K_Q]) {
+        g_quitGame = true;
+    }
     if (classes == BALANCED) {
         player.health = 4;
         player.ammo = 5;
