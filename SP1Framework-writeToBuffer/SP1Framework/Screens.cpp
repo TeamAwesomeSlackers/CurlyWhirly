@@ -36,9 +36,11 @@ struct Stats {
 
 extern Stats player;
 
-//--------------------------------------------//
-// Waiting time before Splash Screen switches //
-//--------------------------------------------//
+/* Splash screen
+Done by Cher Yi , 20 Aug 2015
+Checks if 3 seconds have passed after splash screen shows, if true, show title screen
+if false, show splash screen till 3 seconds have passed
+*/
 
 void splashwait(){
     if (elapsedTime > 3.0){

@@ -23,9 +23,11 @@ struct Stats {
 };
 extern Stats player;
 
-//---------------------//
-// Ability for Classes //
-//---------------------//
+/* Classes
+Done by Kwan Liang , 25 Aug 2015
+Changes Gamestate to different states depending on which class is chosen
+Changes player health and stats depending on class
+*/
 
 void Ultimate() {
     if (classes == BALANCED) {
