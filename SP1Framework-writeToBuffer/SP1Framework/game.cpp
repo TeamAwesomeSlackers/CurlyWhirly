@@ -105,15 +105,15 @@ void init()
     CSdescLoc.X = 0;
     CSdescLoc.Y = 0;
     //Guards
-    guarda.X = 4;
+    guarda.X = 18;
     guarda.Y = 13;
-    guardb.X = 14;
+    guardb.X = 13;
     guardb.Y = 13;
-    guardc.X = 23;
+    guardc.X = 22;
     guardc.Y = 13;
-    guardd.X = 31;
+    guardd.X = 30;
     guardd.Y = 13;
-    guarde.X = 40;
+    guarde.X = 39;
     guarde.Y = 13;
 	
     // sets the width, height and the font name to use in the console

@@ -31,27 +31,27 @@ int gdirectione = 0;
 
 
 void guardadeath(){
-    guarda.X = 4;
+    guarda.X = 18;
     guarda.Y = 13;
 }
 // guard b death
 void guardbdeath(){
-    guardb.X = 14;
+    guardb.X = 13;
     guardb.Y = 13;
 }
 //guard c death
 void guardcdeath(){
-    guardc.X = 23;
+    guardc.X = 22;
     guardc.Y = 13;
 }
 // guard d death
 void guardddeath(){
-    guardd.X = 31;
+    guardd.X = 30;
     guardd.Y = 13;
 }
 // guard e death
 void guardedeath(){
-    guarde.X = 40;
+    guarde.X = 39;
     guarde.Y = 13;
 }
 
@@ -116,7 +116,6 @@ void collisione(){
 }
 //guard a movement
 void guardamovement(){
-    if (Monster == STARTGAME){
         if (level == LIBRARYROOM)
         {
             monsterdelaya++; 
@@ -151,11 +150,9 @@ void guardamovement(){
             }
         }
     }
-}
 
 //guard b movement
 void guardbmovement(){
-    if (Monster == STARTGAME){
         if (level == RIVERROOM){
             monsterdelayb++;
             if (monsterdelayb == 8){
@@ -187,11 +184,9 @@ void guardbmovement(){
             collisionb();
         }
     }
-}
 
 //guard c movement
 void guardcmovement(){
-    if (Monster == STARTGAME){
         if (level == THEHROOM){
             monsterdelayc++;
             if (monsterdelayc == 8){
@@ -223,11 +218,9 @@ void guardcmovement(){
             collisionc();
         }
     }
-}
 
 //guard d movement
 void guarddmovement(){
-    if (Monster == STARTGAME){
         if (level == MERRYGRROOM)
         {
             monsterdelayd++;
@@ -260,11 +253,9 @@ void guarddmovement(){
             collisiond();
         }
     }
-}
 
 //guard e movement
 void guardemovement(){
-    if (Monster == STARTGAME){
         if (level == LECTUREHALLROOM)
         {
             monsterdelaye++;
@@ -297,7 +288,7 @@ void guardemovement(){
             collisione();
         }
     }
-}
+
 void guardCollision(){
     if (level == LIBRARYROOM){
          collisiona();
