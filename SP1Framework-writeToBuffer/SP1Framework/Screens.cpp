@@ -12,6 +12,7 @@ int timesRetry = 0;
 int *pStats = 0;
 
 extern int Bhealth;
+extern int gamesoundToken;
 extern bool keyPressed[K_COUNT];
 extern double elapsedTime;
 extern Console console;
@@ -43,9 +44,10 @@ if false, show splash screen till 3 seconds have passed
 */
 
 void splashwait(){
-    if (elapsedTime > 3.0){
-        g_eGameState = TITLE;
-    }
+	if (elapsedTime > 3.0){
+		g_eGameState = TITLE;
+		PlaySound(L"sounds/menutheme.wav", NULL, SND_ASYNC | SND_LOOP);
+	}
 }
 
 //---------------//
@@ -186,6 +188,7 @@ void Ppointer(){
     if (keyPressed[K_RETURN]){
         if (PpointerLoc.Y == 15){
             g_eGameState = GAME;
+			soundreset();
         } // move to the game screen
         else if (PpointerLoc.Y == 17){
             tutorial();
@@ -196,7 +199,9 @@ void Ppointer(){
             g_eGameState = SPLASH;
             elapsedTime = 2;
             fight = NORMAL;
-        } // move to splash screen
+        } 
+		gamesoundToken = 0;// move to splash screen
+		PlaySound(NULL, NULL, 0);
     }
 }
 

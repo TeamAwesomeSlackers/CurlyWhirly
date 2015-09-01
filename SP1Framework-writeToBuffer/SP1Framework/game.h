@@ -134,5 +134,6 @@ void victory();
 void guardMovement();
 void credits();
 void Statistics();
+void soundreset();
 
 #endif // _GAME_H
