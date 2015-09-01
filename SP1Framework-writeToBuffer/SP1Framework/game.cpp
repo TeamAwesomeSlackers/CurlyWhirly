@@ -119,7 +119,7 @@ void init()
     guarde.Y = 13;
 	
     // sets the width, height and the font name to use in the console
-    console.setConsoleFont(0, 16, L"Consolas");
+    console.setConsoleFont(0, 24, L"Consolas");
 }
 
 // Do your clean up of memory here
