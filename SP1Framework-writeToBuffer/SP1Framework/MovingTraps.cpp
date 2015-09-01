@@ -12,6 +12,7 @@ extern COORD charLocation;
 extern double elapsedTime;
 extern double t_invincibility;
 extern int iToken;
+
 struct Stats {
     short health;
     short ammo;
@@ -30,31 +31,42 @@ int gdirectiond = 0;
 int gdirectione = 0;
 
 
+/* respawning of guards
+Done by Sean, 21 Aug 2015
+Checks if Guards are on the same location as player
+if true, player takes 1 damage and becomes invulnerable for 0.5 seconds
+Updated on 26 Aug 2015 - Added invulnerablity for 0.5 seconds
+*/
 void guardadeath(){
-    guarda.X = 18;
+    guarda.X = 4;
     guarda.Y = 13;
 }
 // guard b death
 void guardbdeath(){
-    guardb.X = 13;
+    guardb.X = 14;
     guardb.Y = 13;
 }
 //guard c death
 void guardcdeath(){
-    guardc.X = 22;
+    guardc.X = 23;
     guardc.Y = 13;
 }
 // guard d death
 void guardddeath(){
-    guardd.X = 30;
+    guardd.X = 31;
     guardd.Y = 13;
 }
 // guard e death
 void guardedeath(){
-    guarde.X = 39;
+    guarde.X = 40;
     guarde.Y = 13;
 }
-
+/* Check if guards get damaged
+Done by Sean, 21 Aug 2015
+Checks if Guards are on the same location as player
+if true, player takes 1 damage and becomes invulnerable for 0.5 seconds
+Updated on 26 Aug 2015 - Added invulnerablity for 0.5 seconds
+*/
 void collisiona(){
     if (charLocation.X == guarda.X && charLocation.Y == guarda.Y){
         guardadeath();
@@ -114,8 +126,14 @@ void collisione(){
         healthDMG++;
     }
 }
-//guard a movement
+/* moving of guards
+Done by Sean, 21 Aug 2015
+Checks if Guards are on the same location as player
+if true, player takes 1 damage and becomes invulnerable for 0.5 seconds
+Updated on 26 Aug 2015 - Added invulnerablity for 0.5 seconds
+*/
 void guardamovement(){
+    if (Monster == STARTGAME){
         if (level == LIBRARYROOM)
         {
             monsterdelaya++; 
@@ -150,9 +168,11 @@ void guardamovement(){
             }
         }
     }
+}
 
 //guard b movement
 void guardbmovement(){
+    if (Monster == STARTGAME){
         if (level == RIVERROOM){
             monsterdelayb++;
             if (monsterdelayb == 8){
@@ -184,9 +204,11 @@ void guardbmovement(){
             collisionb();
         }
     }
+}
 
 //guard c movement
 void guardcmovement(){
+    if (Monster == STARTGAME){
         if (level == THEHROOM){
             monsterdelayc++;
             if (monsterdelayc == 8){
@@ -218,9 +240,11 @@ void guardcmovement(){
             collisionc();
         }
     }
+}
 
 //guard d movement
 void guarddmovement(){
+    if (Monster == STARTGAME){
         if (level == MERRYGRROOM)
         {
             monsterdelayd++;
@@ -253,9 +277,11 @@ void guarddmovement(){
             collisiond();
         }
     }
+}
 
 //guard e movement
 void guardemovement(){
+    if (Monster == STARTGAME){
         if (level == LECTUREHALLROOM)
         {
             monsterdelaye++;
@@ -288,7 +314,7 @@ void guardemovement(){
             collisione();
         }
     }
-
+}
 void guardCollision(){
     if (level == LIBRARYROOM){
          collisiona();
