@@ -1,7 +1,9 @@
 #include "game.h"
 #include "Map.h"
 #include "Framework\console.h"
-// Boss projectiles coordinates for all 8 directions
+/*
+Boss projectiles coordinates for all 8 directions
+*/
 COORD   Bprojectile1;
 COORD   Bprojectile2;
 COORD	Bprojectile3;
@@ -10,6 +12,7 @@ COORD	Bprojectile5;
 COORD	Bprojectile6;
 COORD	Bprojectile7;
 COORD	Bprojectile8;
+/* Game State for Boss*/
 BOSS fight = NORMAL;
 int iToken = 0;
 int BAdelay1 = 0; // for btm right
@@ -48,9 +51,14 @@ struct Stats {
 };
 extern Stats player;
 
-//-----------------//
-// Bosses's attack //
-//-----------------//
+/*
+Boss attack
+Done by Cher Yi, modified by Ashley, 26 Aug 2015
+Function for boss to attack in each direction
+Arguments - When boss delay == random attack
+Updates
+26 Aug 2015 - Ashley updated the projectile randomness and delay
+*/
 
 void BossAttack(){
     //btm right
@@ -165,9 +173,11 @@ void BossAttack(){
     BAdelay8++;
 }
 
-//------------------------------//
-// Check if Boss damages Player //
-//------------------------------//
+/* Damage Check for boss
+Done by Cher Yi 26 Aug 2015
+Check if character location == projectile location
+if its true,  player health - 1 and gives player invincibility for 0.5seconds
+*/
 
 void Getdamagedbyboss(){
     if (charLocation.X == Bprojectile1.X && charLocation.Y == Bprojectile1.Y){
@@ -237,9 +247,11 @@ void Getdamagedbyboss(){
 
 }
 
-//---------------------------------------//
-// Set Boss and Boss projectile location //
-//---------------------------------------//
+/* Boss projectile location
+Done by Cher Yi 26 Aug 2015
+if gamestate = BATTLE
+Boss and projectile will spawn
+*/
 
 void BossFight(){
     for (int i = 0; i < MAP_HEIGHT; i++){
