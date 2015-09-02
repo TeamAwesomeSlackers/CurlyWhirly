@@ -35,6 +35,10 @@ if Player x/y coordinates and monster x/y coordinates is the same, chaser damage
 Updated by 24 Aug 2015 - Added delay for monster movement
 */
 
+//-----------------//
+// Ghost1 movement //
+//-----------------//
+
 void moveMonster(){
     // CHASER MOVEMENT
     if (Monster == STARTGAME){
@@ -57,6 +61,10 @@ void moveMonster(){
     }
 }
 
+//-----------------//
+// Ghost2 movement //
+//-----------------//
+
 void moveMonster1(){
     // CHASER MOVEMENT
     if (Monster == STARTGAME){
@@ -78,11 +86,16 @@ void moveMonster1(){
         }
     }
 }
+
 /* check hitbox for monster
 Check if player projectile hits the monster
 checks by x/y location, if returns true, monster dies
 Done by Cher Yi, 18 Aug 2015
 */
+
+//-------------------------------//
+// Player projectile kill ghost1 //
+//-------------------------------//
 
 void projKill(){
     if (g_cChaserLoc.X == g_cProjectile.X && g_cChaserLoc.Y == g_cProjectile.Y){
@@ -90,7 +103,9 @@ void projKill(){
     }
 }
 
-
+//-------------------------------//
+// Player projectile kill ghost2 //
+//-------------------------------//
 
 void projKill1(){
     if (g_cChaser1Loc.X == g_cProjectile.X && g_cChaser1Loc.Y == g_cProjectile.Y){
@@ -104,6 +119,11 @@ Checks if monster dies and randomises their spawn points
 Done by Ashley, 20 Aug 2015
 Updated on 27 Aug 2015, added monster delay when spawning
 */
+
+//-----------------//
+// 1st ghost death //
+//-----------------//
+
 void monsterDeath(){
     monsterToken = 0;
     t_monsterDied = elapsedTime + 15;
@@ -120,9 +140,14 @@ void monsterDeath(){
         g_cChaserLoc.Y = 24; // location 3
     }
 }
+
+//-----------------//
+// 2nd ghost death //
+//-----------------//
+
 void monster1Death(){
     monster1Token = 0;
-    t_monster1Died = elapsedTime + 3;
+    t_monster1Died = elapsedTime + 15;
     spawn1Token = 1;
     int spawnLocation = rand() % 3; // Spawns the monster randomly between 3 different spawn locations
     g_cChaser1Loc.X = 26;
@@ -142,6 +167,11 @@ Done by Cher Yi , 21 Aug 2015
 Checks if player and monster is on the same location
 if true, player damaged and becomes invulnerable for 0.5 seconds
 */
+
+//------------------------------------------------//
+// 1st ghost collision check & damage calculation //
+//------------------------------------------------//
+
 void collision(){
     if (charLocation.X == g_cChaserLoc.X && charLocation.Y == g_cChaserLoc.Y){
         monsterDeath(); // Monster dies after damaging player
@@ -177,6 +207,11 @@ Checks if super monster is on the same location as player
 if true, player takes 2 damage and becomes invulnerable for 0.5 seconds
 Updated on 26 Aug 2015 - Added invulnerablity for 0.5 seconds
 */
+
+//--------------------------------------//
+// Check for ghost & super ghost damage //
+//--------------------------------------//
+
 void monsterDamage(){
     if (charLocation.X == g_cChaser1Loc.X && charLocation.Y == g_cChaser1Loc.Y && charLocation.X == g_cChaserLoc.X && charLocation.Y == g_cChaserLoc.Y){
         if (monsterToken == 1){
@@ -206,6 +241,7 @@ Done by Ashley, 21 Aug 2015
 respawns the ghost if thge ghost has died
 
 */
+
 //-----------------//
 // Spawn 1st ghost //
 //-----------------//

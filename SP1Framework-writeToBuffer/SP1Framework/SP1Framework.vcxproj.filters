@@ -22,9 +22,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Resource Files\Work</Filter>
     </ClCompile>
+<<<<<<< 0d188310de4682127e7d512340b81f77fa63f7ef
     <ClCompile Include="Mapdefination.cpp">
       <Filter>Resource Files\Work</Filter>
     </ClCompile>
+=======
+>>>>>>> 73bdb606eb43f9a8c6b4b18f2b4b0b60286400e7
     <ClCompile Include="mapfunctions.cpp">
       <Filter>Resource Files\Work</Filter>
     </ClCompile>
@@ -48,6 +51,9 @@
     </ClCompile>
     <ClCompile Include="traps.cpp">
       <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="Mapdefinition.cpp">
+      <Filter>Resource Files\Framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

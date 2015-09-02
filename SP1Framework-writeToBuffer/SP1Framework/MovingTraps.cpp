@@ -37,6 +37,8 @@ Checks if Guards are on the same location as player
 if true, player takes 1 damage and becomes invulnerable for 0.5 seconds
 Updated on 26 Aug 2015 - Added invulnerablity for 0.5 seconds
 */
+
+// guard a death
 void guardadeath(){
     guarda.X = 4;
     guarda.Y = 13;
@@ -61,12 +63,14 @@ void guardedeath(){
     guarde.X = 40;
     guarde.Y = 13;
 }
+
 /* Check if guards get damaged
 Done by Sean, 21 Aug 2015
 Checks if Guards are on the same location as player
 if true, player takes 1 damage and becomes invulnerable for 0.5 seconds
 Updated on 26 Aug 2015 - Added invulnerablity for 0.5 seconds
 */
+
 void collisiona(){
     if (charLocation.X == guarda.X && charLocation.Y == guarda.Y){
         guardadeath();
@@ -78,6 +82,7 @@ void collisiona(){
         healthDMG++;
     }
 }
+
 //guard b (trap) collision
 void collisionb(){
     if (charLocation.X == guardb.X && charLocation.Y == guardb.Y){
@@ -90,6 +95,7 @@ void collisionb(){
         healthDMG++;
     }
 }
+
 //guard c (trap) collision
 void collisionc(){
     if (charLocation.X == guardc.X && charLocation.Y == guardc.Y){
@@ -102,6 +108,7 @@ void collisionc(){
         healthDMG++;
     }
 }
+
 //guard d (trap) collision
 void collisiond(){
     if (charLocation.X == guardd.X && charLocation.Y == guardd.Y){
@@ -114,6 +121,7 @@ void collisiond(){
         healthDMG++;
     }
 }
+
 //guard e (trap) collision
 void collisione(){
     if (charLocation.X == guarde.X && charLocation.Y == guarde.Y){
@@ -126,12 +134,15 @@ void collisione(){
         healthDMG++;
     }
 }
+
 /* moving of guards
 Done by Sean, 21 Aug 2015
 Checks if Guards are on the same location as player
 if true, player takes 1 damage and becomes invulnerable for 0.5 seconds
 Updated on 26 Aug 2015 - Added invulnerablity for 0.5 seconds
 */
+
+//guard a movement
 void guardamovement(){
     if (Monster == STARTGAME){
         if (level == LIBRARYROOM)
@@ -315,6 +326,9 @@ void guardemovement(){
         }
     }
 }
+
+
+//collision of moving traps in different maps
 void guardCollision(){
     if (level == LIBRARYROOM){
          collisiona();
@@ -333,6 +347,8 @@ void guardCollision(){
         collisione();
     }
 }
+
+//moving trap function
 void guardMovement(){   
     guardamovement();  
     guardbmovement(); 

@@ -87,9 +87,10 @@ void mapTheH(){
     level = THEHROOM;
 }
 
-//-------------------//
-// Restarts the game //
-//-------------------//
+//----------------------//
+// Renders tutorial map //
+//----------------------//
+
 void tutorial(){
     for (int i = 0; i < MAP_HEIGHT; i++){
         for (int j = 0; j < MAP_WIDTH; j++){

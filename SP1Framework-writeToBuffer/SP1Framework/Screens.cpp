@@ -15,6 +15,8 @@ extern int Bhealth;
 extern int gamesoundToken;
 extern bool keyPressed[K_COUNT];
 extern double elapsedTime;
+extern double t_monsterDied;
+extern double t_monster1Died;
 extern Console console;
 extern GAMESTATES g_eGameState;
 extern CLASSES classes;
@@ -76,8 +78,8 @@ void titlescreen(){
     clearScreen();
     std::string title;
     COORD c;
-    c.Y = 3;
     c.X = 10;
+    c.Y = 3;
     std::ifstream myfile;
     myfile.open("screen/title.txt");
     for (int i = 0; myfile.good(); i++){
@@ -85,7 +87,19 @@ void titlescreen(){
         console.writeToBuffer(c, title, 0x0E);
         c.Y += 1;
     } // prints out the characters line by line
-
+    
+    int randGhost = rand() % 100;
+    switch (randGhost) {
+    case 1: ghost1();
+        break;
+    case 2: ghost2();
+        break;
+    case 3: ghost3();
+        break;
+    case 4: ghost4();
+        break;
+    }
+    
     // start button
     c.Y = 18;
     c.X = 34;
@@ -95,6 +109,62 @@ void titlescreen(){
     c.X = 34;
     console.writeToBuffer(c, "Exit");
     Tpointer();
+}
+
+void ghost1() {
+    std::string ghost1;
+    COORD c;
+    c.X = rand() % 68;
+    c.Y = rand() % 18;
+    std::ifstream ghostAppear1;
+    ghostAppear1.open("screen/ghost1.txt");
+    for (int i = 0; ghostAppear1.good(); i++){
+        std::getline(ghostAppear1, ghost1);
+        console.writeToBuffer(c, ghost1, 0x0E);
+        c.Y += 1;
+    } // prints out the characters line by line
+}
+
+void ghost2() {
+    std::string ghost2;
+    COORD c;
+    c.X = rand() % 68;
+    c.Y = rand() % 18;
+    std::ifstream ghostAppear2;
+    ghostAppear2.open("screen/ghost2.txt");
+    for (int i = 0; ghostAppear2.good(); i++){
+        std::getline(ghostAppear2, ghost2);
+        console.writeToBuffer(c, ghost2, 0x0E);
+        c.Y += 1;
+    } // prints out the characters line by line
+}
+
+void ghost3() {
+    std::string ghost3;
+    COORD c;
+    c.X = rand() % 68;
+    c.Y = rand() % 18;
+    std::ifstream ghostAppear3;
+    ghostAppear3.open("screen/ghost3.txt");
+    for (int i = 0; ghostAppear3.good(); i++){
+        std::getline(ghostAppear3, ghost3);
+        console.writeToBuffer(c, ghost3, 0x0E);
+        c.Y += 1;
+    } // prints out the characters line by line
+}
+
+void ghost4() {
+    std::string ghost4;
+    COORD c;
+    c.X = rand() % 68;
+    c.Y = rand() % 18;
+    std::ifstream ghostAppear4;
+    ghostAppear4.open("screen/ghost4.txt");
+    for (int i = 0; ghostAppear4.good(); i++){
+        std::getline(ghostAppear4, ghost4);
+        console.writeToBuffer(c, ghost4, 0x0E);
+        c.Y += 1;
+    } // prints out the characters line by line
 }
 
 //----------------------//
@@ -195,12 +265,10 @@ void Ppointer(){
             g_eGameState = GAMEOVER;
         } // move to game over screen
         else if (PpointerLoc.Y == 19){
-            tutorial();
-            g_eGameState = SPLASH;
+            completeReset();
             elapsedTime = 2;
-            fight = NORMAL;
-        } 
-		gamesoundToken = 0;// move to splash screen
+        }
+        // move to splash screen
 		PlaySound(NULL, NULL, 0);
     }
 }
@@ -404,6 +472,14 @@ void victory() {
         console.writeToBuffer(c, victory, 0x0E);
         c.Y += 1;
     }
+
+    int randFirework = rand() % 5;
+
+    switch (randFirework) {
+        case 0: firework();
+        break;
+    }
+
     c.X = 14;
     c.Y = 13;
     console.writeToBuffer(c, "Press R to see game run statistics and credits", 0x0E);
@@ -423,6 +499,24 @@ void victory() {
         player.ammo = 8;
     } // Archer class, health 2 , 8 ammo at start, 3 range
 }
+
+void firework() {
+    std::string boom;
+    COORD c;
+    c.X = rand() % 50;
+    c.Y = rand() % 10 + 10;
+    std::ifstream fireworkExp;
+    fireworkExp.open("screen/firework.txt");
+    for (int i = 0; fireworkExp.good(); i++){
+        std::getline(fireworkExp, boom);
+        console.writeToBuffer(c, boom, 0x0E);
+        c.Y += 1;
+    } // prints out the characters line by line
+}
+
+//----------------//
+// Credits Screen //
+//----------------//
 
 void credits() {
     clearScreen();
@@ -485,15 +579,7 @@ void credits() {
     console.writeToBuffer(c, "Press R to return to title screen", 0x0E);
 
     if (keyPressed[K_R]) {
-        g_eGameState = GAME;
-        player.bomb = 1;
-        fight = NORMAL;
-        g_eGameState = SPLASH;
-        level = TUTORIALROOM;
-        tutorial();
-        Bhealth = 50;
-        healthDMG = 0;
-        ammoUsed = 0;
-        bombUsed = 0;
+        completeReset();
     } // Change gamestate from gameover to game and allows player to retry the stage they are at
 }
+

@@ -25,6 +25,10 @@ Changes Gamestate to different states depending on which class is chosen
 Changes player health and stats depending on class
 */
 
+//--------------------------------//
+// Ultimate skills for each class //
+//--------------------------------//
+
 void Ultimate() {
     if (classes == BALANCED) {
         if (elapsedTime > uCooldown) {
@@ -55,7 +59,10 @@ void Ultimate() {
     }
 }
 
-//BOMB
+//---------------//
+// Bomb function //
+//---------------//
+
 void bomb() {
     if (keyPressed[K_E]) {
         if (player.bomb > 0){

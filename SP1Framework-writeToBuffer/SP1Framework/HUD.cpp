@@ -22,6 +22,10 @@ Done by Cher Yi , 25 Aug 2015
 Checks using loops to add/minus respective stats
 */
 
+//-----------------------------//
+// Display player & boss stats //
+//-----------------------------//
+
 void HUD() {
     COORD c;
     #define HUD_WIDTH 22
@@ -92,21 +96,21 @@ void HUD() {
         c.Y = console.getConsoleSize().Y - 4;
         console.writeToBuffer(c, "BOSS HP"); //only shows when the gamestate is BOSSROOM
         if (Bhealth >= 30){
-            for (int m = 0; m < Bhealth / 5; m++){      //Health bar when hp is >= 30
+            for (int m = 0; m <= (Bhealth - 30) / 2; m++){      //Health bar when hp is >= 30
                 c.X = console.getConsoleSize().X - 21 + m;
                 c.Y = console.getConsoleSize().Y - 3;
                 console.writeToBuffer(c, (char)220);
             }
         }
         else if (Bhealth >= 10){					   //Health bar when hp is >= 10, Changes to yellow
-            for (int m = 0; m < Bhealth / 5; m++){
+            for (int m = 0; m <= (Bhealth - 10) / 2; m++){
                 c.X = console.getConsoleSize().X - 21 + m;
                 c.Y = console.getConsoleSize().Y - 3;
                 console.writeToBuffer(c, (char)220, 0x0E);
             }
         }
         else if (Bhealth < 10){						   //Health bar when hp is < 10, Changes to red
-            for (int m = 0; m < Bhealth / 5; m++){
+            for (int m = 0; m < Bhealth; m++){
                 c.X = console.getConsoleSize().X - 21 + m;
                 c.Y = console.getConsoleSize().Y - 3;
                 console.writeToBuffer(c, (char)220, 0x0C);
