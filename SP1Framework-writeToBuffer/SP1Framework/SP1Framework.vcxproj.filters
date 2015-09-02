@@ -1,53 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="ability.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="BossFight.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\console.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="HUD.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Mapdefination.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="mapfunctions.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="minimap.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="MonsterFight.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="MovingTraps.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="projectile.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Refills.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Screens.cpp">
       <Filter>Resource Files\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Framework\timer.cpp">
       <Filter>Resource Files\Framework</Filter>
     </ClCompile>
+    <ClCompile Include="ability.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="BossFight.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="Mapdefination.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="mapfunctions.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="minimap.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterFight.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingTraps.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="projectile.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="Screens.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="Refills.cpp">
+      <Filter>Resource Files\Work</Filter>
+    </ClCompile>
     <ClCompile Include="traps.cpp">
-      <Filter>Resource Files\Framework</Filter>
+      <Filter>Resource Files\Work</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +73,9 @@
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{0e0e174c-30f7-4175-80ef-5a130ca23e74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Work">
+      <UniqueIdentifier>{ccb76a1e-a082-46ae-8c93-9c602f6145c1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files\Framework">
       <UniqueIdentifier>{66aaa462-5e20-4b64-aed5-4e4db9c8923d}</UniqueIdentifier>
