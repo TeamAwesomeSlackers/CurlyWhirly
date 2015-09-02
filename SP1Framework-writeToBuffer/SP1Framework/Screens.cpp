@@ -335,6 +335,7 @@ void pointerCS(){
         else if (pointerCSLoc.Y == 25){
             g_eGameState = SPLASH;
             elapsedTime = 2;
+            pointerCSLoc.Y = 24;
         }
     }
 
