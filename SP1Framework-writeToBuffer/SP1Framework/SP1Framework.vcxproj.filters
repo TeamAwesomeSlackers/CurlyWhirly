@@ -1,90 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Framework\console.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework\timer.cpp">
-      <Filter>Resource Files\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="ability.cpp">
-      <Filter>Resource Files\Work</Filter>
+      <Filter>Source Files\Framework</Filter>
     </ClCompile>
     <ClCompile Include="BossFight.cpp">
-      <Filter>Resource Files\Work</Filter>
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\console.cpp">
+      <Filter>Source Files\Framework</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
-      <Filter>Resource Files\Work</Filter>
+      <Filter>Source Files\Framework</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp">
-      <Filter>Resource Files\Work</Filter>
+      <Filter>Source Files\Framework</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Resource Files\Work</Filter>
-    </ClCompile>
-<<<<<<< 0d188310de4682127e7d512340b81f77fa63f7ef
-    <ClCompile Include="Mapdefination.cpp">
-      <Filter>Resource Files\Work</Filter>
-    </ClCompile>
-=======
->>>>>>> 73bdb606eb43f9a8c6b4b18f2b4b0b60286400e7
-    <ClCompile Include="mapfunctions.cpp">
-      <Filter>Resource Files\Work</Filter>
-    </ClCompile>
-    <ClCompile Include="minimap.cpp">
-      <Filter>Resource Files\Work</Filter>
-    </ClCompile>
-    <ClCompile Include="MonsterFight.cpp">
-      <Filter>Resource Files\Work</Filter>
-    </ClCompile>
-    <ClCompile Include="MovingTraps.cpp">
-      <Filter>Resource Files\Work</Filter>
-    </ClCompile>
-    <ClCompile Include="projectile.cpp">
-      <Filter>Resource Files\Work</Filter>
-    </ClCompile>
-    <ClCompile Include="Screens.cpp">
-      <Filter>Resource Files\Work</Filter>
-    </ClCompile>
-    <ClCompile Include="Refills.cpp">
-      <Filter>Resource Files\Work</Filter>
-    </ClCompile>
-    <ClCompile Include="traps.cpp">
-      <Filter>Resource Files\Work</Filter>
+      <Filter>Source Files\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Mapdefinition.cpp">
-      <Filter>Resource Files\Framework</Filter>
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="mapfunctions.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="minimap.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterFight.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingTraps.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="projectile.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Refills.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Screens.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\timer.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="traps.cpp">
+      <Filter>Source Files\Framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h">
-      <Filter>HeaderFIles\FrameWork</Filter>
+      <Filter>Header Files\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Framework\timer.h">
-      <Filter>HeaderFIles\FrameWork</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>HeaderFIles</Filter>
+      <Filter>Header Files\Framework</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
-      <Filter>HeaderFIles</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="HeaderFIles">
-      <UniqueIdentifier>{f6dcf45c-887c-495b-b961-7fe0cbe00bea}</UniqueIdentifier>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{a5bb3e8f-7318-4b4a-ab9d-cb490565588d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="HeaderFIles\FrameWork">
-      <UniqueIdentifier>{1301baa5-6bab-43c6-ad7d-2a9fbfbe3bc1}</UniqueIdentifier>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1aae3bfd-acb4-4925-9ab2-6e4ca424233e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Framework">
+      <UniqueIdentifier>{f332498f-cbda-40e6-a513-a8688d2cb36b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework">
+      <UniqueIdentifier>{971d7931-9086-409d-a6c9-a10dc8142ceb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
-      <UniqueIdentifier>{0e0e174c-30f7-4175-80ef-5a130ca23e74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Work">
-      <UniqueIdentifier>{ccb76a1e-a082-46ae-8c93-9c602f6145c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Framework">
-      <UniqueIdentifier>{66aaa462-5e20-4b64-aed5-4e4db9c8923d}</UniqueIdentifier>
+      <UniqueIdentifier>{4f9123d7-d6be-468f-a219-5c184ad35053}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
