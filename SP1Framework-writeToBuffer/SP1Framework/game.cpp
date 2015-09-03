@@ -245,9 +245,9 @@ void gameplay(){
     }
 
     traps();                // check traps
-    monsterSpawn();         // check for monster spawns
+    monsterSpawn();         // check for monster spawn
     guardMovement(); 
-    monstersMoveChecker();// Moving trap function
+    monstersMoveChecker();  // Moving trap function
 
     // sound can be played here too.
     // When the player dies and the gamestate switches to the game over screen
@@ -948,6 +948,7 @@ void completeReset(){ // Reset the whole game
     t_monsterDied = 0;
     t_monster1Died = 0;
     uCooldown = 0;
+    elapsedTime = 0;
 }
 
 //----------------------------//

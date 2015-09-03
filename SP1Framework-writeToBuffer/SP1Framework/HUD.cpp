@@ -1,3 +1,5 @@
+#include <sstream>
+#include <iomanip>
 #include "game.h"
 #include "Framework\console.h"
 
@@ -30,6 +32,14 @@ void HUD() {
     COORD c;
     #define HUD_WIDTH 22
     #define HUD_HEIGHT 17
+    std::ostringstream ss;
+    ss << std::fixed << std::setprecision(1);
+    ss.str("");
+    ss << elapsedTime << "s";
+    c.X = 24;
+    c.Y = 0;
+    console.writeToBuffer(c, ss.str());
+
     //defining HUD position
     c.X = console.getConsoleSize().X - 21;
     c.Y = console.getConsoleSize().Y - 16;

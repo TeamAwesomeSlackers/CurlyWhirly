@@ -1,6 +1,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <iomanip>
 #include "game.h"
 #include "Framework\console.h"
 
@@ -18,6 +19,7 @@ extern bool keyPressed[K_COUNT];
 extern double elapsedTime;
 extern double t_monsterDied;
 extern double t_monster1Died;
+double finalTime;
 extern Console console;
 extern GAMESTATES g_eGameState;
 extern CLASSES classes;
@@ -262,7 +264,7 @@ void Ppointer(){
 			soundreset();
         } // move to the game screen
         else if (PpointerLoc.Y == 17){
-            tutorial();
+            completeReset();
             g_eGameState = GAMEOVER;
         } // move to game over screen
         else if (PpointerLoc.Y == 19){
@@ -323,14 +325,17 @@ void pointerCS(){
             if (pointerCLoc.X == 7){
                 classes = BALANCED;
                 g_eGameState = GAME;
+                elapsedTime = 0;
             }
             else if (pointerCLoc.X == 27){
                 classes = WARRIOR;
                 g_eGameState = GAME;
+                elapsedTime = 0;
             }
             else if (pointerCLoc.X == 47){
                 classes = ARCHER;
                 g_eGameState = GAME;
+                elapsedTime = 0;
             }
         }
         else if (pointerCSLoc.Y == 25){
@@ -476,12 +481,11 @@ void victory() {
     }
 
     int randFirework = rand() % 5;
-
     switch (randFirework) {
         case 0: firework();
         break;
     }
-
+    finalTime = elapsedTime;
     c.X = 14;
     c.Y = 13;
     console.writeToBuffer(c, "Press R to see game run statistics and credits", 0x0E);
@@ -529,16 +533,16 @@ void credits() {
     std::ostringstream stimesRetry;
     std::ostringstream stimeTaken;
     std::ostringstream sghostKilled;
+    stimeTaken << std::fixed << std::setprecision(1);
 
     c.X = 20;
     c.Y = 4;
     console.writeToBuffer(c, "STATISTICS", 0x0E);
 
-    static double timeTaken = elapsedTime;
 
     c.X = 20;
     c.Y = 5;
-    stimeTaken << "Time Taken : " << timeTaken << "s";
+    stimeTaken << "Time Taken : " << finalTime << "s";
     console.writeToBuffer(c, stimeTaken.str());
 
     c.X = 20;
