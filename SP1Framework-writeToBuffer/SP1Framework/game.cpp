@@ -183,7 +183,7 @@ void status() {
 }
 // Adventure class
 void balanced() {
-    player.health = 4;
+    player.health = 4000;
     player.ammo = 5;
     player.bomb = 1;
     MaxHP = 4;
@@ -239,12 +239,7 @@ void gameplay(){
         moveCharacter();    // moves the character, collision detection, physics, etc
     }
     invincibility();
-    if (monsterToken == 1) {
-        moveMonster();      // moves ghost1
-    }
-    if (monster1Token == 1){
-        moveMonster1();     // moves ghost2
-    }
+    
     if (Monster == STARTGAME){
         monsterDamage();    // check ghost damage
     }
@@ -252,7 +247,8 @@ void gameplay(){
     traps();                // check traps
     spawnMonster();         // spawn ghost1
     spawnMonster1();        // spawn ghost2
-    guardMovement();        // Moving trap function
+    guardMovement(); 
+    monstersMoveChecker();// Moving trap function
 
     // sound can be played here too.
     // When the player dies and the gamestate switches to the game over screen
@@ -692,6 +688,8 @@ void setmonsterlocation(){
     g_cChaser1Loc.Y = 24;
     charLocation.X = 3;
     charLocation.Y = 13;
+    t_monsterDied = 0;
+    t_monster1Died = 0;
 } // Code the coordinates for each entity
 
 //--------------------------//
@@ -715,13 +713,13 @@ void textbox() {
 
     // Moving traps
     if (printMap[charLocation.Y][charLocation.X] == 'Z'){
-        c.X = 8;
+        c.X = 6;
         c.Y = 7;
         console.writeToBuffer(c, "This is a moving trap");
-        c.X = 8;
+        c.X = 6;
         c.Y = 8;
         console.writeToBuffer(c, "Deals a damage when you step into it");
-        c.X = 8;
+        c.X = 6;
         c.Y = 9;
         console.writeToBuffer(c, "Won't get in your way... most of the time", 0x0A);
     }
@@ -746,7 +744,7 @@ void textbox() {
         console.writeToBuffer(c, "This is a door");
         c.X = 6;
         c.Y = 8;
-        console.writeToBuffer(c, "It transport you to another level");
+        console.writeToBuffer(c, "It transports you to another level");
         c.X = 6;
         c.Y = 9;
         console.writeToBuffer(c, "Onward!", 0x0A);
@@ -961,7 +959,7 @@ void renderMonster(){
     // render super monster
     if (g_cChaserLoc.X == g_cChaser1Loc.X && g_cChaserLoc.Y == g_cChaser1Loc.Y){
         if (monsterToken == 1){
-            console.writeToBuffer(g_cChaserLoc, (char)238, 0x0A);
+            console.writeToBuffer(g_cChaserLoc, (char)238, 0x0D);
         }
     }
     // normal monster
@@ -999,5 +997,13 @@ void renderGuards(){
     if (level == LECTUREHALLROOM)
     {
         console.writeToBuffer(guarde, '*', 0x0E);
+    }
+}
+void monstersMoveChecker(){
+    if (monsterToken == 1) {
+        moveMonster();      // moves ghost1
+    }
+    if (monster1Token == 1){
+        moveMonster1();     // moves ghost2
     }
 }

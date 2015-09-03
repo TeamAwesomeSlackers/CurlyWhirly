@@ -255,7 +255,6 @@ void guardcmovement(){
 
 //guard d movement
 void guarddmovement(){
-    if (Monster == STARTGAME){
         if (level == MERRYGRROOM)
         {
             monsterdelayd++;
@@ -287,7 +286,6 @@ void guarddmovement(){
             }
             collisiond();
         }
-    }
 }
 
 //guard e movement

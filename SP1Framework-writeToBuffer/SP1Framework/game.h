@@ -131,8 +131,11 @@ void bossSpeed();           // Boss projectile speed function
 void randomSeed();          // Random seeding
 void projKill1();           // kill ghost when projectile hits
 void projKill();            // kill ghost when projectile hits
-void monsterDamage();       // Damage function for super ghost
-
+void monsterDamage();  
+void monstersMoveChecker();
+// Damage function for super ghost
+/* moving traps */
+void guardMovement();
 /*Spawn monster*/
 void setmonsterlocation();  // Set monster spawn
 void spawnMonster();        // Spawn ghost 1
@@ -146,7 +149,8 @@ void gameend();             // Resets the game, gameover
 
 /*Traps*/
 void traps();               // Traps such as lava and cobweb
-void guardMovement();       // Moving traps function
+void 
+Movement();       // Moving traps function
 
 /*Maps*/
 void mapLibrary();          // Library map
