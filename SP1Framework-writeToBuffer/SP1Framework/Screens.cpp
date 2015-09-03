@@ -538,7 +538,7 @@ void credits() {
 
     c.X = 20;
     c.Y = 5;
-    stimeTaken << "Time Taken : " << timeTaken;
+    stimeTaken << "Time Taken : " << timeTaken << "s";
     console.writeToBuffer(c, stimeTaken.str());
 
     c.X = 20;
