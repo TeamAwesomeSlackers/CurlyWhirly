@@ -184,7 +184,7 @@ void status() {
 // Adventure class
 void balanced() {
     player.health = 4;
-    player.ammo = 5000;
+    player.ammo = 5;
     player.bomb = 1;
     MaxHP = 4;
 }
