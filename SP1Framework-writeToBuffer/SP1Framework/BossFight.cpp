@@ -206,6 +206,7 @@ void BossAttack(){
     BAdelay6++;
     BAdelay7++;
     BAdelay8++;
+    Getdamagedbyboss();     // Damage by boss
 }
 
 /* Damage Check for boss

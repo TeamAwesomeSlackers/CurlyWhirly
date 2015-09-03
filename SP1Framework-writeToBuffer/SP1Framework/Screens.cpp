@@ -504,6 +504,7 @@ void victory() {
         player.health = 2;
         player.ammo = 8;
     } // Archer class, health 2 , 8 ammo at start, 3 range
+   
 }
 
 void firework() {
@@ -542,7 +543,9 @@ void credits() {
 
     c.X = 20;
     c.Y = 5;
+   
     stimeTaken << "Time Taken : " << finalTime << "s";
+
     console.writeToBuffer(c, stimeTaken.str());
 
     c.X = 20;

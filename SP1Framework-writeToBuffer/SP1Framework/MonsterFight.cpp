@@ -274,7 +274,6 @@ void spawnMonster1(){
     }
 }
 void monsterSpawn(){
-
     spawnMonster();
     spawnMonster1();
 

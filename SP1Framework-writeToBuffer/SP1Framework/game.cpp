@@ -184,7 +184,7 @@ void status() {
 // Adventure class
 void balanced() {
     player.health = 4;
-    player.ammo = 5;
+    player.ammo = 5000;
     player.bomb = 1;
     MaxHP = 4;
 }
@@ -315,7 +315,7 @@ void renderGame() {
     bomb();                     // bomb function
     Ultimate();                 // ultimate skills function
 	if (fight == BATTLE){
-		BossAttack();
+        BossAttack();
         if (elapsedTime > bossFightTime){
             bossSpeed();                        // Seeding
             bossFightTime = elapsedTime + 30;   // map and boss pattern refreshes every 30 seconds
@@ -556,7 +556,6 @@ void moveCharacter()
         }
         mapChange();            // Change from one map to another
         refill();               // Refill items
-		Getdamagedbyboss();     // Damage by boss
 }
 
 void processUserInput()
@@ -935,10 +934,9 @@ void levelReset() { // Resets level when dead
 
 void completeReset(){ // Reset the whole game
     soundreset();
-    g_eGameState = GAME;
+    g_eGameState = SPLASH;
     player.bomb = 1;
     fight = NORMAL;
-    g_eGameState = SPLASH;
     level = TUTORIALROOM;
     tutorial();
     Bhealth = 50;
@@ -949,6 +947,7 @@ void completeReset(){ // Reset the whole game
     t_monster1Died = 0;
     uCooldown = 0;
     elapsedTime = 0;
+    cobwebToken = 0;
 }
 
 //----------------------------//
