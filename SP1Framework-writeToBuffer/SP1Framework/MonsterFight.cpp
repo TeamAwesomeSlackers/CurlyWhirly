@@ -8,6 +8,7 @@ extern int monsterdelay; // Delay for monster spawn
 extern int monster1delay; // Delay for monster spawn
 extern int iToken;
 extern int healthDMG;
+extern int ghostKilled;
 double t_monsterDied;
 double t_monster1Died;
 extern double elapsedTime;
@@ -139,6 +140,7 @@ void monsterDeath(){
     else{
         g_cChaserLoc.Y = 24; // location 3
     }
+    ghostKilled++;
 }
 
 //-----------------//
@@ -160,6 +162,7 @@ void monster1Death(){
     else{
         g_cChaser1Loc.Y = 2; // location 3
     }
+    ghostKilled++;
 }
 
 /* Check hitbox for monster
@@ -224,6 +227,7 @@ void monsterDamage(){
         monsterDeath();
         monster1Death();
         healthDMG += 2;
+        ghostKilled += 2;
     }
     else{
         if (monsterToken == 1){

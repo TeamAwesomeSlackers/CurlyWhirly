@@ -8,6 +8,7 @@ int healthDMG = 0;
 int ammoUsed = 0;
 int bombUsed = 0;
 int timesRetry = 0;
+int ghostKilled = 0;
 
 int *pStats = 0;
 
@@ -526,10 +527,19 @@ void credits() {
     std::ostringstream sAmmo;
     std::ostringstream sBombs;
     std::ostringstream stimesRetry;
+    std::ostringstream stimeTaken;
+    std::ostringstream sghostKilled;
+
+    c.X = 20;
+    c.Y = 4;
+    console.writeToBuffer(c, "STATISTICS", 0x0E);
+
+    static double timeTaken = elapsedTime;
 
     c.X = 20;
     c.Y = 5;
-    console.writeToBuffer(c, "STATISTICS", 0x0E);
+    stimeTaken << "Time Taken : " << timeTaken;
+    console.writeToBuffer(c, stimeTaken.str());
 
     c.X = 20;
     c.Y = 6;
@@ -556,27 +566,33 @@ void credits() {
     console.writeToBuffer(c, sBombs.str());
 
     c.X = 20;
-    c.Y = 12;
-    console.writeToBuffer(c, "CREDITS", 0x0E);
+    c.Y = 10;
+    pStats = &ghostKilled;
+    sghostKilled << "Ghost Killed : " << *pStats;
+    console.writeToBuffer(c, sghostKilled.str());
 
     c.X = 20;
     c.Y = 13;
-    console.writeToBuffer(c, "Lee Kwan Liang");
+    console.writeToBuffer(c, "CREDITS", 0x0E);
 
     c.X = 20;
     c.Y = 14;
-    console.writeToBuffer(c, "Ashley Wong Keng Han");
+    console.writeToBuffer(c, "Lee Kwan Liang");
 
     c.X = 20;
     c.Y = 15;
-    console.writeToBuffer(c, "Quek Cher Yi");
+    console.writeToBuffer(c, "Ashley Wong Keng Han");
 
     c.X = 20;
     c.Y = 16;
+    console.writeToBuffer(c, "Quek Cher Yi");
+
+    c.X = 20;
+    c.Y = 17;
     console.writeToBuffer(c, "Seann Mauri");
 
     c.X = 20;
-    c.Y = 20;
+    c.Y = 21;
     console.writeToBuffer(c, "Press R to return to title screen", 0x0E);
 
     if (keyPressed[K_R]) {
