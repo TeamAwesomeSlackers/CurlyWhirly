@@ -139,7 +139,8 @@ void guardMovement();
 /*Spawn monster*/
 void setmonsterlocation();  // Set monster spawn
 void spawnMonster();        // Spawn ghost 1
-void spawnMonster1();       // Spawn ghost 2
+void spawnMonster1(); // Spawn ghost 2
+void monsterSpawn();
 
 /*Restart*/
 void completeReset();       // Game reset

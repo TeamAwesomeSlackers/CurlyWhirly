@@ -245,8 +245,7 @@ void gameplay(){
     }
 
     traps();                // check traps
-    spawnMonster();         // spawn ghost1
-    spawnMonster1();        // spawn ghost2
+    monsterSpawn();         // check for monster spawns
     guardMovement(); 
     monstersMoveChecker();// Moving trap function
 
@@ -957,10 +956,8 @@ void completeReset(){ // Reset the whole game
 
 void renderMonster(){
     // render super monster
-    if (g_cChaserLoc.X == g_cChaser1Loc.X && g_cChaserLoc.Y == g_cChaser1Loc.Y){
-        if (monsterToken == 1){
+    if (g_cChaserLoc.X == g_cChaser1Loc.X && g_cChaserLoc.Y == g_cChaser1Loc.Y && monsterToken == 1 && monster1Token == 1){
             console.writeToBuffer(g_cChaserLoc, (char)238, 0x0D);
-        }
     }
     // normal monster
     else{

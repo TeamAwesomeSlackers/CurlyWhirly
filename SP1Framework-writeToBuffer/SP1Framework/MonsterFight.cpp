@@ -1,5 +1,5 @@
 #include "game.h"
-
+#include <math.h>
 int monsterToken = 1;
 int monster1Token = 1;
 int spawnToken = 0;
@@ -127,7 +127,7 @@ Updated on 27 Aug 2015, added monster delay when spawning
 
 void monsterDeath(){
     monsterToken = 0;
-    t_monsterDied = elapsedTime + 15;
+    t_monsterDied = floor(elapsedTime + 15);
     spawnToken = 1;
     int spawnLocation = rand() % 3; // Spawns the monster randomly between 3 different spawn locations
     g_cChaserLoc.X = 26;
@@ -149,7 +149,7 @@ void monsterDeath(){
 
 void monster1Death(){
     monster1Token = 0;
-    t_monster1Died = elapsedTime + 15;
+    t_monster1Died = floor(elapsedTime + 15);
     spawn1Token = 1;
     int spawnLocation = rand() % 3; // Spawns the monster randomly between 3 different spawn locations
     g_cChaser1Loc.X = 26;
@@ -251,10 +251,11 @@ respawns the ghost if thge ghost has died
 //-----------------//
 
 void spawnMonster(){
-    if (elapsedTime > t_monsterDied){
+    if (elapsedTime >= t_monsterDied){
         if (spawnToken == 1){
             monsterToken = 1;
             spawnToken = 0;
+            monsterdelay = monster1delay;
         }
     }
 }
@@ -264,10 +265,17 @@ void spawnMonster(){
 //-----------------//
 
 void spawnMonster1(){
-    if (elapsedTime > t_monster1Died) {
+    if (elapsedTime >= t_monster1Died) {
         if (spawn1Token == 1){
             monster1Token = 1;
             spawn1Token = 0;
+            monster1delay = monsterdelay;
         }
     }
+}
+void monsterSpawn(){
+
+    spawnMonster();
+    spawnMonster1();
+
 }
