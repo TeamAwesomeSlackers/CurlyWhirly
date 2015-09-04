@@ -76,8 +76,7 @@ void collisiona(){
         guardadeath();
         if (iToken == 0){
             player.health -= 1;
-            iToken += 1;
-            t_invincibility = elapsedTime + 0.5;
+            iframe();
         }
         healthDMG++;
     }
@@ -89,8 +88,7 @@ void collisionb(){
         guardbdeath();
         if (iToken == 0){
             player.health -= 1;
-            iToken += 1;
-            t_invincibility = elapsedTime + 0.5;
+            iframe();
         }
         healthDMG++;
     }
@@ -102,8 +100,7 @@ void collisionc(){
         guardcdeath();
         if (iToken == 0){
             player.health -= 1;
-            iToken += 1;
-            t_invincibility = elapsedTime + 0.5;
+            iframe();
         }
         healthDMG++;
     }
@@ -115,8 +112,7 @@ void collisiond(){
         guardddeath();
         if (iToken == 0){
             player.health -= 1;
-            iToken += 1;
-            t_invincibility = elapsedTime + 0.5;
+            iframe();
         }
         healthDMG++;
     }
@@ -128,8 +124,7 @@ void collisione(){
         guardedeath();
         if (iToken == 0){
             player.health -= 1;
-            iToken += 1;
-            t_invincibility = elapsedTime + 0.5;
+            iframe();
         }
         healthDMG++;
     }

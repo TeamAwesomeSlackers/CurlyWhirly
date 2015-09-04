@@ -180,8 +180,7 @@ void collision(){
         monsterDeath(); // Monster dies after damaging player
         if (iToken == 0){
             player.health -= 1; // reduces player health by 1
-            iToken += 1;
-            t_invincibility = elapsedTime + 0.5; // allows player to have invicibility for 0.5 sec after being damaged
+            iframe();
         }
         healthDMG++;
     }
@@ -196,8 +195,7 @@ void collision1(){
         monster1Death(); // Monster dies after damaging player
         if (iToken == 0){
             player.health -= 1; // reduces player health by 1
-            iToken += 1;
-            t_invincibility = elapsedTime + 0.5; // allows player to have invicibility for 0.5 sec after being damaged
+            iframe();
         }
         healthDMG++;
     }
@@ -220,8 +218,7 @@ void monsterDamage(){
         if (monsterToken == 1){
             if (iToken == 0){
                 player.health -= 2;
-                iToken += 1;
-                t_invincibility = elapsedTime + 0.5;
+                iframe();
             }
         }
         monsterDeath();
@@ -277,4 +274,13 @@ void monsterSpawn(){
     spawnMonster();
     spawnMonster1();
 
+}
+
+//---------------//
+// Invincibility //
+//---------------//
+
+void iframe() {
+    iToken += 1;
+    t_invincibility = elapsedTime + 0.5; // allows player to have invicibility for 0.5 sec after being damaged
 }

@@ -133,6 +133,8 @@ void projKill1();           // kill ghost when projectile hits
 void projKill();            // kill ghost when projectile hits
 void monsterDamage();  
 void monstersMoveChecker();
+void iframe();              // Invincibility
+
 // Damage function for super ghost
 /* moving traps */
 void guardMovement();

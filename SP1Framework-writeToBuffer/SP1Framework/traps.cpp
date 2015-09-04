@@ -33,8 +33,7 @@ void traps(){
     if (printMap[charLocation.Y][charLocation.X] == 2){
         if (iToken == 0){
             player.health -= 2;
-            iToken += 1;
-            t_invincibility = elapsedTime + 0.5;
+            iframe();
         }
         healthDMG += 2;
     }
