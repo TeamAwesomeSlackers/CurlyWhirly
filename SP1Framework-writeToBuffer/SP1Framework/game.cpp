@@ -18,6 +18,7 @@ extern int ammoUsed;
 extern int bombUsed;
 extern double t_monsterDied;
 extern double t_monster1Died;
+extern double t_wProjectile;
 extern COORD    Bprojectile1;
 extern COORD    Bprojectile2;
 extern COORD	Bprojectile3;
@@ -926,6 +927,7 @@ void levelReset() { // Resets level when dead
     monsterToken = 1;
     monster1Token = 1;
     Bhealth = 50;
+	t_wProjectile = 0;
 }
 
 //------------//
@@ -945,6 +947,7 @@ void completeReset(){ // Reset the whole game
     bombUsed = 0;
     t_monsterDied = 0;
     t_monster1Died = 0;
+	t_wProjectile = 0;
     uCooldown = 0;
     elapsedTime = 0;
     cobwebToken = 0;
